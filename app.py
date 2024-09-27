@@ -173,7 +173,7 @@ def create_admin():
                     vals = (first_name, last_name, email, password)
                     cursor.execute(sql, vals)
                     connection.commit()
-                    connection.close()
+                    # connection.close()
                     msg = 'Posted successfully !!'
                     flash(msg, 'success')
                 return redirect(url_for('dashboard'))
@@ -237,7 +237,7 @@ def add_blog():
                     vals = (title, body, category, author, publish_date, blog_link)
                     cursor.execute(sql, vals)
                     connection.commit()
-                    connection.close()
+                    # connection.close()
                     msg = 'Posted successfully !!'
                     flash(msg, 'success')
                 return redirect(url_for('read_blog', blog_link = blog_link))
@@ -276,7 +276,7 @@ def save_blog():
                 vals = (title, body, category, author, blog_link)
                 cursor.execute(sql, vals)
                 connection.commit()
-                connection.close()
+                # connection.close()
                 msg = 'You have successfully updated Blog Post'
                 flash(msg, 'success')
             return redirect(url_for('blog_view'))
@@ -311,7 +311,7 @@ def read_blog(blog_link):
 def blog_view():
     if 'loggedin' in session:
         if session['role'] == 'admin':
-            sql_select = "SELECT * FROM Blog" #where author = '%s %s' "%(i['FIRST_NAME'],i['LAST_NAME'])
+            sql_select = "SELECT * FROM Blog"
             cursor.execute(sql_select)
             record = cursor.fetchall()
             return render_template("blog_view.html", record = record)
@@ -362,7 +362,7 @@ def add_video():
                     vals = (title, link, upload_date)
                     cursor.execute(sql, vals)
                     connection.commit()
-                    connection.close()
+                    # connection.close()
                     msg = 'Video Posted successfully !!'
                     flash(msg, 'success')
                 return redirect(url_for('video_view'))
@@ -378,7 +378,7 @@ def add_video():
 def video_view():
     if 'loggedin' in session:
         if session['role'] == 'admin':
-            sql_select = "SELECT * FROM Videos" 
+            sql_select = 'SELECT * FROM Videos' 
             cursor.execute(sql_select)
             record = cursor.fetchall()
             return render_template("all_videos.html", record = record)
