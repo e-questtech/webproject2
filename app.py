@@ -11,29 +11,26 @@ import pymysql
 import datetime
 import requests
 from flask_caching import Cache
-from config import Config 
+from config import Config
 
 
-# Flask app initialization
+
 app = Flask(__name__)
-app.config.from_object(Config)  # Load configuration from Config class
 
-# Database connection parameters
-timeout = 20
+app.config.from_object(Config)
+
+
+# LInk to the online database ffrom Aiven
 connection = pymysql.connect(
-    charset="utf8mb4",
-    connect_timeout=timeout,
-    cursorclass=pymysql.cursors.DictCursor,
-    db=app.config['DATABASE_NAME'],
-    host=app.config['DATABASE_HOST'],
-    password=app.config['DATABASE_PASSWORD'],
-    read_timeout=timeout,
-    port=app.config['DATABASE_PORT'],  # Get port from config
-    user=app.config['DATABASE_USER'],
-    write_timeout=timeout
-)
-
-
+        host=app.config['DATABASE_HOST'],
+        user=app.config['DATABASE_USER'],
+        password=app.config['DATABASE_PASSWORD'],
+        db=app.config['DATABASE_NAME'],
+        port=app.config['DATABASE_PORT'],
+        charset='utf8mb4',
+        cursorclass=pymysql.cursors.DictCursor
+    )
+    
 cursor = connection.cursor()
 
 # For sessions
@@ -42,6 +39,7 @@ app.config['PERMANENT_SESSION_LIFETIME'] =  timedelta(minutes=30)
 
 
 # To Make secret key
+
 app.secret_key = app.config['SECRET_KEY']
 
 # UNSPLASH ACCESS KEY
@@ -55,8 +53,6 @@ app.config['CACHE_DEFAULT_TIMEOUT'] = 300  # Cache timeout (in seconds)
 cache = Cache(app)
 # _____________________________________________________________________
 # PROGRAM STARTS
-
-
 
 @cache.cached(timeout=300, key_prefix='unsplash_image')  # Cache for 5 minutes
 def get_unsplash_image(query):
@@ -188,7 +184,6 @@ def create_admin():
     flash(msg, 'warning')
     return redirect(url_for('admin_login', next = '/admin/create/' ))
     
-    
 # Admin Dashboard
 @app.route('/admin/')
 def dashboard():
@@ -299,7 +294,7 @@ def read_blog(blog_link):
             record = cursor.fetchall()
             result = cursor.fetchone()  # Since you're expecting a single result
             if result:
-                query = result[0]  # Assign the category to the 'query' variable as a string
+                query = result[2]  # Assign the category to the 'query' variable as a string
             else:
                 query = 'Tech'
             image_url = get_unsplash_image(query)
@@ -368,7 +363,6 @@ def add_video():
                     cursor.execute(sql, vals)
                     connection.commit()
                     connection.close()
-
                     msg = 'Video Posted successfully !!'
                     flash(msg, 'success')
                 return redirect(url_for('video_view'))
@@ -402,7 +396,6 @@ def delete_video(link):
                 cursor.execute(sql)
                 connection.commit()
                 connection.close()
-
                 return jsonify({'status': 'success', 'message': 'Video deleted successfully'}), 200
             else:
                 return jsonify({'status': 'error', 'message': 'Deletion not confirmed'}), 400
@@ -539,9 +532,12 @@ def student_create():
 
 
 
+
+
 if __name__ == "__main__":
    app.run(host="0.0.0.0", port=5000, debug=True)
     # app.run(host='0.0.0.0', port=5000)
+
 
 
 
