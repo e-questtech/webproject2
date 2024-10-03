@@ -518,7 +518,10 @@ def logout():
 @app.errorhandler(403)
 def forbidden(error):
     return render_template("403.html")
-
+        
+@app.errorhandler(500)
+def forbidden(error):
+    return render_template("403.html")
 
 @app.errorhandler(404)
 def page_not_found(error):
