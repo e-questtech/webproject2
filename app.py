@@ -160,7 +160,7 @@ def create_admin():
                 email = request.form['email']
                 _password = request.form['password']
                 _password = str(_password)
-                password = hashlib.sha256(_password.encode()).hexdigest()
+                #password = hashlib.sha256(_password.encode()).hexdigest()
                 cursor.execute("SELECT * from Admins WHERE EMAIL = '%s'"%email)
                 new_user = cursor.fetchone()
                 if new_user:
