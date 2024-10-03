@@ -1,14 +1,13 @@
-
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify, flash#,Response
 from datetime import timedelta      #Check JS for timer
 # from flask_mail import *
 import hashlib    #To change to one for flask hashing
-# import random
+import random
 import re
 from mysql.connector import OperationalError
+import datetime
 from datetime import datetime
 import pymysql
-import datetime
 import requests
 from flask_caching import Cache
 from config import Config
@@ -16,8 +15,6 @@ from config import Config
 
 
 app = Flask(__name__)
-#app.config['DEBUG'] = False
-
 
 app.config.from_object(Config)
 
@@ -80,9 +77,9 @@ def blog():
 
 # Check if a result was found
     if result:
-        query = result[0]  # Assign the category to the 'query' variable as a string
+        query = result['category']  # Assign the category to the 'query' variable as a string
     else:
-        query = 'Tech'
+        query = 'tech-teaching'
     if blog:
         image_url = get_unsplash_image(query)
         if image_url:
@@ -99,7 +96,7 @@ def blog_post(blog_link):
 
 # Check if a result was found
     if result:
-        query = result[0]  # Assign the category to the 'query' variable as a string
+        query = result['category']  # Assign the category to the 'query' variable as a string
     else:
         query = 'Tech'
     if blog:
@@ -219,8 +216,7 @@ def add_blog():
             sql ="select first_name, last_name from Admins where email = '%s'"%session['email']
             cursor.execute(sql)
             names = cursor.fetchall()
-            publish_date = datetime.date.today()
-
+            publish_date = datetime.now()
             if request.method == 'POST' and 'title' in request.form and 'body' in request.form and 'category' in request.form and 'author' in request.form:
                 title = request.form['title']
                 blog_link = title.lower().replace(' ', '-')
@@ -296,7 +292,7 @@ def read_blog(blog_link):
             record = cursor.fetchall()
             result = cursor.fetchone()  # Since you're expecting a single result
             if result:
-                query = result[2]  # Assign the category to the 'query' variable as a string
+                query = result['category']  # Assign the category to the 'query' variable as a string
             else:
                 query = 'Tech'
             image_url = get_unsplash_image(query)
@@ -347,7 +343,7 @@ def delete_blog(blog_link):
 def add_video():
     if 'loggedin' in session:
         if session['role'] == 'admin':
-            upload_date = datetime.date.today()
+            upload_date = datetime.now()
 
             if request.method == 'POST' and 'title' in request.form and 'link' in request.form:
                 title = request.form['title']
@@ -403,6 +399,111 @@ def delete_video(link):
                 return jsonify({'status': 'error', 'message': 'Deletion not confirmed'}), 400
         return jsonify({'status': 'error', 'message': 'Unauthorized'}), 403
     return jsonify({'status': 'error', 'message': 'Not logged in'}), 401
+
+@app.route("/admin/student/create/", methods = ["GET", "POST"])
+def create_student():
+    if 'loggedin' in session:
+        if session['role'] == 'admin':
+            sql ="select * from Courses"
+            cursor.execute(sql)
+            courses = cursor.fetchall()
+            date_registered = datetime.now()
+            if request.method == 'POST' and 'first_name'in request.form and 'last_name' in request.form and 'email'  in request.form:# and courses in request.form:
+                first_name = request.form['first_name'].upper()
+                last_name = request.form['last_name'].upper()
+                email = request.form['email']
+                course_code = request.form.get('courses')
+                STUDENT_ID = str(course_code)+'/'+ str(datetime.now().year) + '/'+ str(random.randint(1, 100))
+                password = 0000
+                cursor.execute("SELECT * from Students WHERE Student_ID = '%s'"%STUDENT_ID)
+                new_user = cursor.fetchone()
+                if new_user:
+                    msg = 'Student already exists !'
+                    flash(msg, 'error')
+                    return render_template('create_student.html', msg = msg)
+                else:
+                    sql = """INSERT INTO Students(FIRST_NAME, LAST_NAME, EMAIL, PASSWORD_, Student_ID, Date_Registered) VALUES(%s, %s, %s, %s, %s, %s)"""
+                    vals = (first_name, last_name, email, password, STUDENT_ID, date_registered)
+                    cursor.execute(sql, vals)
+                    connection.commit()
+                    msg = 'Added successfully !!'
+                    flash(msg, 'success')
+                return redirect(url_for('all_students'))
+            return render_template('create_student.html', courses = courses)
+        else:
+            return render_template('403.html')
+    msg = 'Session TimeOut'
+    flash(msg, 'warning')
+    return redirect(url_for('admin_login', next = '/admin/student/create/' ))
+
+# View All Students
+@app.route("/admin/student/all/", methods = ["GET", "POST"])
+def all_students():
+    if 'loggedin' in session:
+        if session['role'] == 'admin':
+            sql_select = "SELECT * FROM Students;"
+            cursor.execute(sql_select)
+            record = cursor.fetchall()
+            return render_template("all_students.html", record = record)
+        else:
+            return render_template('403.html')
+    return redirect(url_for('admin_login', next= "/admin/student/all/"))
+
+# To add courses
+@app.route('/admin/course/add/', methods = ["GET", "POST"])
+def add_course():
+    if 'loggedin' in session:
+        if session['role'] == 'admin':
+            if request.method == 'POST' and 'course_code' in request.form and 'course_title' in request.form:
+                course_code = request.form['course_code']
+                course_title = request.form['course_title']
+                sql_select = "select * from Courses where course_code = '%s'"%course_code
+                cursor.execute(sql_select)
+                new_course = cursor.fetchone()
+                if new_course:
+                    msg = 'Course already Added !!!'
+                    flash(msg, 'error')
+                    return render_template('add_course.html', msg = msg)
+                else:
+                    sql = """insert into Courses (course_title, course_code) values(%s,%s)"""
+                    vals = (course_title, course_code)
+                    cursor.execute(sql, vals)
+                    connection.commit()
+                    # connection.close()
+                    msg = 'Course Added successfully !!'
+                    flash(msg, 'success')
+                return redirect(url_for('courses'))
+            return render_template('add_course.html')
+        else:
+            return render_template('403.html')
+    msg = 'Session TimeOut'
+    flash(msg, 'warning')
+    return redirect(url_for('admin_login', next = '/admin/course/add/' ))
+
+@app.route('/admin/course/all/', methods = ["GET", "POST"])
+def courses():
+    if 'loggedin' in session:
+        if session['role'] == 'admin':
+            sql_select = 'SELECT * FROM Courses' 
+            cursor.execute(sql_select)
+            record = cursor.fetchall()
+            return render_template("courses.html", record = record)
+        else:
+            return render_template('403.html')
+    return redirect(url_for('admin_login', next= "/admin/course/all/"))
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #Logout
@@ -480,24 +581,11 @@ def handle_db_error(e):
 
 
 # Student Stuff
-# Register for courses
-@app.route("/register/")
-def register():
-    pass
 
 # For Student Login
 @app.route("/login/", methods = ["GET", "POST"])
 def login():
     pass
-
-
-
-# Create Student
-@app.route("/admin/student/create/", methods = ["GET", "POST"])
-def student_create():
-    pass
-
-
 
 
 
@@ -537,135 +625,8 @@ def student_create():
 
 
 if __name__ == "__main__":
-        app.run(debug=False, host = "0.0.0.0")
+   app.run(host="0.0.0.0", port=5000, debug=True)
     # app.run(host='0.0.0.0', port=5000)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# pip install python-dotenv
-# DATABASE_URL=mysql://user:password@host/dbname
-# from dotenv import load_dotenv
-# load_dotenv()
-# export FLASK_APP=app.py
-# flask run
-
-
-# For Flask Mail
-# from flask import Flask
-# from flask_mail import Mail, Message
-
-# app = Flask(__name__)
-
-# # Flask-Mail configuration for Hostinger's SMTP service
-# app.config['MAIL_SERVER'] = 'smtp.hostinger.com'  # or mail.yourdomain.com
-# app.config['MAIL_PORT'] = 465  # SSL port, use 587 for TLS
-# app.config['MAIL_USE_TLS'] = False  # Use SSL, not TLS
-# app.config['MAIL_USE_SSL'] = True  # Enable SSL
-# app.config['MAIL_USERNAME'] = 'your-email@yourdomain.com'  # Your email hosted on Hostinger
-# app.config['MAIL_PASSWORD'] = 'your-email-password'  # Your email password
-# app.config['MAIL_DEFAULT_SENDER'] = 'your-email@yourdomain.com'  # Default sender email address
-
-# # Initialize Flask-Mail
-# mail = Mail(app)
-
-
-
-# To read forom environment
-# set MAIL_USERNAME=your-email@gmail.com
-# set MAIL_PASSWORD=your-email-password
-
-
-# import os
-
-# app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
-# app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
