@@ -134,7 +134,7 @@ def admin_login():
     if request.method == 'POST' and 'email' in request.form and 'password' in request.form:
         email = str(request.form['email'])
         _password = str(request.form['password'])
-        password = hashlib.sha256(_password.encode()).hexdigest()
+        #password = hashlib.sha256(_password.encode()).hexdigest()
         sql_select = "SELECT * FROM Admins WHERE EMAIL = '%s' AND PASSWORD_ = '%s'"%(email, password)
         cursor.execute(sql_select)
         verify = cursor.fetchone()
