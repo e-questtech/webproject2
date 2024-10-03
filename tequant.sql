@@ -1,8 +1,9 @@
 -- use defaultdb;
+create database defaultdb;
 CREATE TABLE Blog (
 	blog_link  varchar(200) primary key,
     Title VARCHAR(254) NOT NULL,
-    Body MEDIUMTEXT CHARSET UTF16 NOT NULL,
+    Body longtext CHARSET UTF16 NOT NULL,
     category VARCHAR(255) NOT NULL,
     author VARCHAR(255) NOT NULL,
     publish_date DATE NOT NULL
@@ -14,7 +15,8 @@ SELECT
     *
 FROM
     Blog;
--- drop table Blog
+
+drop table Blog;
     
    CREATE TABLE Admins (
     FIRST_NAME VARCHAR(100) NOT NULL,
@@ -45,4 +47,13 @@ create table Students(
 );
 
 insert into Students values('CS/24/011/', 'Johnny', 'Doer', 'johnnydoer@gmail.com', '12456756i5u4352rgbgcbxh63g224gui67n', '2022-12-23');
-select * from Students
+select * from Students;
+-- delete from Students where STUDENT_ID  ='CS/24/001/'
+select * from Courses;
+-- insert into Courses values('Data Analysis', 'DTA');
+insert into Courses values('CyberSecurity', 'CYB');
+
+ALTER TABLE Blog
+ADD COLUMN image_filename VARCHAR(255);
+
+-- drop database defaultdb;

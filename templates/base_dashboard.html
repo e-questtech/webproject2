@@ -76,7 +76,7 @@
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="{{ url_for('create_admin') }}" data-target="#collapseTwo"
                         aria-expanded="true" aria-controls="collapseTwo">
-                        <i class="fas fa-fw fa-cog"></i>
+                        <i class="fas fa-fw fa-user"></i>
                         <span>Add Admin</span>
                     </a>
                 </li>
@@ -90,7 +90,20 @@
 
                 <!-- Heading -->
                 <li class="nav-item">
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url_for('create_student') }}" data-target="#collapseTwo"
+                            aria-expanded="true" aria-controls="collapseTwo">
+                            <i class="fas fa-fw fa-user"></i>
+                            <span>Register Student</span>
+                        </a>
                     
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{ url_for('all_students') }}" data-target="#collapseTwo"
+                        aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fas fa-fw fa-cog"></i>
+                        <span>All Students</span>
+                    </a>
                 </li>
                 <hr class="sidebar-divider">
 
@@ -103,14 +116,14 @@
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="{{ url_for('add_blog') }}" data-target="#collapseTwo"
                         aria-expanded="true" aria-controls="collapseTwo">
-                        <i class="fas fa-fw fa-cog"></i>
+                        <i class="fas fa-fw fa-blog"></i>
                         <span>Add Blog</span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="{{ url_for('blog_view') }}" data-target="#collapseTwo"
                         aria-expanded="true" aria-controls="collapseTwo">
-                        <i class="fas fa-fw fa-cog"></i>
+                        <i class="fas fa-fw fa-blog"></i>
                         <span>All Blogs</span>
                     </a>
                 </li>
@@ -132,7 +145,7 @@
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="{{ url_for('video_view') }}" data-target="#collapseTwo"
                         aria-expanded="true" aria-controls="collapseTwo">
-                        <i class="fas fa-fw fa-cog"></i>
+                        <i class="fas fa-fw fa-video"></i>
                         <span>All Videos</span>
                     </a>
                 </li>
@@ -140,13 +153,7 @@
 
                 <!-- Heading -->
 
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-target="#collapseTwo"
-                        aria-expanded="true" aria-controls="collapseTwo">
-                        <i class="fas fa-fw fa-cog"></i>
-                        <span>Add Course</span>
-                    </a>
-                </li>
+                
                 <hr class="sidebar-divider">
                 <!-- Heading -->
                 <div class="sidebar-heading">
@@ -154,7 +161,7 @@
                 </div>
 
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-target="#collapseTwo" aria-expanded="true"
+                    <a class="nav-link collapsed" href="{{ url_for('add_course') }}" data-target="#collapseTwo" aria-expanded="true"
                         aria-controls="collapseTwo">
                         <i class="fas fa-fw fa-cog"></i>
                         <span>Add Course</span>
@@ -162,7 +169,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="#" data-target="#collapseTwo" aria-expanded="true"
+                    <a class="nav-link collapsed" href="{{ url_for('courses') }}" data-target="#collapseTwo" aria-expanded="true"
                         aria-controls="collapseTwo">
                         <i class="fas fa-fw fa-cog"></i>
                         <span>All Courses</span>
