@@ -1,80 +1,166 @@
 {% extends "base.html" %}
-
 {% block title %} About Us {% endblock %}
-
 {% block head %}
 {{ super() }}
-<!-- Custom CSS for loading effect -->
-<style>
-    .team-member {
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-    .team-member.loaded {
-        opacity: 1;
-        transform: translateY(0);
-    }
-</style>
 {% endblock %}
-
 {% block content %}
-<div class="container mt-5">
-    <h1 class="text-center">Get to Know Us</h1>
-    <p class="text-center">
-        We started as an educational center in the city of Port Harcourt, aiming to provide affordable training to those in the garden city of Nigeria. 
-        It's been over four years now, and we are still in the business of providing quality education for professionals. 
-        We began with just one course, but we currently have multiple courses on our platform, with technically sound individuals signed up as tutors.
-    </p>
-
-    <h2 class="mt-5">Our Mission</h2>
-    <p>
-        We are on a mission to make tech education more effective by ensuring a direct connection between tutor and student.
-    </p>
-
-    <h2 class="mt-5">Our Vision</h2>
-    <p>
-        We have a vision to educate the continent of Africa into innovation. We want to see that everyone we train gets a good grasp of what they are taught, 
-        and it becomes inevitable that they apply this knowledge to bring solutions to challenges facing the people of the continent.
-    </p>
-
-    <h2 class="mt-5">Our Team</h2>
-    <div class="row">
-        <div class="col-md-3">
-            <div class="team-member" id="member1">
-                <img src="path/to/nikson.jpg" alt="Nikson Kejeh" class="img-fluid rounded-circle mb-3">
-                <h5>Nikson Kejeh</h5>
-                <p>Chief Operating Officer</p>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="team-member" id="member2">
-                <img src="path/to/ezinne.jpg" alt="Ezinne Kalu" class="img-fluid rounded-circle mb-3">
-                <h5>Ezinne Kalu</h5>
-                <p>Community Manager</p>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="team-member" id="member3">
-                <img src="path/to/osamuyi.jpg" alt="Osamuyi Osaghae" class="img-fluid rounded-circle mb-3">
-                <h5>Osamuyi Osaghae</h5>
-                <p>Digital Marketer</p>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="team-member" id="member4">
-                <img src="path/to/oghenetega.jpg" alt="Oghenetega Stanley" class="img-fluid rounded-circle mb-3">
-                <h5>Oghenetega Stanley</h5>
-                <p>Graphics Designer</p>
+<body>
+    <!-- Page Content -->
+    <div class="page-heading header-text">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>About TE Quant</h1>
+                    <span>Get to Know Us</span>
+                    <div class="more-info about-info right-content">
+                        <div class="container">
+                                <span>We started as an educational center in the city of Port Harcourt, <br>
+                                    aiming to provide quality training to those in the garden city of Nigeria. <br>It's been over four
+                                    years and we are still in the business<br>
+                                    of providing quality education for professionals.<br> We began with just one course, but we
+                                    currently have <br>
+                                    multiple courses on our Platforms, with technically sound individuals signed on our platforms as
+                                    tutors. </span>
+                           
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
+        
+    <div class="more-info about-info">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="more-info-content">
+                        <div class="row">
+                            <div class="col-md-6 align-self-center">
+                                <div class="right-content">
+                                    <h4><em>Our Mission</em></h4>
+                                    <p>We are on a mission to make Tech education more effective by ensuring a direct connection between tutor and students.
+                                        We have a vision to educate the continent of Africa into innovation.<br> We want to see that everyone gets a good grasp<br>
+                                        of what they are taught and it becomes <br>inevitable that they apply this knowledge to bring solutions to challenges<br> facing the people of the continent
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="left-image">
+                                    <img src="{{url_for('static', filename = '/images/service_02.jpg')}}" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-{% endblock %}
+    <div class="team">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-heading">
+                        <h2>Our <em>Team</em></h2>
+                        <span>Some of our Team members</span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="team-item">
+                        <img src="{{url_for('static', filename = '/images/team_01.jpg')}}" alt="">
+                        <div class="down-content">
+                            <h4>Nikson Kejeh</h4>
+                            <span>Chief Operating Officer</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="team-item">
+                        <img src="{{url_for('static', filename = '/images/team_02.jpg')}}" alt="">
+                        <div class="down-content">
+                            <h4>Faith Dan-Elebiga</h4>
+                            <span>Community Manager</span>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="team-item">
+                        <img src="{{url_for('static', filename = '/images/team_03.jpg')}}" alt="">
+                        <div class="down-content">
+                            <h4>Osamuyi Osaghae</h4>
+                            <span>Digital Marketer</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="team-item">
+                        <img src="{{url_for('static', filename = '/images/team_02.jpg')}}" alt="">
+                        <div class="down-content">
+                            <h4>Oghenetega Stanley</h4>
+                            <span>Graphics Designer</span>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-{% block scripts %}
-{{ super() }}
-<!-- Link to the external JavaScript file -->
-<script src="{{ url_for('static', filename='js/about.js') }}"></script>
+
+    <div class="testimonials">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="section-heading">
+                <h2>What they say <em>about us</em></h2>
+                <span>testimonials from our past students</span>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="owl-testimonials owl-carousel">
+                
+                <div class="testimonial-item">
+                  <div class="inner-content">
+                    <h4>Chioma J Okorie</h4>
+                    <p>"Transitioning from Law to Tech wasn't <br>an easy task. I expected it to be difficult, <br>but my tutors here at TE Quant made <br>the basics easy to understand."</p>
+                  </div>
+                  <img src="http://placehold.it/60x60" alt="">
+                </div>
+                
+                <div class="testimonial-item">
+                  <div class="inner-content">
+                    <h4>Lawrence Ameh</h4>
+                    <p>"As a computer scientist, I decided to advance my career by pursuing a degree in Data Science<br> and TE Quant provided the quality education which has helped me enroll for a master's program <br> here in the UK."</p>
+                  </div>
+                  <img src="http://placehold.it/60x60" alt="">
+                </div>
+                
+                <div class="testimonial-item">
+                  <div class="inner-content">
+                    <h4>Daniel Michael-Akhere</h4>
+                    <p>"I started a program with TE Quant to study <br> data analysis, and for someone who is moving from 
+                      operational management to <br> core data analytics,the experience has been beautiful<br> as learning 
+                      is made easy with their teaching methodology and instructors. <br> I strongly recommend anyone serious about taking a career path in technology."</p>
+                  </div>
+                  <img src="http://placehold.it/60x60" alt="">
+                </div>
+                
+                <div class="testimonial-item">
+                  <div class="inner-content">
+                    <h4>Joshua Kema</h4>
+                    <span>Marketing Head</span>
+                    <p>"My learning experience at TE Quant was one-of-a-kind. I learned things i found<br> difficult to learn on platforms like Youtube.<br> I also got to learn Python Programming <br>and I was also able to create a calculator all by myself."</p>
+                  </div>
+                  <img src="http://placehold.it/60x60" alt="">
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+</body>
 {% endblock %}
