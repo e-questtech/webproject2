@@ -1758,7 +1758,7 @@ h2.title {
   
   .icon {
     padding: 10px;
-    background: #aeb0b9;
+    background: #4e73df;
     color: white;
     min-width: 50px;
     text-align: center;
@@ -1779,8 +1779,8 @@ h2.title {
   
   .btn {
     color: #fff;
-    background-color: #26ebda;
-    border-color: #26ebda;
+    background-color: #4e73df;
+    border-color: #4e73df;
     padding: 15px 20px;
     border: none;
     cursor: pointer;
@@ -1791,14 +1791,14 @@ h2.title {
   .btn:hover {
     opacity: 1;
     color: #fff;
-    background-color: #26ebda;
-    border-color: #26ebda
+    background-color: #2e59d9;
+    border-color: #2653d4
   }
   
   .btn:active {
     color: #fff;
-    background-color: #26ebda;
-    border-color: #26ebda
+    background-color: #2653d4;
+    border-color: #244ec9
   }
   
   #indexpage {
