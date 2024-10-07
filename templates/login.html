@@ -17,19 +17,26 @@
             {% endif %}
             {% endwith %}
         </div>
-        <h2 class="title">Login</h2>
-        <div class="input-container">
-            <i class="fa fa-envelope icon"></i>
-            <input class="input-field" type="text" placeholder="Email" name="email" required>
-        </div>
-        <div class="input-container">
-            <i class="fa fa-key icon"></i>
-            <input class="input-field" type="password" placeholder="Password" name="password" required>
-        </div>
-        <button type="submit" class="btn">Login</button>
-    </form>
+        
 
+<h2 class="title">Login</h2>
+<form>
+    <div class="input-container">
+        <i class="fa fa-envelope icon"></i>
+        <input class="input-field" type="text" placeholder="Email" name="email" required>
+    </div>
+    <div class="input-container">
+        <i class="fa fa-key icon"></i>
+        <input class="input-field" type="password" placeholder="Password" name="password" required>
+    </div>
+    <button type="submit" class="btn">Login</button>
+</form>
 
-</body>
+<!-- Adding custom style for the margin below the form -->
+<style>
+    form {
+        margin-bottom: 50px; /* Adjust this value for more or less space */
+    }
+</style>
 
 {% endblock %}
