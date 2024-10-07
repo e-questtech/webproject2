@@ -499,7 +499,7 @@ def courses():
 
 
 
-@app.route('/sitemap.xml')
+@app.route('/sitemap.xml', methods = ["GET", "POST"])
 def sitemap():
     # Generate a list of URLs
     urls = [
