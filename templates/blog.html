@@ -18,9 +18,8 @@
                 <div class="blog">
                     <div class="blog-image">
                 {% for i in blog %}
-                        <div class = "page-heading">
-                    </div>
-                    
+			    <img class="img-fluid" src="{{url_for('static', filename = 'images/fun-facts-bg.jpg')}}" alt="Blog Image">
+		    </div>
                     <div class="blog-info clearfix">
                         <div class="post-left">
                             <ul>
@@ -127,22 +126,7 @@
 </article>
 
 {% endblock %}
-<head>
-<style>
-	.page-heading {
-	text-align: center;
-	background-image: url("http://placehold.it/300x100");
-	background-position: center center;
-	background-repeat: no-repeat;
-	background-size: 20%;
-	padding: 230px 20px 150px 70px;
-	color: #fff;
-	}
-	.course-content{
-	background-color: rgb(185, 185, 185);
-	}
-</style>
-</head>
+
 
 <!-- 
 <form>
