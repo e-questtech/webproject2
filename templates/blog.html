@@ -17,9 +17,9 @@
                 <!-- Blog Post -->
                 <div class="blog">
                     <div class="blog-image">
-                {% for i in blog %}
-			    <img src="{{url_for('static', filename = 'images/fun-facts-bg.jpg')}}" alt="Blog Image">
-		    </div>
+                        {% for i in blog %}
+                        <img src="{{url_for('static', filename = 'images/fun-facts-bg.jpg')}}" alt="Blog Image">
+                    </div>
                     <div class="blog-info clearfix">
                         <div class="post-left">
                             <ul>
@@ -46,7 +46,8 @@
             </div>
 
             <!-- Blog Sidebar -->
-            <div class="col-lg-3 col-md-12 sidebar-right theiaStickySidebar">
+            <!-- Blog Sidebar -->
+            <div class="col-lg-3 col-md-12 sidebar-right theiaStickySidebar" style="margin-top: 20mm;">
 
                 <!-- Latest Posts -->
                 <div class="card post-widget blog-widget">
@@ -67,21 +68,7 @@
                                     </h4>
                                     <p><img class="img-fluid" src="assets/img/icon/icon-22.svg" alt="">Jun 14, 2022</p>
                                 </div>
-                            </li>
-                            <li>
-                                <div class="post-thumb">
-                                    <a href="#">
-                                        <img class="img-fluid" src="assets/img/blog/blog-02.jpg" alt="">
-                                    </a>
-                                </div>
-                                <div class="post-info">
-                                    <h4>
-                                        <a href="#">Expand Your Career Opportunities With Python</a>
-                                    </h4>
-                                    <p><img class="img-fluid" src="assets/img/icon/icon-22.svg" alt=""> 3 Dec 2019</p>
-                                </div>
-                            </li>
-                            <li>
+
                                 <div class="post-thumb">
                                     <a href="#">
                                         <img class="img-fluid" src="assets/img/blog/blog-03.jpg" alt="">
@@ -94,24 +81,15 @@
                                     <p><img class="img-fluid" src="assets/img/icon/icon-22.svg" alt=""> 3 Dec 2019</p>
                                 </div>
                             </li>
+
                         </ul>
                     </div>
                 </div>
-                <!-- /Latest Posts -->
-
             </div>
-
         </div>
     </div>
 </section>
-
-
-
-</div>
-</div>
-</div>
-</article>
-
+    
 {% endblock %}
 
 
