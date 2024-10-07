@@ -1739,3 +1739,72 @@ footer .contact-form button.filled-button:hover {
 	background: #ed4051;
 	border: 1px solid #ed4051;
 }
+
+h2.title {
+  text-align: center;
+  text-transform: uppercase;
+  color: rgb(85, 99, 112);
+  letter-spacing: 2px;
+}
+
+.input-container {
+  display: -ms-flexbox;
+  /* IE10 */
+  display: flex;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.icon {
+  padding: 10px;
+  background: #4e73df;
+  color: white;
+  min-width: 50px;
+  text-align: center;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  outline: none;
+  font-family: 'Antic';
+  font-size: 16px;
+}
+
+.input-field:focus {
+  border: 2px solid rgb(21, 53, 194);
+
+}
+
+.btn {
+  color: #fff;
+  background-color: #4e73df;
+  border-color: #4e73df;
+  padding: 15px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.btn:hover {
+  opacity: 1;
+  color: #fff;
+  background-color: #2e59d9;
+  border-color: #2653d4
+}
+
+.btn:active {
+  color: #fff;
+  background-color: #2653d4;
+  border-color: #244ec9
+}
+
+#indexpage {
+  background-color: #faf7f7;
+  width: auto;
+  border-radius: 2px;
+  padding: 50px;
+  margin: 10px;
+  display: flex;
+}
