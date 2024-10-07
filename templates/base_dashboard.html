@@ -38,7 +38,18 @@
     <!-- Summernote  -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<style>
+        /* Sidebar Transition */
+        .sidebar {
+            transition: margin-left 0.3s ease;
+            margin-left: 0; /* Default position */
+            width: 250px; /* Width of the sidebar */
+        }
 
+        .sidebar.collapsed {
+            margin-left: -250px; /* Hide the sidebar */
+        }
+    </style>
     {% endblock %}
 </head>
 
@@ -50,142 +61,136 @@
         <div id="wrapper">
 
             <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar" >
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url_for('index') }}">
+            <img src="{{ url_for('static', filename='img/te_quant_logo.png') }}" width="50" height="80" alt="TE Quant Logo">
+            <div class="sidebar-brand-text mx-3">TE Quant</div>
+        </a>
 
-                <!-- Sidebar - Brand -->
-                
-               
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{url_for('index')}}">
-                    <img src="{{url_for('static', filename = 'img/te_quant_logo.png')}}" width = 50px height = 80px ></img>
-                    <div class="sidebar-brand-text mx-3">TE Quant</div>
-                </a>
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
 
-                <!-- Divider -->
-                <hr class="sidebar-divider my-0">
+        <!-- Toggle Button for Mobile View -->
+        <div class="text-center d-md-none">
+            <button class="btn btn-link text-white" id="sidebarToggle">Toggle Sidebar</button>
+        </div>
 
-                <!-- Nav Item - Dashboard -->
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{url_for('dashboard')}}">
-                        <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Dashboard</span></a>
-                </li>
+        <!-- Nav Items -->
+        <li class="nav-item active">
+            <a class="nav-link" href="{{ url_for('dashboard') }}">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
 
-                <!-- Divider -->
-                <hr class="sidebar-divider">
+        <!-- Divider -->
+        <hr class="sidebar-divider">
 
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url_for('create_admin') }}" data-target="#collapseTwo"
-                        aria-expanded="true" aria-controls="collapseTwo">
-                        <i class="fas fa-fw fa-user"></i>
-                        <span>Add Admin</span>
-                    </a>
-                </li>
-                
-                <!-- Divider -->
-                <hr class="sidebar-divider">
-                <!-- Heading -->
-                <div class="sidebar-heading">
-                    Students
-                </div>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ url_for('create_admin') }}" data-target="#collapseTwo"
+                aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-user"></i>
+                <span>Add Admin</span>
+            </a>
+        </li>
 
-                <!-- Heading -->
-                <li class="nav-item">
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url_for('create_student') }}" data-target="#collapseTwo"
-                            aria-expanded="true" aria-controls="collapseTwo">
-                            <i class="fas fa-fw fa-user"></i>
-                            <span>Register Student</span>
-                        </a>
-                    
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url_for('all_students') }}" data-target="#collapseTwo"
-                        aria-expanded="true" aria-controls="collapseTwo">
-                        <i class="fas fa-fw fa-cog"></i>
-                        <span>All Students</span>
-                    </a>
-                </li>
-                <hr class="sidebar-divider">
+        <!-- Divider -->
+        <hr class="sidebar-divider">
 
-                <!-- Heading -->
-                <div class="sidebar-heading">
-                    Blog
-                </div>
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Students
+        </div>
 
-                <!-- Heading -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url_for('add_blog') }}" data-target="#collapseTwo"
-                        aria-expanded="true" aria-controls="collapseTwo">
-                        <i class="fas fa-fw fa-blog"></i>
-                        <span>Add Blog</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url_for('blog_view') }}" data-target="#collapseTwo"
-                        aria-expanded="true" aria-controls="collapseTwo">
-                        <i class="fas fa-fw fa-blog"></i>
-                        <span>All Blogs</span>
-                    </a>
-                </li>
-                <hr class="sidebar-divider">
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ url_for('create_student') }}" data-target="#collapseTwo"
+                aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-user"></i>
+                <span>Register Student</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ url_for('all_students') }}" data-target="#collapseTwo"
+                aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>All Students</span>
+            </a>
+        </li>
+        <hr class="sidebar-divider">
 
-                <!-- Heading -->
-                <div class="sidebar-heading">
-                    Videos
-                </div>
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Blog
+        </div>
 
-                <!-- Heading -->
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url_for('add_video') }}" data-target="#collapseTwo"
-                        aria-expanded="true" aria-controls="collapseTwo">
-                        <i class="fas fa-fw fa-video"></i>
-                        <span>Add Videos</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url_for('video_view') }}" data-target="#collapseTwo"
-                        aria-expanded="true" aria-controls="collapseTwo">
-                        <i class="fas fa-fw fa-video"></i>
-                        <span>All Videos</span>
-                    </a>
-                </li>
-                <hr class="sidebar-divider">
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ url_for('add_blog') }}" data-target="#collapseTwo"
+                aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-blog"></i>
+                <span>Add Blog</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ url_for('blog_view') }}" data-target="#collapseTwo"
+                aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-blog"></i>
+                <span>All Blogs</span>
+            </a>
+        </li>
+        <hr class="sidebar-divider">
 
-                <!-- Heading -->
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Videos
+        </div>
 
-                
-                <hr class="sidebar-divider">
-                <!-- Heading -->
-                <div class="sidebar-heading">
-                    Courses
-                </div>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ url_for('add_video') }}" data-target="#collapseTwo"
+                aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-video"></i>
+                <span>Add Videos</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ url_for('video_view') }}" data-target="#collapseTwo"
+                aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-video"></i>
+                <span>All Videos</span>
+            </a>
+        </li>
+        <hr class="sidebar-divider">
 
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url_for('add_course') }}" data-target="#collapseTwo" aria-expanded="true"
-                        aria-controls="collapseTwo">
-                        <i class="fas fa-fw fa-cog"></i>
-                        <span>Add Course</span>
-                    </a>
-                </li>
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Courses
+        </div>
 
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{{ url_for('courses') }}" data-target="#collapseTwo" aria-expanded="true"
-                        aria-controls="collapseTwo">
-                        <i class="fas fa-fw fa-cog"></i>
-                        <span>All Courses</span>
-                    </a>
-                </li>
-                
-                <!-- Divider -->
-                <hr class="sidebar-divider d-none d-md-block">
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ url_for('add_course') }}" data-target="#collapseTwo"
+                aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Add Course</span>
+            </a>
+        </li>
 
-                <!-- Sidebar Toggler (Sidebar) -->
-    <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-    </div>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{{ url_for('courses') }}" data-target="#collapseTwo"
+                aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>All Courses</span>
+            </a>
+        </li>
 
-</ul>
-            <!-- End of Sidebar -->
+        <!-- Divider -->
+        <hr class="sidebar-divider d-none d-md-block">
+
+        <!-- Sidebar Toggler (Sidebar) -->
+        <div class="text-center d-none d-md-inline">
+            <button class="rounded-circle border-0" id="sidebarToggle"></button>
+        </div>
+    </ul>
+    <!-- End of Sidebar -->
 
             <!-- Content Wrapper -->
             <div id="content-wrapper" class="d-flex flex-column">
@@ -390,6 +395,13 @@
             }
 
         }
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#sidebarToggle').on('click', function () {
+                $('.sidebar').toggleClass('collapsed');
+            });
+        });
     </script>
 </body>
 
