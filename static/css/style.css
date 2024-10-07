@@ -20,6 +20,12 @@ p {
 a {
 	text-decoration: none!important;
 }
+.social-sharing {
+    margin: 20px 0;
+}
+.social-sharing a {
+    margin-right: 10px;
+}
 ul {
 	padding: 0;
 	margin: 0;
