@@ -35,6 +35,22 @@
                             </ul>
                         </div>
                     </div>
+                    <div class="social-sharing">
+                    <h4>Share this post:</h4>
+                    <!-- Facebook Share Button -->
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{url_for('blog_post', blog_link = i['blog_link'])}}" target="_blank">
+                    <i class="fa fa-facebook"></i>    
+                    </a>
+                    
+                    <!-- Twitter Share Button -->
+                    <a href="https://twitter.com/intent/tweet?url={{url_for('blog_post', blog_link = i['blog_link'])}}&text={{i['Title'] |safe }}" target="_blank">
+                    <i class="fa fa-twitter"></i>     
+                    </a>
+                    
+                    <!-- LinkedIn Share Button -->
+                    <a href="https://www.linkedin.com/shareArticle?mini=true&url={{url_for('blog_post', blog_link = i['blog_link'])}}&title={{i['Title'] |safe}}" target="_blank">
+                        <i class = "fa fa-linkedin"></i></a>
+                </div>
                     <h3 class="blog-title"><a href=#">{{i['Title'].replace('-', ' ').title() |safe}}</a></h3>
                     <div class="blog-content">
                         {{i['Body']| safe}}
