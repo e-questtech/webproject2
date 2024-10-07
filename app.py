@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify, flash#,Response
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify, flash,Response
 from datetime import timedelta      #Check JS for timer
 # from flask_mail import *
 import hashlib    #To change to one for flask hashing
