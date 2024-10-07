@@ -499,6 +499,19 @@ def courses():
 
 
 
+@app.route('/sitemap.xml')
+def sitemap():
+    # Generate a list of URLs
+    urls = [
+        url_for('blog'),
+        url_for('about'),
+        url_for('videos')
+
+
+        # Add more URLs here
+    ]
+    return Response(render_template('sitemap.xml', urls=urls), mimetype='application/xml')
+
 
 
 
