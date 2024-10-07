@@ -10,120 +10,122 @@
 {% block content %}
 
 <section class="course-content">
-				<div class="container">
-					<div class="row">
-						<div class="col-lg-9 col-md-12">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 col-md-12">
 
-							<!-- Blog Post -->
-                            {% for i in blog %}
-							<div class="blog">
-								<div class="blog-image">
-									<a href="#"><img class="img-fluid" src="assets/img/blog-banner.jpg" alt="Post Image"></a>
-								</div>
-								<div class="blog-info clearfix">
-									<div class="post-left">
-										<ul>
-											<li>
-												<div class="post-author">
-													<a href="#"><img src="assets/img/user/user.jpg" alt="Post Author"> <span>{{i['author']}}</span></a>
-												</div>
-											</li>
-											<li><img class="img-fluid" src="assets/img/icon/icon-22.svg" alt="">{{i['publish_date']}}</li>
-											<li><img class="img-fluid" src="assets/img/icon/icon-23.svg" alt="">{{i['category']}}</li>
-										</ul>
-									</div>
-								</div>
-								<h3 class="blog-title"><a href=#">{{i['Title'].replace('-', ' ').title() |safe}}</a></h3>
-								<div class="blog-content">
-									{{i['Body']| safe}}
-                    {% endfor %}
-                                </div>
-							</div>
-							<!-- /Blog Post -->
-							
-						</div>
-						
-						<!-- Blog Sidebar -->
-						<div class="col-lg-3 col-md-12 sidebar-right theiaStickySidebar">
-
-							<!-- Search -->
-							<div class="card search-widget blog-search blog-widget">
-								<div class="card-body">
-									<form class="search-form">
-										<div class="input-group">
-											<input type="text" placeholder="Search..." class="form-control">
-											<button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
-										</div>
-									</form>
-								</div>
-							</div>
-							<!-- /Search -->
-
-							<!-- Latest Posts -->
-							<div class="card post-widget blog-widget">
-								<div class="card-header">
-									<h4 class="card-title">Recent Posts</h4>
-								</div>
-								<div class="card-body">
-									<ul class="latest-posts">
-										<li>
-											<div class="post-thumb">
-												<a href="#">
-													<img class="img-fluid" src="assets/img/blog/blog-01.jpg" alt="">
-												</a>
-											</div>
-											<div class="post-info">
-												<h4>
-													<a href="#">Learn Webs Applications Development from Experts</a>
-												</h4>
-												<p><img class="img-fluid" src="assets/img/icon/icon-22.svg" alt="">Jun 14, 2022</p>
-											</div>
-										</li>
-										<li>
-											<div class="post-thumb">
-												<a href="#">
-													<img class="img-fluid" src="assets/img/blog/blog-02.jpg" alt="">
-												</a>
-											</div>
-											<div class="post-info">
-												<h4>
-													<a href="#">Expand Your Career Opportunities With Python</a>
-												</h4>
-												<p><img class="img-fluid" src="assets/img/icon/icon-22.svg" alt=""> 3 Dec 2019</p>
-											</div>
-										</li>
-										<li>
-											<div class="post-thumb">
-												<a href="#">
-													<img class="img-fluid" src="assets/img/blog/blog-03.jpg" alt="">
-												</a>
-											</div>
-											<div class="post-info">
-												<h4>
-													<a href="#">Complete PHP Programming Career Guideline</a>
-												</h4>
-												<p><img class="img-fluid" src="assets/img/icon/icon-22.svg" alt=""> 3 Dec 2019</p>
-											</div>
-										</li>
-									</ul>
-								</div>
-							</div>
-							<!-- /Latest Posts -->
-
-						</div>
-						
-					</div>
-				</div>
-			</section>
-   
-    
-                        
+                <!-- Blog Post -->
+                {% for i in blog %}
+                <div class="blog">
+                    <div class="blog-image">
+                        <a href="#"><img class="img-fluid" src="http://placehold.it/200x300" alt="Blog Image"></a>
+                    </div>
+                    <div class="blog-info clearfix">
+                        <div class="post-left">
+                            <ul>
+                                <li>
+                                    <div class="post-author">
+                                        <a href="#"><img src="http://placehold.it/60x60" alt="Author">
+                                            <span>{{i['author']}}</span></a>
+                                    </div>
+                                </li>
+                                <li><i class="fa fa-calender">{{i['publish_date']}}</i>i></li>
+                                <li><i class="fa fa-tag">{{i['category']}}
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <h3 class="blog-title"><a href=#">{{i['Title'].replace('-', ' ').title() |safe}}</a></h3>
+                    <div class="blog-content">
+                        {{i['Body']| safe}}
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
-        </div>
-    </article>
+                <!-- /Blog Post -->
 
-    {% endblock %}
+            </div>
+
+            <!-- Blog Sidebar -->
+            <div class="col-lg-3 col-md-12 sidebar-right theiaStickySidebar">
+
+                <!-- Search -->
+                <div class="card search-widget blog-search blog-widget">
+                    <div class="card-body">
+                        <form class="search-form">
+                            <div class="input-group">
+                                <input type="text" placeholder="Search..." class="form-control">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- /Search -->
+
+                <!-- Latest Posts -->
+                <div class="card post-widget blog-widget">
+                    <div class="card-header">
+                        <h4 class="card-title">Recent Posts</h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="latest-posts">
+                            <li>
+                                <div class="post-thumb">
+                                    <a href="#">
+                                        <img class="img-fluid" src="assets/img/blog/blog-01.jpg" alt="">
+                                    </a>
+                                </div>
+                                <div class="post-info">
+                                    <h4>
+                                        <a href="#">Learn Webs Applications Development from Experts</a>
+                                    </h4>
+                                    <p><img class="img-fluid" src="assets/img/icon/icon-22.svg" alt="">Jun 14, 2022</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="post-thumb">
+                                    <a href="#">
+                                        <img class="img-fluid" src="assets/img/blog/blog-02.jpg" alt="">
+                                    </a>
+                                </div>
+                                <div class="post-info">
+                                    <h4>
+                                        <a href="#">Expand Your Career Opportunities With Python</a>
+                                    </h4>
+                                    <p><img class="img-fluid" src="assets/img/icon/icon-22.svg" alt=""> 3 Dec 2019</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="post-thumb">
+                                    <a href="#">
+                                        <img class="img-fluid" src="assets/img/blog/blog-03.jpg" alt="">
+                                    </a>
+                                </div>
+                                <div class="post-info">
+                                    <h4>
+                                        <a href="#">Complete PHP Programming Career Guideline</a>
+                                    </h4>
+                                    <p><img class="img-fluid" src="assets/img/icon/icon-22.svg" alt=""> 3 Dec 2019</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /Latest Posts -->
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+
+</div>
+</div>
+</div>
+</article>
+
+{% endblock %}
 <!-- 
 <form>
     <h1>Leave a Comment on this post</h1>
