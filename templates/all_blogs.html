@@ -2,13 +2,11 @@
 {% block title %} Blog {% endblock %}
 {% block head %}
 {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/blog_styles.css')}}">
 {% endblock %}
 
 {% block content %}
 
-<head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/blog_styles.css')}}">
-</head>
 <header class="masthead" style="background-image: url('{{ image_url }}');">
     <div class="container position-relative px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
