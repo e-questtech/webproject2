@@ -69,7 +69,7 @@ def index():
         
 #Contact 
 @app.route("/contact/", methods = ["GET", "POST"])
-def index():
+def contact():
     return render_template('contact.html')
 
 # Blog 
