@@ -28,7 +28,6 @@
                     {% for i in record %}
                     <div class="post-heading">
                         <h1>{{i['Title'].replace('-', ' ').title() |safe}}</h1>
-                        <h2 class="subheading">{{i['Title'].replace('-', ' ').title() |safe }} Subheading</h2>
                         <span class="meta">
                             &bullet; <a href="#!">{{i['author']}}</a>
                             &bullet; <a href="#">{{i['publish_date']}}</a>
