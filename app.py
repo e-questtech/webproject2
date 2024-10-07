@@ -68,7 +68,7 @@ def index():
     return render_template('index.html')
         
 #Contact 
-@app.route('/contact/')
+@app.route("/contact/", methods = ["GET", "POST"])
 def index():
     return render_template('contact.html')
 
