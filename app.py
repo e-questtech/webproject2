@@ -66,6 +66,11 @@ def get_unsplash_image(query):
 @app.route('/')
 def index():
     return render_template('index.html')
+        
+#Contact 
+@app.route('/contact/')
+def index():
+    return render_template('contact.html')
 
 # Blog 
 @app.route("/blog/", methods = ["GET", "POST"])
