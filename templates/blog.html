@@ -9,16 +9,13 @@
 
 {% block content %}
 
-<head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/blog_styles.css')}}">
-</head>
 <section class="course-content">
 				<div class="container">
 					<div class="row">
 						<div class="col-lg-9 col-md-12">
 
 							<!-- Blog Post -->
-                            {% for i in record %}
+                            {% for i in blog %}
 							<div class="blog">
 								<div class="blog-image">
 									<a href="#"><img class="img-fluid" src="assets/img/blog-banner.jpg" alt="Post Image"></a>
