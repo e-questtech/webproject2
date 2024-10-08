@@ -14,6 +14,9 @@ class Config:
     SECRET_KEY = os.getenv('SECRET_KEY','default_secret_key')
     
     UNSPLASH_ACCESS_KEY = os.getenv('UNSPLASH_ACCESS_KEY','9zXMTqIIAc2fz6iC4XZzsIcSI9TgSlzom7TzpKgvGJM')
-
-    MEGA_EMAIL = os.getenv('MEGA_EMAIL')
-    MEGA_PASSWORD = os.getenv('MEGA_PASSWORD')
+    
+    IMAGEKIT_PRIVATE_KEY=os.getenv('IMAGEKIT_PRIVATE_KEY'),
+    IMAGEKIT_PUBLIC_KEY=os.getenv('IMAGEKIT_PUBLIC_KEY'),
+    IMAGEKIT_URL_ENDPOINT=os.getenv('IMAGEKIT_URL_ENDPOINT')
+    
+    
