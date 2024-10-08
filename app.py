@@ -11,6 +11,7 @@ import pymysql
 import requests
 from flask_caching import Cache
 from config import Config
+from mega import Mega
 
 
 app = Flask(__name__)
@@ -39,6 +40,17 @@ app.config['PERMANENT_SESSION_LIFETIME'] =  timedelta(minutes=30)
 # To Make secret key
 
 app.secret_key = app.config['SECRET_KEY']
+
+#Mega for storing the images
+mega = Mega()
+
+# Retrieve email and password from environment variables
+email = app.config['MEGA_EMAIL']
+password = app.config['MEGA_PASSWORD']
+
+# Login to MEGA
+m = mega.login(email, password)
+
 
 # UNSPLASH ACCESS KEY
 
@@ -232,28 +244,56 @@ def add_blog():
                 body = request.form['body']
                 category = request.form['category'].title()
                 author = request.form['author']
-                sql_select = "select * from Blog where blog_link = '%s'"%blog_link
+
+		# Handle image upload
+                image = request.files.get('image')
+                image_url = None
+
+                if image:
+                    # Validate image file
+                    valid_extensions = ['.jpg', '.jpeg', '.png', '.gif']
+                    file_extension = os.path.splitext(image.filename)[1].lower()
+                    if file_extension not in valid_extensions:
+                        flash('Invalid image type! Only JPG, JPEG, PNG, and GIF are allowed.', 'error')
+                        return render_template('add_blog.html', names=names, publish_date=publish_date)
+
+                    # Save the image temporarily
+                    image_path = f'temp_{image.filename}'
+                    image.save(image_path)
+
+                    # Upload to MEGA
+                    image_url = mega.upload(image_path)
+                    os.remove(image_path)  # Delete the temporary file
+
+                # Check if blog already exists
+                sql_select = "SELECT * FROM Blog WHERE blog_link = '%s'" % blog_link
                 cursor.execute(sql_select)
                 new_blog = cursor.fetchone()
+
                 if new_blog:
                     msg = 'Blog already Posted !!!'
                     flash(msg, 'error')
-                    return render_template('add_blog.html', msg = msg)
+                    return render_template('add_blog.html', msg=msg, names=names)
+
                 else:
-                    sql = """insert into Blog (Title, Body, Category, author, publish_date, blog_link) values( %s, %s, %s, %s, %s, %s)"""
-                    vals = (title, body, category, author, publish_date, blog_link)
+                    # Insert into Blog
+                    sql = """INSERT INTO Blog (Title, Body, Category, Author, Publish_Date, blog_link, image_url) 
+                             VALUES (%s, %s, %s, %s, %s, %s, %s)"""
+                    vals = (title, body, category, author, publish_date, blog_link, image_url)
                     cursor.execute(sql, vals)
                     connection.commit()
-                    # connection.close()
                     msg = 'Posted successfully !!'
                     flash(msg, 'success')
-                return redirect(url_for('read_blog', blog_link = blog_link))
-            return render_template('add_blog.html', names = names, publish_date = publish_date)
+                return redirect(url_for('read_blog', blog_link=blog_link))
+
+            return render_template('add_blog.html', names=names, publish_date=publish_date)
         else:
             return render_template('403.html')
-    msg = 'Session TimeOut'
+
+    msg = 'Session Timeout'
     flash(msg, 'warning')
-    return redirect(url_for('admin_login', next = '/admin/blog/add/' ))
+    return redirect(url_for('admin_login', next='/admin/blog/add/'))
+		  
 
 # Edit Blog Post
 @app.route("/admin/blog/<blog_link>/edit/", methods =['GET', 'POST'])
@@ -299,16 +339,8 @@ def read_blog(blog_link):
             sql_select = "select * from Blog where blog_link = '%s'"%blog_link
             cursor.execute(sql_select)
             record = cursor.fetchall()
-            result = cursor.fetchone()  # Since you're expecting a single result
-            if result:
-                query = result['category']  # Assign the category to the 'query' variable as a string
-            else:
-                query = 'Tech'
-            image_url = get_unsplash_image(query)
-            if image_url:
-                return render_template('read_blog.html', record = record, image_url=image_url)
-            else:
-                return render_template('read_blog.html', record = record)
+	    return render_template('read_blog.html', record = record)
+            
         else:
             return render_template('403.html')
     return redirect(url_for('admin_login'))
@@ -525,7 +557,7 @@ def sitemap():
 #Student Register (Prospective)
 @app.route('/sign_up/', methods=["GET", "POST"])
 def student_register():
-    if 'loggedin' not in session and session['role'] != 'admin:
+    if 'loggedin' not in session and session['role'] != 'admin':
 	    sql = "SELECT * FROM Courses"
 	    cursor.execute(sql)
 	    courses = cursor.fetchall()
