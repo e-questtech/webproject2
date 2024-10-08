@@ -20,7 +20,7 @@
     <head>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/blog_styles.css')}}">
     </head>
-    <header class="masthead" style="background-image: url('{{ image_url }}'); height: 100vh; background-size: cover; background-position: center;">
+    <header class="masthead" style="background-image: url('{{ i['image_url'] }}'); height: 100vh; background-size: cover; background-position: center;" alt="{{ i['Title'] }}">
         <!-- To change the background image to another thing not the whole link... -->
         <div class="container position-relative px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
