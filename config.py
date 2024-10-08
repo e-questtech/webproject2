@@ -1,18 +1,16 @@
 # config.py
 import os
-import secrets
+from dotenv import load_dotenv
 
-# Generate a random secret key
-secret_key = secrets.token_hex(16)  # Generates a 32-character hex string
-secret_key = str(secret_key)
-
+load_dotenv()
 class Config:
-    DATABASE_NAME = 'defaultdb'
-    DATABASE_HOST = 'mysql-001-joeradnitz-483e.l.aivencloud.com'
-    DATABASE_USER = 'avnadmin'
-    DATABASE_PASSWORD = 'AVNS_h3B29i7yn0D3PvqkcZF'
-    DATABASE_PORT = 16936
+    DATABASE_NAME = os.getenv('DATABASE_NAME')
+    DATABASE_HOST = os.getenv('DATABASE_HOST')
+    DATABASE_USER = os.getenv('DATABASE_USER')
+    DATABASE_PASSWORD = os.getenv('DATABASE_PASSWORD')
+    DATABASE_PORT = os.getenv('DATABASE_PORT')
     
 
-    SECRET_KEY = secret_key
-    UNSPLASH_ACCESS_KEY =  '9zXMTqIIAc2fz6iC4XZzsIcSI9TgSlzom7TzpKgvGJM'
+    SECRET_KEY = os.getenv('SECRET_KEY','default_secret_key')
+    
+    UNSPLASH_ACCESS_KEY = os.getenv('UNSPLASH_ACCESS_KEY','9zXMTqIIAc2fz6iC4XZzsIcSI9TgSlzom7TzpKgvGJM')
