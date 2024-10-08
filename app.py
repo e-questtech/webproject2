@@ -541,6 +541,19 @@ def courses():
             return render_template('403.html')
     return redirect(url_for('admin_login', next= "/admin/course/all/"))
 
+#Courses Individually
+@app.route('/courses/<course_link>/', methods=["GET"])
+def course_detail(course_link):
+    sql = "SELECT * FROM Courses WHERE course_link = %s"
+    cursor.execute(sql, (course_link,))
+    course = cursor.fetchone()
+
+    if course:
+        return render_template('course_detail.html', course=course)
+    else:
+        flash('Course not found!', 'error')
+        return redirect(url_for('home'))
+
 
 
 @app.route('/sitemap.xml/', methods = ["GET"])
