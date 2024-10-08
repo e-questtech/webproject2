@@ -525,40 +525,41 @@ def sitemap():
 #Student Register (Prospective)
 @app.route('/sign_up/', methods=["GET", "POST"])
 def student_register():
-    sql = "SELECT * FROM Courses"
-    cursor.execute(sql)
-    courses = cursor.fetchall()
-    if request.method == "POST":
-        full_name = request.form['fullName']
-        email = request.form['email']
-        country_code = request.form['countryCode']
-        phone = request.form['phone']
-        
-        # Combine country code and phone number
-        full_phone = f"{country_code}{phone}"
-        
-        preferred_course = request.form['course']
-        state = request.form['state']
-        other_state = request.form.get('otherState', None)
-
-        sql_select = "SELECT * FROM prospective_students WHERE email = '%s'" % email
-        cursor.execute(sql_select)
-        student = cursor.fetchone()
-        other_state = 'NONE'
-        if student:
-            msg = 'Student already Registered !!!'
-            flash(msg, 'error')
-            return render_template('student_register.html', msg=msg, courses=courses)
-        else:
-            sql = """INSERT INTO prospective_students (full_name, email, phone_number, preferred_course, state, other_state)
-                        VALUES (%s, %s, %s, %s, %s, %s)"""
-            vals = (full_name, email, full_phone, preferred_course, state, other_state)
-            cursor.execute(sql, vals)
-            connection.commit()
-            flash('Registration submitted successfully!', 'success')
-            return redirect(url_for('home'))
-
-    return render_template('student_register.html', courses=courses)
+    if 'loggedin' not in session and session['role'] != 'admin:
+	    sql = "SELECT * FROM Courses"
+	    cursor.execute(sql)
+	    courses = cursor.fetchall()
+	    if request.method == "POST":
+	        full_name = request.form['fullName']
+	        email = request.form['email']
+	        country_code = request.form['countryCode']
+	        phone = request.form['phone']
+	        
+	        # Combine country code and phone number
+	        full_phone = f"{country_code}{phone}"
+	        
+	        preferred_course = request.form['course']
+	        state = request.form['state']
+	        other_state = request.form.get('otherState', None)
+	
+	        sql_select = "SELECT * FROM prospective_students WHERE email = '%s'" % email
+	        cursor.execute(sql_select)
+	        student = cursor.fetchone()
+	        other_state = 'NONE'
+	        if student:
+	            msg = 'Student already Registered !!!'
+	            flash(msg, 'error')
+	            return render_template('student_register.html', msg=msg, courses=courses)
+	        else:
+	            sql = """INSERT INTO prospective_students (full_name, email, phone_number, preferred_course, state, other_state)
+	                        VALUES (%s, %s, %s, %s, %s, %s)"""
+	            vals = (full_name, email, full_phone, preferred_course, state, other_state)
+	            cursor.execute(sql, vals)
+	            connection.commit()
+	            flash('Registration submitted successfully!', 'success')
+	            return redirect(url_for('home'))
+	
+	    return render_template('student_register.html', courses=courses)
 
 
 @app.route('/admin/students/new/', methods=["GET"])
