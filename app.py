@@ -96,11 +96,11 @@ def blog():
 def blog_post(blog_link):
     sql = "select * from Blog where blog_link = '%s'"%blog_link
     cursor.execute(sql)
-    blog = cursor.fetchall()
-    result = cursor.fetchone()  # Since you're expecting a single result
+    #result = cursor.fetchone()  # Since you're expecting a single result
+    blog = cursor.fetchone()
 
 # Check if a result was found
-    if result:
+    if blog:
         query = result['category']  # Assign the category to the 'query' variable as a string
     else:
         query = 'Tech'
@@ -119,7 +119,7 @@ def about():
     return render_template('about.html')
 
 #Cohort
-@app.foute("/cohort/")
+@app.route("/cohort/")
 def cohort():
     return render_template('cohort.html')
         
