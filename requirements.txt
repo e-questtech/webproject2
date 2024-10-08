@@ -12,9 +12,7 @@ Flask-Mail==0.10.0
 Flask-MySQLdb==2.0.0
 gunicorn
 idna==3.10
-google-auth==1.35.0
-google-auth-oauthlib==0.4.6
-google-api-python-client==2.32.0
+mega.py==1.0.7
 python-dotenv
 itsdangerous==2.2.0
 Jinja2==3.1.4
