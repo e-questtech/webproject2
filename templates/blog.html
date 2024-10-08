@@ -18,7 +18,7 @@
                 <div class="blog">
                     <div class="blog-image">
                         {% for i in blog %}
-                        <img src="{{url_for('static', filename = 'images/fun-facts-bg.jpg')}}" alt="Blog Image">
+                        <img src="{{ i['image_url'] }}" alt="{{ i['Title'] }}" />
                     </div>
                     <div class="blog-info clearfix">
                         <div class="post-left">
