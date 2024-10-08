@@ -6,9 +6,19 @@
 {% endblock %}
 
 {% block content %}
+    <form action="{{ url_for('student_register') }}" method="post">
+<div class="alert">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <span class="closebtn">&times;</span>
+        <div class="{{ category }}">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
 <div class="container mt-5">
     <h1>Student Registration Form</h1>
-    <form action="{{ url_for('student_register') }}" method="POST" id="registrationForm">
         <div class="form-group">
             <label for="fullName">Full Name</label>
             <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Enter Full Name" required>
