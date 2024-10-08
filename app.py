@@ -550,7 +550,8 @@ def student_register():
         cursor.execute(sql, vals)
         connection.commit()
         # connection.close()
-    return jsonify({"status": "success"})
+        return jsonify({"status": "success"})
+    return render_template('student_register.html')
 
 
 
