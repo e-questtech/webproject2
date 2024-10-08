@@ -544,7 +544,7 @@ def student_register():
         sql_select = "SELECT * FROM prospective_students WHERE email = '%s'" % email
         cursor.execute(sql_select)
         student = cursor.fetchone()
-        
+        other_state = 'NONE'
         if student:
             msg = 'Student already Registered !!!'
             flash(msg, 'error')
