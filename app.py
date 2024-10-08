@@ -524,7 +524,7 @@ def sitemap():
 
 
 #Student Register (Prospective)
-@app.route('/register/', methods = ["GET", "POST"])
+@app.route('/sign_up/', methods = ["GET", "POST"])
 def student_register():
     sql ="select * from Courses"
     cursor.execute(sql)
