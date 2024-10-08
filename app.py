@@ -12,7 +12,7 @@ import requests
 from flask_caching import Cache
 from config import Config
 from flask_wtf.csrf import CSRFProtect
-
+import secrets
 
 
 app = Flask(__name__)
@@ -531,38 +531,49 @@ def student_register():
     sql = "SELECT * FROM Courses"
     cursor.execute(sql)
     courses = cursor.fetchall()
+    csrf_token = secrets.token_hex(16)  # Generate a random CSRF token
+    session['csrf_token'] = csrf_token  # Store it in the session
 
     if request.method == "POST":
-        full_name = request.form['fullName']
-        email = request.form['email']
-        country_code = request.form['countryCode']
-        phone = request.form['phone']
-        
-        # Combine country code and phone number
-        full_phone = f"{country_code}{phone}"
-        
-        preferred_course = request.form['course']
-        state = request.form['state']
-        other_state = request.form.get('otherState', None)
+        # Check CSRF token
+        submitted_csrf_token = request.form.get('csrf_token')
+        if submitted_csrf_token != session.get('csrf_token'):
+            flash('Invalid CSRF token', 'error')
+            return render_template('student_register.html', csrf_token=csrf_token)
 
-        sql_select = "SELECT * FROM prospective_students WHERE email = '%s'" % email
-        cursor.execute(sql_select)
-        student = cursor.fetchone()
-        
-        if student:
-            msg = 'Student already Registered !!!'
-            flash(msg, 'error')
-            return render_template('student_register.html', msg=msg, courses=courses)
         else:
-            sql = """INSERT INTO prospective_students (full_name, email, phone_number, preferred_course, state, other_state)
-                     VALUES (%s, %s, %s, %s, %s, %s)"""
-            vals = (full_name, email, full_phone, preferred_course, state, other_state)
-            cursor.execute(sql, vals)
-            connection.commit()
-            flash('Registration submitted successfully!', 'success')
-            return redirect(url_for('home'))
+            if request.method == "POST":
+                full_name = request.form['fullName']
+                email = request.form['email']
+                country_code = request.form['countryCode']
+                phone = request.form['phone']
+                
+                # Combine country code and phone number
+                full_phone = f"{country_code}{phone}"
+                
+                preferred_course = request.form['course']
+                state = request.form['state']
+                other_state = request.form.get('otherState', None)
+        
+                sql_select = "SELECT * FROM prospective_students WHERE email = '%s'" % email
+                cursor.execute(sql_select)
+                student = cursor.fetchone()
+                
+                if student:
+                    msg = 'Student already Registered !!!'
+                    flash(msg, 'error')
+                    return render_template('student_register.html', msg=msg, courses=courses)
+                else:
+                    sql = """INSERT INTO prospective_students (full_name, email, phone_number, preferred_course, state, other_state)
+                             VALUES (%s, %s, %s, %s, %s, %s)"""
+                    vals = (full_name, email, full_phone, preferred_course, state, other_state)
+                    cursor.execute(sql, vals)
+                    connection.commit()
+                    flash('Registration submitted successfully!', 'success')
+                    return redirect(url_for('home'))
+        
+            return render_template('student_register.html', csrf_token=csrf_token, courses=courses)
 
-    return render_template('student_register.html', courses=courses)
 
 @app.route('/admin/students/new/', methods=["GET"])
 def prospective_students():
