@@ -564,6 +564,15 @@ def student_register():
 
     return render_template('student_register.html', courses=courses)
 
+@app.route('/admin/students/new/', methods=["GET"])
+def prospective_students():
+    if 'loggedin' in session and session['role'] == 'admin':
+        sql = "SELECT * FROM prospective_students"
+        cursor.execute(sql)
+        students = cursor.fetchall()
+        return render_template('prospective_students.html', students=students)
+    else:
+        return render_template('403.html')
 
 
 
