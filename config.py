@@ -14,3 +14,4 @@ class Config:
     SECRET_KEY = os.getenv('SECRET_KEY','default_secret_key')
     
     UNSPLASH_ACCESS_KEY = os.getenv('UNSPLASH_ACCESS_KEY','9zXMTqIIAc2fz6iC4XZzsIcSI9TgSlzom7TzpKgvGJM')
+    WTF_CSRF_ENABLED = True
