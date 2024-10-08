@@ -1,3 +1,73 @@
-<html>
-  <h2>The Cohort file</h2>
-</html>
+{% extends "base.html" %}
+{% block title %} {% for i in blog %}
+{{i['Title']|safe }}
+{% endfor %} {% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+
+{% block content %}
+
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">
+            <img src="path_to_logo.png" alt="Logo" width="40" height="40"> TE Quant
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{url_for('index')}}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Cohort Program</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('contact')}}">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container">
+            <h1>Join Our Cohort Program</h1>
+            <p>Empower your future with hands-on learning and mentorship. Start your journey today.</p>
+            <a href="#" class="cta-button">Apply Now</a>
+        </div>
+    </div>
+
+    <!-- Program Information Section -->
+    <div class="container program-info">
+        <h2>About the Program</h2>
+        <p>
+            Our cohort program offers immersive, practical learning experiences in tech fields like web development, data science, and more. You'll work on real-world projects, collaborate with industry experts, and build skills that employers are looking for.
+        </p>
+        <p>
+            Join our growing community of learners and take your first step towards an exciting career in technology.
+        </p>
+
+        <div class="row mt-5">
+            <div class="col-md-4 text-center">
+                <i class="fas fa-code fa-3x"></i>
+                <h4>Web Development</h4>
+                <p>Learn full-stack web development with HTML, CSS, JavaScript, and more.</p>
+            </div>
+            <div class="col-md-4 text-center">
+                <i class="fas fa-database fa-3x"></i>
+                <h4>Data Science</h4>
+                <p>Master data analysis, visualization, and machine learning techniques.</p>
+            </div>
+            <div class="col-md-4 text-center">
+                <i class="fas fa-cogs fa-3x"></i>
+                <h4>IoT & Automation</h4>
+                <p>Explore Internet of Things (IoT) devices, robotics, and automation technologies.</p>
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}
