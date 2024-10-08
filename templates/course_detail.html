@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %} {% for i in blog %}
+{{i['Title']|safe }}
+{% endfor %} {% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+
+{% block content %}
+
+{{ course['course_title'] }}
+
+    <div class="course-header">
+        <h1>{{ course['course_title'] }}</h1>
+    </div>
+    <div class="course-description">
+        <p>{{ course['course_description'] }}</p>
+    </div>
+    <div class="course-curriculum">
+        <h2>Course Curriculum</h2>
+        <p>{{ course['course_curriculum'] }}</p>
+    </div>
+
+    
+{% endblock %}
