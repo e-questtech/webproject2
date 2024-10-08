@@ -245,7 +245,7 @@ def add_blog():
                 category = request.form['category'].title()
                 author = request.form['author']
 
-		# Handle image upload
+		        # Handle image upload
                 image = request.files.get('image')
                 image_url = None
 
@@ -339,7 +339,7 @@ def read_blog(blog_link):
             sql_select = "select * from Blog where blog_link = '%s'"%blog_link
             cursor.execute(sql_select)
             record = cursor.fetchall()
-	    return render_template('read_blog.html', record = record)
+	        return render_template('read_blog.html', record = record)
             
         else:
             return render_template('403.html')
