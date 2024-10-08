@@ -12,7 +12,7 @@ Flask-Mail==0.10.0
 Flask-MySQLdb==2.0.0
 gunicorn
 idna==3.10
-mega.py==1.0.5
+imagekitio==3.1.2
 python-dotenv
 itsdangerous==2.2.0
 Jinja2==3.1.4
