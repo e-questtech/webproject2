@@ -1,6 +1,6 @@
 {% extends "base.html" %}
-{% block title %} {% for i in blog %}
-{{i['Title']|safe }}
+{% block title %} {% for course in course %}
+{{course['course_title']|safe }}
 {% endfor %} {% endblock %}
 {% block head %}
 {{ super() }}
