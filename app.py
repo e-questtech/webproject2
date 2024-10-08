@@ -11,8 +11,11 @@ import pymysql
 import requests
 from flask_caching import Cache
 from config import Config
-from mega import Mega
 
+from imagekitio import ImageKit
+import os
+
+# Initialize ImageKit
 
 app = Flask(__name__)
 
@@ -31,6 +34,12 @@ connection = pymysql.connect(
     )
     
 cursor = connection.cursor()
+
+imagekit = ImageKit(
+    private_key=app.config['IMAGEKIT_PRIVATE_KEY'],
+    public_key=app.config['IMAGEKIT_PUBLIC_KEY'],
+    url_endpoint=app.config['IMAGEKIT_URL_ENDPOINT']
+)
 
 # For sessions
 
@@ -237,10 +246,11 @@ def dashboard():
 def add_blog():
     if 'loggedin' in session:
         if session['role'] == 'admin':
-            sql ="select first_name, last_name from Admins where email = '%s'"%session['email']
+            sql = "select first_name, last_name from Admins where email = '%s'" % session['email']
             cursor.execute(sql)
             names = cursor.fetchall()
             publish_date = datetime.now()
+
             if request.method == 'POST' and 'title' in request.form and 'body' in request.form and 'category' in request.form and 'author' in request.form:
                 title = request.form['title']
                 blog_link = title.lower().replace(' ', '-')
@@ -248,7 +258,7 @@ def add_blog():
                 category = request.form['category'].title()
                 author = request.form['author']
 
-		        # Handle image upload
+                # Handle image upload
                 image = request.files.get('image')
                 image_url = None
 
@@ -260,13 +270,23 @@ def add_blog():
                         flash('Invalid image type! Only JPG, JPEG, PNG, and GIF are allowed.', 'error')
                         return render_template('add_blog.html', names=names, publish_date=publish_date)
 
-                    # Save the image temporarily
-                    image_path = f'temp_{image.filename}'
-                    image.save(image_path)
+                    # Upload the image to ImageKit
+                    image_data = image.read()
+                    upload = imagekit.upload_file(
+                        file=image_data,
+                        file_name=image.filename,
+                        options={
+                            "folder": "/blog_images/",
+                            "use_unique_file_name": True
+                        }
+                    )
+                    
+                    if upload['error']:
+                        flash('Image upload failed!', 'error')
+                        return render_template('add_blog.html', names=names, publish_date=publish_date)
 
-                    # Upload to MEGA
-                    image_url = mega.upload(image_path)
-                    os.remove(image_path)  # Delete the temporary file
+                    # Get the image URL
+                    image_url = upload['response']['url']
 
                 # Check if blog already exists
                 sql_select = "SELECT * FROM Blog WHERE blog_link = '%s'" % blog_link
