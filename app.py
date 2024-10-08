@@ -510,14 +510,39 @@ def sitemap():
         url_for('blog'),
         url_for('about'),
         url_for('videos')
-
-
-        # Add more URLs here
+        #url_for('')
     ]
     return Response(render_template('sitemap.xml', urls=urls), mimetype='application/xml')
 
 
+#Student Register (Prospective)
+@app.route('/register/', methods=['POST'])
+def student_register():
+    full_name = request.form['fullName']
+    email = request.form['email']
+    phone = request.form['phone']
+    country_code = request.form['countryCode']
+    preferred_course = request.form['course']
+    state = request.form['state']
+    other_state = request.form.get('otherState', None)
 
+    # Connect to the database and save the prospective student's data
+    # Replace with your MySQL database connection settings
+    sql_select = "select * from prospective_students where email = '%s'"%email
+    cursor.execute(sql_select)
+    student = cursor.fetchone()
+    if student:
+        msg = 'Student already Registered !!!'
+        flash(msg, 'error')
+        return render_template('student_register.html', msg = msg)
+    else:
+        sql = """INSERT INTO prospective_students (full_name, email, phone, country_code, preferred_course, state, other_state)
+    VALUES (%s, %s, %s, %s, %s, %s, %s)"""
+        vals = (full_name, email, phone, country_code, preferred_course, state, other_state)
+        cursor.execute(sql, vals)
+        connection.commit()
+        # connection.close()
+    return jsonify({"status": "success"})
 
 
 
@@ -652,7 +677,6 @@ def login():
 
 if __name__ == "__main__":
    app.run(host="0.0.0.0", port=5000, debug=True)
-    # app.run(host='0.0.0.0', port=5000)
 
 
 
