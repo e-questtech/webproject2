@@ -76,10 +76,10 @@ def get_unsplash_image(query):
 # Homepage
 @app.route('/')
 def index():
-	sql = "SELECT * FROM Courses"
+    sql = "SELECT * FROM Courses"
     cursor.execute(sql)
     courses = cursor.fetchall()
-    return render_template('index.html', cursor = cursor)
+    return render_template('index.html', courses = courses)
         
 #Contact 
 @app.route("/contact/", methods = ["GET", "POST"])
