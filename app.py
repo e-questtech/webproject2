@@ -524,37 +524,42 @@ def sitemap():
 
 
 #Student Register (Prospective)
-@app.route('/sign_up/', methods = ["GET", "POST"])
+@app.route('/signup/', methods = ["GET", "POST"])
 def student_register():
-    sql ="select * from Courses"
+    sql = "select * from Courses"
     cursor.execute(sql)
     courses = cursor.fetchall()
-    full_name = request.form['fullName']
-    email = request.form['email']
-    phone = request.form['phone']
-    country_code = request.form['countryCode']
-    preferred_course = request.form['course']
-    state = request.form['state']
-    other_state = request.form.get('otherState', None)
+    if request.method == 'POST':
+        # Ensure that you are accessing the correct form fields
+        full_name = request.form.get('fullName')
+        email = request.form.get('email')
+        phone = request.form.get('phone')
+        country_code = request.form.get('countryCode')
+        preferred_course = request.form.get('course')
+        state = request.form.get('state')
+        other_state = request.form.get('otherState', None)
 
-    sql_select = "select * from prospective_students where email = '%s'"%email
-    cursor.execute(sql_select)
-    student = cursor.fetchone()
-    if student:
-        msg = 'Student already Registered !!!'
-        flash(msg, 'error')
-        return render_template('student_register.html', msg = msg, courses = courses)
-    else:
-        sql = """INSERT INTO prospective_students (full_name, email, phone, country_code, preferred_course, state, other_state)
-    VALUES (%s, %s, %s, %s, %s, %s, %s)"""
-        vals = (full_name, email, phone, country_code, preferred_course, state, other_state)
-        cursor.execute(sql, vals)
-        connection.commit()
-        flash('Registration submitted successfully!', 'success')
-        return redirect(url_for('home'))
-    return render_template('student_register.html', courses = courses)
+        # Check if the student is already registered
+        sql_select = "SELECT * FROM prospective_students WHERE email = %s"
+        cursor.execute(sql_select, (email,))
+        student = cursor.fetchone()
 
+        if student:
+            msg = 'Student already Registered !!!'
+            flash(msg, 'error')
+            return render_template('student_register.html', msg=msg, courses=courses)
+        else:
+            # Insert the new student into the database
+            sql = """INSERT INTO prospective_students 
+                     (full_name, email, phone, country_code, preferred_course, state, other_state)
+                     VALUES (%s, %s, %s, %s, %s, %s, %s)"""
+            vals = (full_name, email, phone, country_code, preferred_course, state, other_state)
+            cursor.execute(sql, vals)
+            connection.commit()
+            flash('Registration submitted successfully!', 'success')
+            return redirect(url_for('home'))
 
+    return render_template('student_register.html', courses=courses)
 
 
 
