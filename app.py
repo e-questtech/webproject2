@@ -526,6 +526,9 @@ def sitemap():
 #Student Register (Prospective)
 @app.route('/register/', methods = ["GET", "POST"])
 def student_register():
+    sql ="select * from Courses"
+    cursor.execute(sql)
+    courses = cursor.fetchall()
     full_name = request.form['fullName']
     email = request.form['email']
     phone = request.form['phone']
@@ -534,24 +537,22 @@ def student_register():
     state = request.form['state']
     other_state = request.form.get('otherState', None)
 
-    # Connect to the database and save the prospective student's data
-    # Replace with your MySQL database connection settings
     sql_select = "select * from prospective_students where email = '%s'"%email
     cursor.execute(sql_select)
     student = cursor.fetchone()
     if student:
         msg = 'Student already Registered !!!'
         flash(msg, 'error')
-        return render_template('student_register.html', msg = msg)
+        return render_template('student_register.html', msg = msg, courses = courses)
     else:
         sql = """INSERT INTO prospective_students (full_name, email, phone, country_code, preferred_course, state, other_state)
     VALUES (%s, %s, %s, %s, %s, %s, %s)"""
         vals = (full_name, email, phone, country_code, preferred_course, state, other_state)
         cursor.execute(sql, vals)
         connection.commit()
-        # connection.close()
-        return jsonify({"status": "success"})
-    return render_template('student_register.html')
+        flash('Registration submitted successfully!', 'success')
+        return redirect(url_for('home'))
+    return render_template('student_register.html', courses = courses)
 
 
 
