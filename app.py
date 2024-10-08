@@ -11,6 +11,7 @@ import pymysql
 import requests
 from flask_caching import Cache
 from config import Config
+from flask_wtf.csrf import CSRFProtect
 
 
 
@@ -18,6 +19,7 @@ app = Flask(__name__)
 
 app.config.from_object(Config)
 
+csrf = CSRFProtect(app)
 
 # LInk to the online database ffrom Aiven
 connection = pymysql.connect(
