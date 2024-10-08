@@ -19,6 +19,7 @@
         {% endwith %}
     </div>
     <h2 class="title">Student Registration Form</h2>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
     <div class="input-container">
         <i class="fa fa-user icon"></i>
         <input class="input-field" type="text" placeholder="Enter Full Name" name="fullName" required>
