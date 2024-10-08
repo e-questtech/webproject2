@@ -118,6 +118,11 @@ def blog_post(blog_link):
 def about():
     return render_template('about.html')
 
+#Cohort
+@app.foute("/cohort/")
+def cohort():
+    return render_template('cohort.html')
+        
 # Display the videos in the site
 @app.route('/videos/')
 def videos():
