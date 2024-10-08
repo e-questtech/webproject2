@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-    <form action="{{ url_for('student_register') }}" method="POST" style="max-width:350px;margin:auto">
+<form action="{{ url_for('student_register') }}" method="POST" style="max-width:350px;margin:auto">
     <div class="alert">
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -37,7 +37,6 @@
         </select>
     </div>
 
-
     <div class="input-container">
         <i class="fa fa-phone icon"></i>
         <input class="input-field" type="text" placeholder="Enter Phone Number" name="phone" id="phone" required>
@@ -47,14 +46,14 @@
         <i class="fa fa-phone icon"></i>
         <select class="form-control" id="course" name="course" required>
             {% for i in courses %}
-            <option name="courses" value="{{ i['course_code'] }}">{{ i['course_title'] }}</option>
+            <option value="{{ i['course_code'] }}">{{ i['course_title'] }}</option>
             {% endfor %}
         </select>
     </div>
 
     <div class="input-container">
         <i class="fa fa-house icon"></i>
-        <select class="form-control" id="state" name="state" required>
+        <select class="form-control" id="state" name="state" onchange="checkOtherState()" required>
             <option value="Rivers">Rivers</option>
             <option value="Delta">Delta</option>
             <option value="Anambra">Anambra</option>
@@ -62,7 +61,6 @@
             <option value="Imo">Imo</option>
             <option value="Other">Other</option>
         </select>
-
     </div>
 
     <div class="input-container" id="otherStateField" style="display:none;">
@@ -81,14 +79,13 @@
         var otherStateField = document.getElementById('otherStateField');
         var otherStateInput = document.getElementById('otherState');
 
-        if (state.value === 'Other') {
+        if (stateDropdown.value === 'Other') {
             otherStateField.style.display = 'block';
-            otherState.required = true; // Make the input required
+            otherStateInput.required = true; // Make the input required
         } else {
             otherStateField.style.display = 'none';
-            otherState.required = false; // Remove the required attribute
-            otherState.value = ''; // Clear the input if it's hidden
+            otherStateInput.required = false; // Remove the required attribute
+            otherStateInput.value = ''; // Clear the input if it's hidden
         }
     }
 </script>
-
