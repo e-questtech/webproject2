@@ -516,7 +516,7 @@ def sitemap():
 
 
 #Student Register (Prospective)
-@app.route('/register/', methods=['POST'])
+@app.route('/register/', methods=['POST', 'GET'])
 def student_register():
     full_name = request.form['fullName']
     email = request.form['email']
