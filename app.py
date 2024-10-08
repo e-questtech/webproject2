@@ -460,35 +460,43 @@ def all_students():
     return redirect(url_for('admin_login', next= "/admin/student/all/"))
 
 # To add courses
-@app.route('/admin/course/add/', methods = ["GET", "POST"])
+@app.route('/admin/course/add/', methods=["GET", "POST"])
 def add_course():
     if 'loggedin' in session:
         if session['role'] == 'admin':
             if request.method == 'POST' and 'course_code' in request.form and 'course_title' in request.form:
                 course_code = request.form['course_code']
                 course_title = request.form['course_title']
-                sql_select = "select * from Courses where course_code = '%s'"%course_code
-                cursor.execute(sql_select)
+                course_description = request.form['course_description']
+                course_curriculum = request.form['course_curriculum']
+                
+                # Check if course already exists
+                sql_select = "SELECT * FROM Courses WHERE course_code = %s"
+                cursor.execute(sql_select, (course_code,))
                 new_course = cursor.fetchone()
+                
                 if new_course:
-                    msg = 'Course already Added !!!'
+                    msg = 'Course already added !!!'
                     flash(msg, 'error')
-                    return render_template('add_course.html', msg = msg)
+                    return render_template('add_course.html', msg=msg)
                 else:
-                    sql = """insert into Courses (course_title, course_code) values(%s,%s)"""
-                    vals = (course_title, course_code)
+                    # Insert new course with description and curriculum
+                    sql = """INSERT INTO Courses (course_title, course_code, course_description, course_curriculum) 
+                             VALUES (%s, %s, %s, %s)"""
+                    vals = (course_title, course_code, course_description, course_curriculum)
                     cursor.execute(sql, vals)
                     connection.commit()
-                    # connection.close()
-                    msg = 'Course Added successfully !!'
+                    
+                    msg = 'Course added successfully !!'
                     flash(msg, 'success')
-                return redirect(url_for('courses'))
+                    return redirect(url_for('courses'))
             return render_template('add_course.html')
         else:
             return render_template('403.html')
+    
     msg = 'Session TimeOut'
     flash(msg, 'warning')
-    return redirect(url_for('admin_login', next = '/admin/course/add/' ))
+    return redirect(url_for('admin_login', next='/admin/course/add/'))
 
 @app.route('/admin/course/all/', methods = ["GET", "POST"])
 def courses():
