@@ -11,14 +11,14 @@
 {% block content %}
     <div class="course-header">
         <h1>{{ course['course_title'] }}</h1>
-        <p>Course Code: {{ course['course_code'] }}</p>
+        <h3>Course Code: {{ course['course_code'] }}</h3>
     </div>
-    <div class="course-description">
+    <div class="blog-content">
         <h2>Description</h2>
-        <p>{{ course['course_description'] }}</p>
+        {{ course['course_description'] | safe}}
     </div>
-    <div class="course-curriculum">
+    <div class="blog-content">
         <h2>Course Curriculum</h2>
-        <p>{{ course['course_curriculum'] }}</p>
+        {{ course['course_curriculum'] }}
     </div>
 {% endblock %}
