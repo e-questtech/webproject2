@@ -4,6 +4,13 @@
 {% endblock %}
 {% block head %}
 {{ super() }}
+<meta name="description" content="{{ blog['body'] }}">
+    <!-- Include Open Graph meta tags for better sharing -->
+    <meta property="og:title" content="{{ blog['title'] }}" />
+    <meta property="og:description" content="{{ blog['body'] }}" />
+    <meta property="og:url" content="{{ url_for('blog_post', blog_link=blog['blog_link'], _external=True) }}" />
+    <meta property="og:image" content="{{ blog['image_url'] }}" />
+
 {% endblock %}
 
 
@@ -12,7 +19,7 @@
 <section class="course-content">
     <div class="container">
         <div class="row">
-#            <div class="col-lg-9 col-md-12">
+            <div class="col-lg-9 col-md-12">
 
             <div class="col-md-12">
                 
@@ -41,8 +48,9 @@
                     <div class="social-sharing">
                     <h4>Share this post:</h4>
                     <!-- Facebook Share Button -->
-                    <a href="https://www.facebook.com/sharer/sharer.php?u={{url_for('blog_post', blog_link = blog['blog_link'])}}" target="_blank">
-                    <i class="fa fa-facebook"></i>    
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ url_for('blog_post', blog_link=blog['blog_link'], _external=True) }}" target="_blank">
+                   
+                        <i class="fa fa-facebook"></i>    
                     </a>
                     
                     <!-- Twitter Share Button -->
