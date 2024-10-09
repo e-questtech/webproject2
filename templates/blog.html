@@ -1,7 +1,7 @@
 {% extends "base.html" %}
-{% block title %} {% for i in blog %}
-{{i['Title']|safe }}
-{% endfor %} {% endblock %}
+{% block title %}
+{{blog['Title']|safe }}
+{% endblock %}
 {% block head %}
 {{ super() }}
 {% endblock %}
@@ -18,8 +18,8 @@
                 
                 <div class="blog">
                     <div class="blog-image">
-<!--                         {% for i in blog %}
-                        <img src="{{ image_url }}" alt="{{ i['Title'] }}"> -->
+                         
+                        <img src="{{ image_url }}" alt="{{ blog['Title'] }}"> 
                     </div>
                 
                 <!-- Blog Post -->
@@ -29,11 +29,11 @@
                                 <li>
                                     <div class="post-author">
                                         <a href="#"><img src="http://placehold.it/60x60" alt="Author">
-                                            <span>{{i['author']}}</span></a>
+                                            <span>{{blog['author']}}</span></a>
                                     </div>
                                 </li>
                                 <li><i class="fa fa-calender">{{i['publish_date']}}</i></li>
-                                <li><i class="fa fa-tag">{{i['category']}}</i>
+                                <li><i class="fa fa-tag">{{blog['category']}}</i>
                                 </li>
                             </ul>
                         </div>
@@ -41,23 +41,23 @@
                     <div class="social-sharing">
                     <h4>Share this post:</h4>
                     <!-- Facebook Share Button -->
-                    <a href="https://www.facebook.com/sharer/sharer.php?u={{url_for('blog_post', blog_link = i['blog_link'])}}" target="_blank">
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{url_for('blog_post', blog_link = blog['blog_link'])}}" target="_blank">
                     <i class="fa fa-facebook"></i>    
                     </a>
                     
                     <!-- Twitter Share Button -->
-                    <a href="https://twitter.com/intent/tweet?url={{url_for('blog_post', blog_link = i['blog_link'])}}&text={{i['Title'] |safe }}" target="_blank">
+                    <a href="https://twitter.com/intent/tweet?url={{url_for('blog_post', blog_link = blog['blog_link'])}}&text={{i['Title'] |safe }}" target="_blank">
                     <i class="fa fa-twitter"></i>     
                     </a>
                     
                     <!-- LinkedIn Share Button -->
-                    <a href="https://www.linkedin.com/shareArticle?mini=true&url={{url_for('blog_post', blog_link = i['blog_link'])}}&title={{i['Title'] |safe}}" target="_blank">
+                    <a href="https://www.linkedin.com/shareArticle?mini=true&url={{url_for('blog_post', blog_link = blog['blog_link'])}}&title={{i['Title'] |safe}}" target="_blank">
                         <i class = "fa fa-linkedin"></i></a>
                 </div>
-                    <h3 class="blog-title"><a href=#">{{i['Title'].replace('-', ' ').title() |safe}}</a></h3>
+                    <h3 class="blog-title"><a href=#">{{blog['Title'].replace('-', ' ').title() |safe}}</a></h3>
                     <div class="blog-content">
-                        {{i['Body']| safe}}
-                        {% endfor %}
+                        {{blog['Body']| safe}}
+                     
                     </div>
                 </div>
                 <!-- /Blog Post -->
