@@ -5,8 +5,10 @@
 {% endblock %}
 {% block content %}
 
-<body>
-    <form action="{{ url_for('admin_login')}}" method="POST" style="max-width:300px;margin:auto">
+<body><div class="d-flex align-items-center justify-content-center vh-100">
+            <div class="text-center">
+                
+               <form action="{{ url_for('admin_login')}}" method="POST" style="max-width:300px;margin:auto">
         <div class="alert">
             {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
@@ -31,12 +33,8 @@
     </div>
     <button type="submit" class="btn">Login</button>
 </form>
-
-<!-- Adding custom style for the margin below the form -->
-<style>
-    form {
-        margin-bottom: 50px; /* Adjust this value for more or less space */
-    }
-</style>
-
+                   
+            </div>
+        </div>
+</body>
 {% endblock %}
