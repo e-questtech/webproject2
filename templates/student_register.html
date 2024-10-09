@@ -6,6 +6,8 @@
 {% endblock %}
 
 {% block content %}
+<body><div class="d-flex align-items-center justify-content-center vh-100">
+            <div class="text-center">
 <form action="{{ url_for('student_register') }}" method="POST" style="max-width:350px;margin:auto">
     <div class="alert">
         {% with messages = get_flashed_messages(with_categories=true) %}
@@ -61,9 +63,10 @@
             <option value="Imo">Imo</option>
         </select>
     </div>
-
-    
     <button type="submit" class="btn btn-primary">Register</button>
 </form>
+            </div>
+</div>
+</body>
 
 {% endblock %}
