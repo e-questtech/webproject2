@@ -22,13 +22,13 @@
     <div class="row gx-4 gx-lg-5 justify-content-center">
         <div class="col-md-10 col-lg-8 col-xl-7">
             <!-- Post preview-->
-            {% for course in courses %}
+            {% for i in courses %}
 
             <div class="post-preview">
-                <a href="{{ url_for('course_detail', course_code=course['course_code']) }}">
-                    <h2 class="course-title">{{course['course_title']}}</h2>
+                <a href="{{ url_for('course_detail', course_code=i['course_code']) }}">
+                    <h2 class="course-title">{{i['course_title']}}</h2>
                     <h3 class="post-subtitle">
-                        {{course['course_description'][0:100]|safe}}...
+                        {{i['course_description'][0:100]|safe}}...
                         
                     </h3>
                 </a>
