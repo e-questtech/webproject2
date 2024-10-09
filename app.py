@@ -72,7 +72,7 @@ def blog():
     return render_template('all_blogs.html', blogs = blogs)
 
 # Single Blog Post
-@app.route("/blog/<blog_link>/", methods=["GET"])
+@app.route("/blog/<blog_link>/", methods=["GET", "POST"])
 def blog_post(blog_link):
     # Fetch the blog post using the provided blog_link
     sql = "SELECT * FROM Blog WHERE blog_link = '%s'" % blog_link
@@ -512,6 +512,19 @@ def courses():
             return render_template('403.html')
     return redirect(url_for('admin_login', next= "/admin/course/all/"))
 
+#Courses All
+@app.route('/courses/', methods=["GET", "POST"])
+def all_courses():
+    sql = "SELECT * FROM Courses"
+    cursor.execute(sql)
+    courses = cursor.fetchall()
+
+    if course:
+        return render_template('all_courses.html', courses=courses)
+    else:
+        flash('No course Added!', 'error')
+        return redirect(url_for('home'))
+
 #Courses Individually
 @app.route('/courses/<course_code>/', methods=["GET"])
 def course_detail(course_code):
@@ -525,18 +538,6 @@ def course_detail(course_code):
         flash('Course not found!', 'error')
         return redirect(url_for('home'))
 
-#Courses All
-@app.route('/courses/', methods=["GET"])
-def all_courses():
-    sql = "SELECT * FROM Courses"
-    cursor.execute(sql)
-    courses = cursor.fetchall()
-
-    if course:
-        return render_template('all_courses.html', courses=courses)
-    else:
-        flash('No course Added!', 'error')
-        return redirect(url_for('home'))
 
 
 
