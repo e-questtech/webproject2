@@ -75,11 +75,11 @@ def blog():
 @app.route("/blog/<blog_link>/", methods=["GET", "POST"])
 def blog_post(blog_link):
     # Fetch the blog post using the provided blog_link
-	blog_link = blog_link.replace('%3A', ':')
+    blog_link = blog_link.replace('%3A', ':')
     sql = "SELECT * FROM Blog WHERE blog_link = '%s'" % blog_link
     cursor.execute(sql)
     blog = cursor.fetchone()
-	return render_template('blog.html', blog=blog)#, image_url=image_url
+    return render_template('blog.html', blog=blog)#, image_url=image_url
 
     # Check if a blog was found
     #if blog:
@@ -94,7 +94,6 @@ def blog_post(blog_link):
     #else:
         # If no blog is found, render a 404 page
         #return render_template('404.html')
-
 
 # About Page
 @app.route("/about/")
