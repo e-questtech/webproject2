@@ -511,24 +511,32 @@ def courses():
             return render_template('403.html')
     return redirect(url_for('admin_login', next= "/admin/course/all/"))
 
-#Courses All
-@app.route('/courses/', methods=["GET", "POST"])
+# Courses All
+@app.route('/courses/', methods=["GET"])
 def all_courses():
-    sql = "SELECT * FROM Courses"
-    cursor.execute(sql)
-    courses = cursor.fetchall()
-    return render_template('all_courses.html', courses=courses)
+    try:
+        sql = "SELECT * FROM Courses"
+        cursor.execute(sql)
+        courses = cursor.fetchall()
+        return render_template('all_courses.html', courses=courses)
+    except Exception as e:
+        flash('Error fetching courses: {}'.format(str(e)), 'error')
+        return redirect(url_for('home'))
 
-#Courses Individually
+# Courses Individually
 @app.route('/courses/<course_code>/', methods=["GET"])
 def course_detail(course_code):
-    sql = "SELECT * FROM Courses WHERE course_code = '%s'"%course_code
-    cursor.execute(sql)
-    course = cursor.fetchone()
-    if course:
-        return render_template('course_detail.html', course=course)
-    else:
-        flash('Course not found!', 'error')
+    try:
+        sql = "SELECT * FROM Courses WHERE course_code = %s"
+        cursor.execute(sql, (course_code,))
+        course = cursor.fetchone()
+        
+        if course:
+            return render_template('course_detail.html', course=course)
+        else:
+            return render_template('404.html')  # Render a 404 page if course not found
+    except Exception as e:
+        flash('Error fetching course details: {}'.format(str(e)), 'error')
         return redirect(url_for('home'))
 
 
