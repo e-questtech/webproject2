@@ -54,7 +54,7 @@
                     </a>
                     
                     <!-- Twitter Share Button -->
-                    <a href="https://twitter.com/intent/tweet?url={{url_for('blog_post', blog_link = blog['blog_link'])}}&text={{blog['Title'] |safe }}" target="_blank">
+                    <a href="https://twitter.com/intent/tweet?text={{ blog['title'] }}&url={{ url_for('blog_post',blog_link=blog['blog_link'])}} target="_blank">
                     <i class="fa fa-twitter"></i>     
                     </a>
                     
