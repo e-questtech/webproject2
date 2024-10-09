@@ -11,11 +11,9 @@ import pymysql
 import requests
 from flask_caching import Cache
 from config import Config
-
-from imagekitio import ImageKit
 import os
-
-# Initialize ImageKit
+from cloudinary.uploader import upload
+from cloudinary.utils import cloudinary_url
 
 app = Flask(__name__)
 
@@ -35,12 +33,6 @@ connection = pymysql.connect(
     
 cursor = connection.cursor()
 
-imagekit = ImageKit(
-    private_key=app.config['IMAGEKIT_PRIVATE_KEY'],
-    public_key=app.config['IMAGEKIT_PUBLIC_KEY'],
-    url_endpoint=app.config['IMAGEKIT_URL_ENDPOINT']
-)
-
 # For sessions
 
 app.config['PERMANENT_SESSION_LIFETIME'] =  timedelta(minutes=30)
@@ -49,17 +41,6 @@ app.config['PERMANENT_SESSION_LIFETIME'] =  timedelta(minutes=30)
 # To Make secret key
 
 app.secret_key = app.config['SECRET_KEY']
-
-#Mega for storing the images
-mega = Mega()
-
-# Retrieve email and password from environment variables
-email = app.config['MEGA_EMAIL']
-password = app.config['MEGA_PASSWORD']
-
-# Login to MEGA
-m = mega.login(email, password)
-
 
 # UNSPLASH ACCESS KEY
 
@@ -242,7 +223,7 @@ def dashboard():
     return redirect(url_for('admin_login', next= "url_for('dashboard')"))
 
 # Add Blog Post
-@app.route("/admin/blog/add/", methods = ["GET", "POST"])
+@app.route("/admin/blog/add/", methods=["GET", "POST"])
 def add_blog():
     if 'loggedin' in session:
         if session['role'] == 'admin':
@@ -258,7 +239,7 @@ def add_blog():
                 category = request.form['category'].title()
                 author = request.form['author']
 
-                # Handle image upload
+                # Handle image upload with Cloudinary
                 image = request.files.get('image')
                 image_url = None
 
@@ -270,23 +251,13 @@ def add_blog():
                         flash('Invalid image type! Only JPG, JPEG, PNG, and GIF are allowed.', 'error')
                         return render_template('add_blog.html', names=names, publish_date=publish_date)
 
-                    # Upload the image to ImageKit
-                    image_data = image.read()
-                    upload = imagekit.upload_file(
-                        file=image_data,
-                        file_name=image.filename,
-                        options={
-                            "folder": "/blog_images/",
-                            "use_unique_file_name": True
-                        }
-                    )
-                    
-                    if upload['error']:
-                        flash('Image upload failed!', 'error')
+                    # Upload the image to Cloudinary
+                    try:
+                        upload_result = upload(image)
+                        image_url = upload_result.get('secure_url')  # Get the uploaded image URL
+                    except Exception as e:
+                        flash(f'Image upload failed: {str(e)}', 'error')
                         return render_template('add_blog.html', names=names, publish_date=publish_date)
-
-                    # Get the image URL
-                    image_url = upload['response']['url']
 
                 # Check if blog already exists
                 sql_select = "SELECT * FROM Blog WHERE blog_link = '%s'" % blog_link
@@ -316,7 +287,6 @@ def add_blog():
     msg = 'Session Timeout'
     flash(msg, 'warning')
     return redirect(url_for('admin_login', next='/admin/blog/add/'))
-		  
 
 # Edit Blog Post
 @app.route("/admin/blog/<blog_link>/edit/", methods =['GET', 'POST'])
