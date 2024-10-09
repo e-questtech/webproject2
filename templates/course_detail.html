@@ -9,6 +9,7 @@
 {% endblock %}
 
 {% block content %}
+<div class="d-flex align-items-center>
     <div class="course-header">
         <h1>{{ course['course_title'] }}</h1>
         <h3>Course Code: {{ course['course_code'] }}</h3>
@@ -21,4 +22,6 @@
         <h2>Course Curriculum</h2>
         {{ course['course_curriculum'] }}
     </div>
+</div>
+
 {% endblock %}
