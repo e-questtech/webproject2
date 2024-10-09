@@ -93,7 +93,7 @@ def blog():
     return render_template('all_blogs.html', blogs = blogs)
 
 # Single Blog Post
-@app.route("/blog/<blog_link>", methods=["GET"])
+@app.route("/blog/<blog_link>/", methods=["GET"])
 def blog_post(blog_link):
     # Fetch the blog post using the provided blog_link
     sql = "SELECT * FROM Blog WHERE blog_link = '%s'" % blog_link
