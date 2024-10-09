@@ -42,9 +42,6 @@ app.config['PERMANENT_SESSION_LIFETIME'] =  timedelta(minutes=30)
 
 app.secret_key = app.config['SECRET_KEY']
 
-# UNSPLASH ACCESS KEY
-
-UNSPLASH_ACCESS_KEY = app.config['UNSPLASH_ACCESS_KEY']
 
 app.config['CACHE_TYPE'] = 'SimpleCache'  # You can also use 'RedisCache', 'FileSystemCache', etc.
 app.config['CACHE_DEFAULT_TIMEOUT'] = 300  # Cache timeout (in seconds)
