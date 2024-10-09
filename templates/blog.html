@@ -58,8 +58,8 @@
                     <i class="fa fa-twitter"></i>     
                     </a>
                     
-                    <!-- LinkedIn Share Button -->
-                    <a href="https://www.linkedin.com/shareArticle?mini=true&url={{url_for('blog_post', blog_link = blog['blog_link'])}}&title={I{blog['Title'] |safe}}" target="_blank">
+    <!-- LinkedIn Share Button -->
+                        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ url_for('blog_post', blog_link=blog['blog_link'], _external=True) }}" target="_blank"
                         <i class = "fa fa-linkedin"></i></a>
                 </div>
                     <h3 class="blog-title"><a href=#">{{blog['Title'].replace('-', ' ').title() |safe}}</a></h3>
