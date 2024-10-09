@@ -90,9 +90,7 @@ def blog_post(blog_link):
 
         # Render the blog post with the Cloudinary image URL
         return render_template('blog.html', blog=blog, image_url=image_url)
-    else:
-        # If no blog is found, render a 404 page
-        return render_template('404.html')
+            
 # About Page
 @app.route("/about/")
 def about():
