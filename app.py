@@ -557,45 +557,41 @@ def sitemap():
 @app.route('/sign_up/', methods=["GET", "POST"])
 def student_register():
     # Check if user is not logged in or is not an admin
-    if 'loggedin' not in session or (session.get('role') != 'admin'):
-        sql = "SELECT * FROM Courses"
-        cursor.execute(sql)
-        courses = cursor.fetchall()
-        
-        if request.method == "POST":
-            full_name = request.form['fullName']
-            email = request.form['email']
-            country_code = request.form['countryCode']
-            phone = request.form['phone']
-            
-            # Combine country code and phone number
-            full_phone = f"{country_code}{phone}"
-            
-            preferred_course = request.form['course']
-            state = request.form['state']
-            other_state = request.form.get('otherState', 'NONE')  # Default to 'NONE' if not provided
-
-            sql_select = "SELECT * FROM prospective_students WHERE email = %s"
-            cursor.execute(sql_select, (email,))
-            student = cursor.fetchone()
-            
-            if student:
-                msg = 'Student already Registered !!!'
-                flash(msg, 'error')
-                return render_template('student_register.html', msg=msg, courses=courses)
-            else:
-                sql = """INSERT INTO prospective_students (full_name, email, phone_number, preferred_course, state, other_state)
-                         VALUES (%s, %s, %s, %s, %s, %s)"""
-                vals = (full_name, email, full_phone, preferred_course, state, other_state)
-                cursor.execute(sql, vals)
-                connection.commit()
-                flash('Registration submitted successfully!', 'success')
-                return redirect(url_for('home'))
-
-        return render_template('student_register.html', courses=courses)
+    sql = "SELECT * FROM Courses"
+    cursor.execute(sql)
+    courses = cursor.fetchall()
     
-    flash('Session Timeout or Unauthorized Access', 'warning')
-    return redirect(url_for('admin_login'))  # Redirect to admin login if access is unauthorized
+    if request.method == "POST":
+        full_name = request.form['fullName']
+        email = request.form['email']
+        country_code = request.form['countryCode']
+        phone = request.form['phone']
+        
+        # Combine country code and phone number
+        full_phone = f"{country_code}{phone}"
+        
+        preferred_course = request.form['course']
+        state = request.form['state']
+        other_state = request.form.get('otherState', 'NONE')  # Default to 'NONE' if not provided
+
+        sql_select = "SELECT * FROM prospective_students WHERE email = %s"
+        cursor.execute(sql_select, (email,))
+        student = cursor.fetchone()
+        
+        if student:
+            msg = 'Student already Registered !!!'
+            flash(msg, 'error')
+            return render_template('student_register.html', msg=msg, courses=courses)
+        else:
+            sql = """INSERT INTO prospective_students (full_name, email, phone_number, preferred_course, state, other_state)
+                        VALUES (%s, %s, %s, %s, %s, %s)"""
+            vals = (full_name, email, full_phone, preferred_course, state, other_state)
+            cursor.execute(sql, vals)
+            connection.commit()
+            flash('Registration submitted successfully!', 'success')
+            return redirect(url_for('home'))
+
+    return render_template('student_register.html', courses=courses)
 
 
 @app.route('/admin/students/new/', methods=["GET"])
