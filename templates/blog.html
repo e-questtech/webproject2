@@ -12,14 +12,17 @@
 <section class="course-content">
     <div class="container">
         <div class="row">
-            <div class="col-lg-9 col-md-12">
+#            <div class="col-lg-9 col-md-12">
 
-                <!-- Blog Post -->
+            <div class="col-md-12">
+                
                 <div class="blog">
                     <div class="blog-image">
                         {% for i in blog %}
                         <img src="{{ i[image_url] }}" alt="{{ i['Title'] }}">
                     </div>
+                
+                <!-- Blog Post -->
                     <div class="blog-info clearfix">
                         <div class="post-left">
                             <ul>
