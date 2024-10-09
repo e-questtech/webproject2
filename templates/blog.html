@@ -46,12 +46,12 @@
                     </a>
                     
                     <!-- Twitter Share Button -->
-                    <a href="https://twitter.com/intent/tweet?url={{url_for('blog_post', blog_link = blog['blog_link'])}}&text={{i['Title'] |safe }}" target="_blank">
+                    <a href="https://twitter.com/intent/tweet?url={{url_for('blog_post', blog_link = blog['blog_link'])}}&text={{blog['Title'] |safe }}" target="_blank">
                     <i class="fa fa-twitter"></i>     
                     </a>
                     
                     <!-- LinkedIn Share Button -->
-                    <a href="https://www.linkedin.com/shareArticle?mini=true&url={{url_for('blog_post', blog_link = blog['blog_link'])}}&title={{i['Title'] |safe}}" target="_blank">
+                    <a href="https://www.linkedin.com/shareArticle?mini=true&url={{url_for('blog_post', blog_link = blog['blog_link'])}}&title={I{blog['Title'] |safe}}" target="_blank">
                         <i class = "fa fa-linkedin"></i></a>
                 </div>
                     <h3 class="blog-title"><a href=#">{{blog['Title'].replace('-', ' ').title() |safe}}</a></h3>
