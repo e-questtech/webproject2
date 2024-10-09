@@ -93,7 +93,8 @@
     </button>
     <div class="dropdown-menu" aria-labelledby="courseDropdown">
         {% for course in courses %}
-            <a class="dropdown-item" href="{{ url_for('course_detail', course_link=course['course_link']) }}">
+            <a class="dropdown-item" href="{{ url_for('all_courses
+', courses=courses) }}">
                 {{ course['course_title'] }}
             </a>
         {% endfor %}
