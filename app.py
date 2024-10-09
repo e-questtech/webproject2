@@ -66,10 +66,7 @@ def get_unsplash_image(query):
 # Homepage
 @app.route('/')
 def index():
-    sql = "SELECT * FROM Courses"
-    cursor.execute(sql)
-    courses = cursor.fetchall()
-    return render_template('index.html', courses = courses)
+    return render_template('index.html')
         
 #Contact 
 @app.route("/contact/", methods = ["GET", "POST"])
@@ -535,16 +532,29 @@ def courses():
     return redirect(url_for('admin_login', next= "/admin/course/all/"))
 
 #Courses Individually
-@app.route('/courses/<course_link>/', methods=["GET"])
-def course_detail(course_link):
-    sql = "SELECT * FROM Courses WHERE course_link = %s"
-    cursor.execute(sql, (course_link,))
+@app.route('/courses/<course_code>/', methods=["GET"])
+def course_detail(course_code):
+    sql = "SELECT * FROM Courses WHERE course_code = %s"
+    cursor.execute(sql, (course_code,))
     course = cursor.fetchone()
 
     if course:
         return render_template('course_detail.html', course=course)
     else:
         flash('Course not found!', 'error')
+        return redirect(url_for('home'))
+
+#Courses All
+@app.route('/courses/', methods=["GET"])
+def all_courses():
+    sql = "SELECT * FROM Courses"
+    cursor.execute(sql)
+    courses = cursor.fetchall()
+
+    if course:
+        return render_template('all_courses.html', courses=courses)
+    else:
+        flash('No course Added!', 'error')
         return redirect(url_for('home'))
 
 
