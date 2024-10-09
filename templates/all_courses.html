@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %} Courses {% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+
+{% block content %}
+<div class="page-heading header-text">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1> Courses at TE Quant </h1>
+                <span>Add Value to yourself</span>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Main Content-->
+<div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+            <!-- Post preview-->
+            {% for course in courses %}
+
+            <div class="post-preview">
+                <a href="{{ url_for('course_detail', course_code=course['course_code']) }}">
+                    <h2 class="course-title">{{course['course_title']}}</h2>
+                    <h3 class="post-subtitle">
+                        {{course['course_description'][0:100]|safe}}...
+                        
+                    </h3>
+                </a>
+                
+
+            </div>
+            <!-- Divider-->
+            <hr class="my-4" />
+
+            {% else %}
+            <h5>No Courses</h5>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
