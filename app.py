@@ -518,12 +518,7 @@ def all_courses():
     sql = "SELECT * FROM Courses"
     cursor.execute(sql)
     courses = cursor.fetchall()
-
-    if course:
-        return render_template('all_courses.html', courses=courses)
-    else:
-        flash('No course Added!', 'error')
-        return redirect(url_for('home'))
+    return render_template('all_courses.html', courses=courses)
 
 #Courses Individually
 @app.route('/courses/<course_code>/', methods=["GET"])
