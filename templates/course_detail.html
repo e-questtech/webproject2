@@ -8,7 +8,7 @@
 
 
 {% block content %}
-
+{% for course in course %}
 {{ course['course_title'] }} | {{ course['course_code'] }}
 
     <div class="course-header">
@@ -21,6 +21,6 @@
         <h2>Course Curriculum</h2>
         <p>{{ course['course_curriculum'] }}</p>
     </div>
-
+{% endfor %}
     
 {% endblock %}
