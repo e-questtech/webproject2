@@ -72,28 +72,27 @@ def blog():
     return render_template('all_blogs.html', blogs = blogs)
 
 # Single Blog Post
-@app.route("/blog/<blog_link>/", methods=["GET", "POST"])
+@app.route("/blog/<blog_link>/", methods=["GET"])
 def blog_post(blog_link):
     # Fetch the blog post using the provided blog_link
-    sql = "SELECT * FROM Blog WHERE blog_link ='%s'"%blog_link
-    cursor.execute(sql)
+    sql = "SELECT * FROM Blog WHERE blog_link = %s"
+    cursor.execute(sql, (blog_link,))
     blog = cursor.fetchone()
-    return render_template('blog.html', blog=blog)#, image_url=image_url
 
     # Check if a blog was found
-    #if blog:
+    if blog:
         # Get the image URL from the blog post in the database
-        #image_url = blog['image_url']
-
+        image_url = blog['image_url']  # Assuming 'image_url' is the correct column name
+        
         # If no image is found, set a default placeholder image (optional)
-        #if not image_url:
-            #image_url = "https://via.placeholder.com/600x400?text=No+Image+Available"
+        if not image_url:
+            image_url = "https://via.placeholder.com/600x400?text=No+Image+Available"
 
         # Render the blog post with the Cloudinary image URL
-    #else:
+        return render_template('blog.html', blog=blog, image_url=image_url)
+    else:
         # If no blog is found, render a 404 page
-        #return render_template('404.html')
-
+        return render_template('404.html')
 # About Page
 @app.route("/about/")
 def about():
