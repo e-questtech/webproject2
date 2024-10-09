@@ -557,7 +557,7 @@ def sitemap():
 @app.route('/sign_up/', methods=["GET", "POST"])
 def student_register():
     # Check if user is not logged in or is not an admin
-    if 'loggedin' not in session and session['role'] != 'admin':
+    if 'loggedin' not in session or (session.get('role') != 'admin'):
         sql = "SELECT * FROM Courses"
         cursor.execute(sql)
         courses = cursor.fetchall()
@@ -596,6 +596,7 @@ def student_register():
     
     flash('Session Timeout or Unauthorized Access', 'warning')
     return redirect(url_for('admin_login'))  # Redirect to admin login if access is unauthorized
+
 
 @app.route('/admin/students/new/', methods=["GET"])
 def prospective_students():
