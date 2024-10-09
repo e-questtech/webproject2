@@ -54,14 +54,7 @@ cache = Cache(app)
 # _____________________________________________________________________
 # PROGRAM STARTS
 
-@cache.cached(timeout=300, key_prefix='unsplash_image')  # Cache for 5 minutes
-def get_unsplash_image(query):
-    url = f"https://api.unsplash.com/photos/random?query={query}&client_id={UNSPLASH_ACCESS_KEY}"
-    response = requests.get(url)
-    if response.status_code == 200:
-        return response.json()['urls']['regular']
-    else:
-        return None
+
 
 # Homepage
 @app.route('/')
@@ -79,17 +72,6 @@ def blog():
     sql = "select * from Blog order by publish_date desc"
     cursor.execute(sql)
     blogs = cursor.fetchall()
-    result = cursor.fetchone()  # Since you're expecting a single result
-
-# Check if a result was found
-    if result:
-        query = result['category']  # Assign the category to the 'query' variable as a string
-    else:
-        query = 'tech-teaching'
-    if blog:
-        image_url = get_unsplash_image(query)
-        if image_url:
-            return render_template('all_blogs.html', blogs = blogs, image_url = image_url)
     return render_template('all_blogs.html', blogs = blogs)
 
 # Single Blog Post
