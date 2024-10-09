@@ -75,8 +75,7 @@ def blog():
 @app.route("/blog/<blog_link>/", methods=["GET", "POST"])
 def blog_post(blog_link):
     # Fetch the blog post using the provided blog_link
-    blog_link = blog_link.replace('%3A', ':')
-    sql = "SELECT * FROM Blog WHERE blog_link = '%s'" % blog_link
+    sql = "SELECT * FROM Blog WHERE blog_link ='%s'"%blog_link
     cursor.execute(sql)
     blog = cursor.fetchone()
     return render_template('blog.html', blog=blog)#, image_url=image_url
@@ -307,8 +306,8 @@ def save_blog():
 def read_blog(blog_link):
     if 'loggedin' in session:
         if session['role'] == 'admin':
-            sql_select = "SELECT * FROM Blog WHERE blog_link = %s"  # Use parameterized queries for safety
-            cursor.execute(sql_select, (blog_link,))
+            sql_select = "SELECT * FROM Blog WHERE blog_link = '%s'"%blog_link
+            cursor.execute(sql_select)
             record = cursor.fetchall()
             return render_template('read_blog.html', record=record)
         else:
@@ -523,10 +522,9 @@ def all_courses():
 #Courses Individually
 @app.route('/courses/<course_code>/', methods=["GET"])
 def course_detail(course_code):
-    sql = "SELECT * FROM Courses WHERE course_code = %s"
-    cursor.execute(sql, (course_code,))
+    sql = "SELECT * FROM Courses WHERE course_code = '%s'"%course_code
+    cursor.execute(sql)
     course = cursor.fetchone()
-
     if course:
         return render_template('course_detail.html', course=course)
     else:
