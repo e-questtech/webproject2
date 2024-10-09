@@ -521,7 +521,7 @@ def all_courses():
     except Exception as e:
         flash('Error fetching courses: {}'.format(str(e)), 'error')
         return redirect(url_for('home'))
-
+            
 # Courses Individually
 @app.route('/courses/<course_code>/', methods=["GET"])
 def course_detail(course_code):
@@ -531,14 +531,16 @@ def course_detail(course_code):
         course = cursor.fetchone()
         
         if course:
+            # Log the course details for debugging
+            print(f"Course found: {course}")  # or use logging.debug() if using logging
             return render_template('course_detail.html', course=course)
         else:
+            print("Course not found.")  # Log if no course is found
             return render_template('404.html')  # Render a 404 page if course not found
     except Exception as e:
+        print(f'Error fetching course details: {str(e)}')  # Log the error
         flash('Error fetching course details: {}'.format(str(e)), 'error')
         return redirect(url_for('home'))
-
-
 
 
 @app.route('/sitemap.xml/', methods = ["GET"])
