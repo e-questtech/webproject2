@@ -65,21 +65,7 @@
 }
     </style>
 
-    <script>
-        // Hide navbar when scrolling down, show when scrolling up
-        let prevScrollPos = window.pageYOffset;
-        window.onscroll = function() {
-            const currentScrollPos = window.pageYOffset;
-            const navbar = document.querySelector(".navbar");
-
-            if (prevScrollPos > currentScrollPos) {
-                navbar.style.top = "0";
-            } else {
-                navbar.style.top = "-75px"; // Adjust height based on your navbar
-            }
-            prevScrollPos = currentScrollPos;
-        };
-    </script>
+    
 
     {% endblock %}
 </head>
@@ -97,10 +83,10 @@
 
 <!-- Navigation Bar -->
 <header class="navbar-scroll-hide">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white;"> <!-- Added white background -->
     <div class="container">
       <a class="navbar-brand" href="{{url_for('index')}}">
-          <img src="{{ url_for('static', filename='img/logo.png') }}" alt="TE Quant Resources Logo" class="img-fluid" style="height: 50px;">
+          <img src="{{ url_for('static', filename='img/logo.png') }}" alt="TE Quant Resources Logo" class="img-fluid" style="height: 50px;"> <!-- Logo Placeholder -->
           <h2 class="font-weight-bold" style="display: inline;">TE Quant Resources</h2>
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -109,22 +95,24 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link font-weight-bold" href="{{url_for('index')}}">Home<span class="sr-only">(current)</span></a>
+            <a class="nav-link font-weight-bold" href="{{url_for('index')}}" style="text-transform: uppercase; color: black; font-size: 1.2rem;">Home
+              <span class="sr-only">(current)</span>
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link font-weight-bold" href="{{url_for('about')}}">About Us</a>
+            <a class="nav-link font-weight-bold" href="{{url_for('about')}}" style="text-transform: uppercase; color: black; font-size: 1.2rem;">About Us</a>
+          </li>  
+          <li class="nav-item">
+            <a class="nav-link font-weight-bold" href="{{ url_for('all_courses') }}" style="text-transform: uppercase; color: black; font-size: 1.2rem;">Courses</a>
+          </li>                          
+          <li class="nav-item">
+            <a class="nav-link font-weight-bold" href="{{url_for('blog')}}" style="text-transform: uppercase; color: black; font-size: 1.2rem;">Blogs</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link font-weight-bold" href="{{ url_for('all_courses') }}">Courses</a>
+            <a class="nav-link font-weight-bold" href="{{url_for('videos')}}" style="text-transform: uppercase; color: black; font-size: 1.2rem;">Videos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link font-weight-bold" href="{{url_for('blog')}}">Blogs</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link font-weight-bold" href="{{url_for('videos')}}">Videos</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link font-weight-bold" href="{{url_for('contact')}}">Contact Us</a>
+            <a class="nav-link font-weight-bold" href="{{url_for('contact')}}" style="text-transform: uppercase; color: black; font-size: 1.2rem;">Contact Us</a>
           </li>
         </ul>
       </div>
