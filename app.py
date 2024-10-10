@@ -314,10 +314,12 @@ def save_blog():
 def read_blog(blog_link):
     if 'loggedin' in session:
         if session['role'] == 'admin':
-            sql_select = "SELECT * FROM Blog WHERE blog_link = '%s'"%blog_link
-            cursor.execute(sql_select)
-            record = cursor.fetchall()
-            return render_template('read_blog.html', record=record)
+            sql_select = "SELECT * FROM Blog WHERE blog_link = %s"
+            cursor.execute(sql, (blog_link,))
+            blog = cursor.fetchone()
+    
+            if blog:
+        return render_template('read_blog.html', blog=blog)
         else:
             return render_template('403.html')
     return redirect(url_for('admin_login'))
