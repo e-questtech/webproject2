@@ -317,9 +317,7 @@ def read_blog(blog_link):
             sql_select = "SELECT * FROM Blog WHERE blog_link = %s"
             cursor.execute(sql, (blog_link,))
             blog = cursor.fetchone()
-    
-            if blog:
-        return render_template('read_blog.html', blog=blog)
+            return render_template('read_blog.html', blog=blog)
         else:
             return render_template('403.html')
     return redirect(url_for('admin_login'))
