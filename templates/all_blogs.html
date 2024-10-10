@@ -42,6 +42,7 @@
             {% for blog in blogs %}
             <!-- Single Blog Post Item -->
             <div class="bg-white rounded-lg shadow-md overflow-hidden blog-post">
+                <a href="{{ url_for('blog_post', blog_link = blog['blog_link']) }}">
                 <!-- Blog Image in Small Box -->
                 <div class="blog-image-container">
                     <img src="{{ blog['image_url'] }}" alt="{{ blog['title'] }}">
@@ -50,6 +51,8 @@
                     <h2 class="text-lg font-bold text-gray-800">{{ blog['Title'] }}</h2>
                     <p class="text-gray-600 text-sm mt-1">{{ blog['Body'][0:100]|safe}}...</p>
                     <p class="text-gray-500 text-sm mt-1">Published on: {{ blog['publish_date'].strftime('%B %d, %Y') }}
+                    <p class="text-gray-500 text-sm mt-1">Author: {{ blog['author']}}
+                    
                     </p>
                 </div>
             </div>
