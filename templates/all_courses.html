@@ -5,45 +5,53 @@
 {% endblock %}
 
 
-{% block content %}
-<div class="page-heading header-text">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1> Courses at TE Quant </h1>
-                <span>Add Value to yourself</span>
-                
+{% block content %}<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Courses At TE Quant</title>
+</head>
+
+
+<body class="bg-gray-100">
+    <div class="page-heading header-text">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1> Courses at TE Quant </h1>
+                    <span>Add Value to yourself</span>
+                    
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- Main Content-->
-<div class="d-flex align-items-center justify-content-center >
-<div class="container px-4 px-lg-5">
-    <div class="row gx-4 gx-lg-5 justify-content-center">
-        <div class="col-md-10 col-lg-8 col-xl-7">
-            <!-- Post preview-->
+
+    <!-- Main Container -->
+    <div class="max-w-7xl mx-auto px-6 py-10">
+
+        <div class="space-y-4">
+            <!-- Start of Loop -->
             {% for i in courses %}
 
-            <div class="post-preview">
-                <a href="{{ url_for('course_detail', course_code=i['course_code']) }}">
-                    <h2 class="course-title">{{i['course_title']}}</h2>
-                    <h3 class="post-subtitle">
-                        {{i['course_description'][0:100]|safe}}...
-                        
-                    </h3>
-                </a>
-                
-
+            <!-- Course 2 -->
+            <div class="flex bg-white shadow-md rounded-lg overflow-hidden">
+                <div class="w-32 flex-shrink-0">
+                    <img src="https://placehold.co/200x120" alt="Microsoft UX Design" class="w-full h-full object-cover">
+                </div>
+                <div class="p-4 flex-1">
+                    <h2 class="text-lg font-bold text-gray-800"><a href="{{ url_for('course_detail', course_code=i['course_code']) }}">{{i['course_title']}}</a></h2>
+                    
+                </p>
+                <p>{{i['course_description'][0:200]|safe}}...</p>
+                </div>
             </div>
-            <!-- Divider-->
-            <hr class="my-4" />
 
             {% else %}
             <h5>No Courses</h5>
             {% endfor %}
+            <!-- End of Loop -->
         </div>
+
     </div>
-</div>
-</div>
+
+</body>
 {% endblock %}
