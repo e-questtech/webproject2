@@ -52,10 +52,12 @@
 <script>
     $(document).ready(function () {
         $('#summernote').summernote({
-            placeholder: 'Blog Content',
+            placeholder: 'Blog Content goes Here',
             tabsize: 50,
-            height: 100,
-            color: 'black'
+            height: 300,
+        fontNames: ['Lora', 'Merriweather', 'Open Sans', 'Roboto', 'Source Sans Pro', 'Arial', 'Georgia'], // Add blog-friendly fonts
+        fontNamesIgnoreCheck: ['Lora', 'Merriweather', 'Open Sans', 'Roboto', 'Source Sans Pro'], // Ensure custom fonts work
+        fontSizes: ['12', '14', '16', '18', '24', '36'],
 
         })
     });
