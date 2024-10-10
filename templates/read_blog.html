@@ -1,53 +1,79 @@
 {% extends "base_dashboard.html" %}
-{% block title %} {% for i in record %}
-{{i['Title']}} | Preview
-{% endfor %} {% endblock %}
+{% block title %}
+{{blog['Title']|safe }}
+{% endblock %}
 {% block head %}
 {{ super() }}
+<meta name="description" content="{{ blog['body'] }}">
+    <!-- Include Open Graph meta tags for better sharing -->
+    <meta property="og:title" content="{{ blog['title'] }}" />
+    <meta property="og:description" content="{{ blog['body'] }}" />
+    <meta property="og:url" content="{{ url_for('blog_post', blog_link=blog['blog_link'], _external=True) }}" />
+    <meta property="og:image" content="{{ blog['image_url'] }}" />
+
 {% endblock %}
+
+
 {% block content %}
 
-    <div class="alert">
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        {% for category, message in messages %}
-        <span class="closebtn">&times;</span>
-        <div class="{{ category }}">{{ message }}</div>
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
-    </div>
-    <head>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/blog_styles.css')}}">
-    </head>
-    <header class="masthead" style="background-image: url('{{ i['image_url'] }}'); height: 100vh; background-size: cover; background-position: center;" alt="{{ i['Title'] }}">
-        <!-- To change the background image to another thing not the whole link... -->
-        <div class="container position-relative px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-7">
-                    {% for i in record %}
-                    <div class="post-heading">
-                        <h1>{{i['Title'].replace('-', ' ').title() |safe}}</h1>
-                        <span class="meta">
-                            &bullet; <a href="#!">{{i['author']}}</a>
-                            &bullet; <a href="#">{{i['publish_date']}}</a>
-                            &bullet; <a href="#">{{i['category']}}</a>
-                        </span>
+<section class="course-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 col-md-12">
+
+            <div class="col-md-12">
+                
+                <div class="blog">
+                    <div class="blog-image">
+                         
+                        <img src="{{ blog['image_url'] }}" alt="{{ blog['Title'] }}"> 
+                    </div>
+                
+                <!-- Blog Post -->
+                    <div class="blog-info clearfix">
+                        <div class="post-left">
+                            <ul>
+                                <li>
+                                    <div class="post-author">
+                                        <a href="#"><img src="http://placehold.it/60x60" alt="Author">
+                                            <span>{{blog['author']}}</span></a>
+                                    </div>
+                                </li>
+                                <li><i class="fa fa-calender">{{blog['publish_date']}}</i></li>
+                                <li><i class="fa fa-tag">{{blog['category']}}</i>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="social-sharing">
+                    <h4>Share this post:</h4>
+                    <!-- Facebook Share Button -->
+                                            <a href="https://www.facebook.com/sharer/sharer.php?u={{url_for('blog_post', blog_link = blog['blog_link'])}}" target="_blank">
+                    <i class="fa fa-facebook"></i>    
+                        <i class="fa fa-facebook"></i>    
+                    </a>
+                    
+                    <!-- Twitter Share Button -->
+                   <a href="https://twitter.com/intent/tweet?url={{url_for('blog_post', blog_link = blog['blog_link'])}}&text={{blog['Title'] |safe }}" target="_blank"> <i class="fa fa-twitter"></i>     
+                    </a>
+                    
+    <!-- LinkedIn Share Button -->
+                        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ url_for('blog_post', blog_link=blog['blog_link'], _external=True) }}" target="_blank"
+                        <i class = "fa fa-linkedin"></i></a>
+                </div>
+                    <h3 class="blog-title"><a href=#">{{blog['Title'].replace('-', ' ').title() |safe}}</a></h3>
+                    <div class="blog-content">
+                        {{blog['Body']| safe}}
+                     
                     </div>
                 </div>
-            </div>
-        </div>
-    </header>
-    <!-- Post Content-->
-    <article class="mb-4">
-        <div class="container px-4 px-lg-5">
-            <div class="row gx-4 gx-lg-5 justify-content-center">
-                <div class="col-md-10 col-lg-8 col-xl-7">
-                    {{i['Body']| safe}}
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-    </article>
+                <!-- /Blog Post -->
 
-    {% endblock %}
+            </div>
+
+                        </div>
+        </div>
+    </div>
+</section>
+    
+{% endblock %}
