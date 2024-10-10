@@ -1,89 +1,61 @@
 {% extends "base.html" %}
-{% block title %} TE Quant Blog {% endblock %}
-{% block head %}
-{{ super() }}
-<style>
-    body {
-        background-color: #fff;
-        color: #333;
-    }
-    .page-heading {
-        background-color: #28a745; /* Green */
-        color: white;
-        padding: 40px 0;
-        text-align: center;
-    }
-    .post-preview {
-        border: 1px solid #28a745; /* Green */
-        border-radius: 5px;
-        margin-bottom: 30px;
-        transition: transform 0.3s, box-shadow 0.3s;
-        overflow: hidden;
-        background-color: white;
-    }
-    .post-preview:hover {
-        transform: scale(1.05);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    }
-    .post-title {
-        color: #28a745; /* Green */
-        font-weight: bold;
-    }
-    .post-meta {
-        color: #555;
-    }
-    .post-preview img {
-        width: 100%;
-        height: auto;
-        border-bottom: 1px solid #28a745; /* Green */
-    }
-    @media (max-width: 768px) {
-        .page-heading {
-            padding: 30px 0;
-        }
-        .post-preview {
-            margin-bottom: 20px;
-        }
-    }
-</style>
-{% endblock %}
+
+{% block title %} Blog{% endblock %}
 
 {% block content %}
-<div class="page-heading header-text">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>TE Quant Blog</h1>
-                <span>Get yourself Enlightened</span>
-            </div>
-        </div>
-    </div>
-</div>
 
-<!-- Main Content-->
-<div class="container px-4 px-lg-5">
-    <div class="row gx-4 gx-lg-5 justify-content-center">
-        <div class="col-md-10 col-lg-8 col-xl-7">
-            <!-- Post previews-->
-            {% for i in blogs %}
-            <div class="post-preview">
-                <a href="{{ url_for('blog_post', blog_link=i['blog_link']) }}">
-                    <img src="{{ i['image_url'] }}" alt="{{ i['Title'] }}" class="img-fluid">
-                    <h2 class="post-title">{{ i['Title'] }}</h2>
-                    <h3 class="post-subtitle">
-                        {{ i['Body'][0:100]|safe }}...
-                    </h3>
-                </a>
-                <p class="post-meta">
-                    Posted by <a href="#!">{{ i['author'] }}</a> on {{ i['publish_date'] }}
-                </p>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom Styles for Blog Post Images */
+        .blog-image-container {
+            width: 150px; /* Small box width */
+            height: 150px; /* Small box height */
+            overflow: hidden;
+            border-radius: 10px; /* Optional: Add rounded corners */
+        }
+
+        .blog-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensure the image fits within the box without stretching */
+        }
+
+        /* Add some spacing around the blog post */
+        .blog-post {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+
+    <div class="max-w-6xl mx-auto px-6 py-10 mt-10">
+        <!-- Title -->
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">Blog Posts</h1>
+
+        <!-- Blog Posts Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for blog in blogs %}
+            <!-- Single Blog Post Item -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden blog-post">
+                <!-- Blog Image in Small Box -->
+                <div class="blog-image-container">
+                    <img src="{{ blog['image_url'] }}" alt="{{ blog['title'] }}">
+                </div>
+                <div class="p-4">
+                    <h2 class="text-lg font-bold text-gray-800">{{ blog['title'] }}</h2>
+                    <p class="text-gray-600 text-sm mt-1">{{ blog['excerpt'] }}</p>
+                    <p class="text-gray-500 text-sm mt-1">Published on: {{ blog['publish_date'].strftime('%B %d, %Y') }}
+                    </p>
+                </div>
             </div>
-            <!-- Divider-->
-            <hr class="my-4" />
-            {% else %}
-            <h5>No Posts</h5>
             {% endfor %}
         </div>
     </div>
-</div>
+
+</body>
+
 {% endblock %}
