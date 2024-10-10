@@ -97,10 +97,10 @@
 
 <!-- Navigation Bar -->
 <header class="navbar-scroll-hide">
-  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white;"> <!-- Added white background -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
       <a class="navbar-brand" href="{{url_for('index')}}">
-          <img src="{{ url_for('static', filename='img/logo.png') }}" alt="TE Quant Resources Logo" class="img-fluid" style="height: 50px;"> <!-- Logo Placeholder -->
+          <img src="{{ url_for('static', filename='img/logo.png') }}" alt="TE Quant Resources Logo" class="img-fluid" style="height: 50px;">
           <h2 class="font-weight-bold" style="display: inline;">TE Quant Resources</h2>
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -109,30 +109,29 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link font-weight-bold" href="{{url_for('index')}}" style="text-transform: uppercase; color: black; font-size: 1.2rem;">Home
-              <span class="sr-only">(current)</span>
-            </a>
+            <a class="nav-link font-weight-bold" href="{{url_for('index')}}">Home<span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link font-weight-bold" href="{{url_for('about')}}" style="text-transform: uppercase; color: black; font-size: 1.2rem;">About Us</a>
-          </li>  
-          <li class="nav-item">
-            <a class="nav-link font-weight-bold" href="{{ url_for('all_courses') }}" style="text-transform: uppercase; color: black; font-size: 1.2rem;">Courses</a>
-          </li>                          
-          <li class="nav-item">
-            <a class="nav-link font-weight-bold" href="{{url_for('blog')}}" style="text-transform: uppercase; color: black; font-size: 1.2rem;">Blogs</a>
+            <a class="nav-link font-weight-bold" href="{{url_for('about')}}">About Us</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link font-weight-bold" href="{{url_for('videos')}}" style="text-transform: uppercase; color: black; font-size: 1.2rem;">Videos</a>
+            <a class="nav-link font-weight-bold" href="{{ url_for('all_courses') }}">Courses</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link font-weight-bold" href="{{url_for('contact')}}" style="text-transform: uppercase; color: black; font-size: 1.2rem;">Contact Us</a>
+            <a class="nav-link font-weight-bold" href="{{url_for('blog')}}">Blogs</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link font-weight-bold" href="{{url_for('videos')}}">Videos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link font-weight-bold" href="{{url_for('contact')}}">Contact Us</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 </header>
+    
 <!-- Page Content -->
 <div class="content">
     {% block content %}
@@ -142,33 +141,34 @@
 
       
       
+
 <!-- Footer Starts Here -->
-<footer>
+<footer class="bg-dark text-light py-4">
     <div class="container">
       <div class="row">
         <div class="col-md-3 footer-item">
           <h4>TE Quant Resources</h4>
           <p>Empowerment Through Education.</p>
-          <ul class="social-icons">
-            <li><a href="http://x.com/tequantng"><i class="fa fa-twitter"></i></a></li>
-            <li><a href="https://www.linkedin.com/company/tequant"><i class="fa fa-linkedin"></i></a></li>
-            <li><a href="https://www.youtube.com/@tequantresources"><i class="fa fa-youtube"></i></a></li>
-            <li><a href="https://www.facebook.com/Tequant.ng?mibextid=rS40aB7S9Ucbxw6v"><i class="fa fa-facebook"></i></a></li>
+          <ul class="social-icons list-inline">
+            <li class="list-inline-item"><a href="http://x.com/tequantng"><i class="fa fa-twitter"></i></a></li>
+            <li class="list-inline-item"><a href="https://www.linkedin.com/company/tequant"><i class="fa fa-linkedin"></i></a></li>
+            <li class="list-inline-item"><a href="https://www.youtube.com/@tequantresources"><i class="fa fa-youtube"></i></a></li>
+            <li class="list-inline-item"><a href="https://www.facebook.com/Tequant.ng?mibextid=rS40aB7S9Ucbxw6v"><i class="fa fa-facebook"></i></a></li>
           </ul>
         </div>
         <div class="col-md-3 footer-item">
           <h4>Useful Links</h4>
-          <ul class="menu-list">
+          <ul class="menu-list list-unstyled">
             <li><a href="{{url_for('index')}}">Home</a></li>
             <li><a href="{{url_for('blog')}}">Blogs</a></li>
             <li><a href="{{url_for('videos')}}">Videos</a></li>
-            <li><a href="#">Courses</a></li>
+            <li><a href="{{url_for('all_courses')}}">Courses</a></li>
             <li><a href="{{url_for('sitemap')}}">SiteMap</a></li>
           </ul>
         </div>
         <div class="col-md-3 footer-item">
           <h4>Additional Pages</h4>
-          <ul class="menu-list">
+          <ul class="menu-list list-unstyled">
             <li><a href="{{url_for('about')}}">About Us</a></li>
             <li><a href="{{url_for('contact')}}">Quick Support</a></li>
             <li><a href="{{url_for('contact')}}">Contact Us</a></li>
@@ -178,43 +178,82 @@
     </div>
 </footer>
 
+<!-- Sub-Footer -->
+<div class="sub-footer bg-light text-dark py-2">
+    <div class="container text-center">
+      <p class="mb-0">&copy; 2024 TE Quant Resources Ltd.</p>
+    </div>
+</div>
+
 <!-- Custom Styles for Navbar -->
 <style>
-  /* Make navbar links uppercase and black when background is white */
   .navbar .nav-link {
     text-transform: uppercase;
-    color: black !important; /* Force links to be black */
-    font-size: 1.2rem; /* Increase font size */
+    color: black !important;
+    font-size: 1.2rem;
+    transition: color 0.3s ease-in-out;
   }
 
-  /* Responsive adjustment */
+  .navbar .nav-link:hover {
+    color: #28a745 !important; /* Add a subtle green hover effect */
+  }
+
+  /* Adjust font sizes on smaller screens */
   @media (max-width: 768px) {
     .navbar .nav-link {
-      font-size: 1rem; /* Slightly smaller for mobile screens */
+      font-size: 1rem;
     }
   }
+
+  /* Add shadow effect to navbar */
+  .navbar {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Footer Styles */
+  footer {
+    background-color: #343a40;
+    padding: 2rem 0;
+    color: #ffffff;
+  }
+
+  footer a {
+    color: #ffffff;
+  }
+
+  footer a:hover {
+    color: #28a745;
+  }
+
+  .social-icons a {
+    color: #ffffff;
+    margin-right: 15px;
+  }
+
+  .social-icons a:hover {
+    color: #28a745;
+  }
+
+  /* Sub-footer styles */
+  .sub-footer {
+    background-color: #f8f9fa;
+    color: #212529;
+    padding: 10px 0;
+  }
 </style>
-  <div class="sub-footer">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <p>Copyright &copy; 2024 TE Quant Resources Ltd.
-          </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- Bootstrap core JavaScript -->
-  <script src="{{url_for('static', filename = 'vendor/jquery/jquery.min.js')}}"></script>
-  <script src="{{url_for('static', filename = 'vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+<!-- Bootstrap core JavaScript -->
+<script src="{{url_for('static', filename = 'vendor/jquery/jquery.min.js')}}"></script>
+<script src="{{url_for('static', filename = 'vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
-  <!-- Additional Scripts -->
-  <script src="{{url_for('static', filename = 'js/custom.js')}}"></script>
-  <script src="{{url_for('static', filename = 'js/owl.js')}}"></script>
-  <script src="{{url_for('static', filename = 'js/slick.js')}}"></script>
-  <script src="{{url_for('static', filename = 'js/accordions.js')}}"></script>
+<!-- Additional Scripts -->
+<script src="{{url_for('static', filename = 'js/custom.js')}}"></script>
+<script src="{{url_for('static', filename = 'js/owl.js')}}"></script>
+<script src="{{url_for('static', filename = 'js/slick.js')}}"></script>
+<script src="{{url_for('static', filename = 'js/accordions.js')}}"></script>
 
-<!--   <script> 
+    
+  <script> 
     cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
     function clearField(t){                   //declaring the array outside of the
     if(! cleared[t.id]){                      // function makes it static and global
@@ -223,7 +262,7 @@
         t.style.color='#fff';
         }
     }
-  </script> -->
+  </script>
 
 </body>
 </html>
