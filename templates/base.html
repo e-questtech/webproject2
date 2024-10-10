@@ -4,14 +4,14 @@
 <head>
     {% block head %}
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-20FNDWNBL4"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-20FNDWNBL4"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-20FNDWNBL4');
+    </script>
 
-  gtag('config', 'G-20FNDWNBL4');
-</script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="TE Quant Resources Ltd.">
@@ -19,23 +19,54 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
     <title>{% block title %} {% endblock %}-TE Quant Resources</title>
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/blog_styles.css')}}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/fontawesome.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename = 'css/owl.css')}}">
+
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    
     <link rel="icon" href="{{url_for('static', filename = 'img/favicon.ico')}}" type="image/x-icon">
     
+    <style>
+        /* Add space between navbar and content */
+        .content {
+            margin-top: 20px; /* Creates 20px distance from navbar */
+        }
+        
+        /* Sticky navbar disappears on scroll */
+        .navbar-scroll-hide {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            transition: top 0.3s;
+        }
+    </style>
+
+    <script>
+        // Hide navbar when scrolling down, show when scrolling up
+        let prevScrollPos = window.pageYOffset;
+        window.onscroll = function() {
+            const currentScrollPos = window.pageYOffset;
+            const navbar = document.querySelector(".navbar");
+
+            if (prevScrollPos > currentScrollPos) {
+                navbar.style.top = "0";
+            } else {
+                navbar.style.top = "-75px"; // Adjust height based on your navbar
+            }
+            prevScrollPos = currentScrollPos;
+        };
+    </script>
+
     {% endblock %}
 </head>
 
+<body>
 
-
-<!-- ***** Preloader Start ***** -->
+<!-- Preloader -->
 <div id="preloader">
     <div class="jumper">
         <div></div>
@@ -43,35 +74,12 @@
         <div></div>
     </div>
 </div>  
-<!-- ***** Preloader End ***** -->
 
-<!-- Header -->
-<div class="sub-header">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-8 col-xs-12">
-        <ul class="left-info">
-          <li><a href="#"><i class="fa fa-clock-o"></i>Mon-Fri 09:00-17:00</a></li>
-          <li><a href="#"><i class="fa fa-phone"></i>+2348114787211</a></li>
-        </ul>
-      </div>
-      <div class="col-md-4">
-        <ul class="right-icons">
-          <li><a href="https://www.facebook.com/Tequant.ng?mibextid=rS40aB7S9Ucbxw6v"><i class="fa fa-facebook"></i></a></li>
-          <li><a href="http://x.com/tequantng"><i class="fa fa-twitter"></i></a></li>
-          <li><a href="https://www.linkedin.com/company/tequant/"><i class="fa fa-linkedin"></i></a></li>
-          <li><a href="https://www.youtube.com/@tequantresources"><i class="fa fa-youtube"></i></a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
-
-<header class="">
+<!-- Navigation Bar -->
+<header class="navbar-scroll-hide">
   <nav class="navbar navbar-expand-lg">
     <div class="container">
       <a class="navbar-brand" href="{{url_for('index')}}">
-          <!-- <img src="{{url_for('static', filename = 'img/te_quant_logo.png')}}" alt="TE Quant Logo"> </i> -->
           <h2>TE Quant Resources</h2></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -104,8 +112,8 @@
   </nav>
 </header>
 
-
-<div class="content" style="margin-top: 75px;">
+<!-- Page Content -->
+<div class="content">
     {% block content %}
     <!-- Page content goes here -->
     {% endblock %}
@@ -198,7 +206,7 @@
   <script src="{{url_for('static', filename = 'js/slick.js')}}"></script>
   <script src="{{url_for('static', filename = 'js/accordions.js')}}"></script>
 
-  <script> 
+<!--   <script> 
     cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
     function clearField(t){                   //declaring the array outside of the
     if(! cleared[t.id]){                      // function makes it static and global
@@ -207,7 +215,7 @@
         t.style.color='#fff';
         }
     }
-  </script>
+  </script> -->
 
 </body>
 </html>
