@@ -1,33 +1,49 @@
 {% extends "base.html" %}
-{% block title %} Blog {% endblock %}
+{% block title %} TE Quant Blog {% endblock %}
 {% block head %}
 {{ super() }}
 <style>
+    body {
+        background-color: #fff;
+        color: #333;
+    }
+    .page-heading {
+        background-color: #28a745; /* Green */
+        color: white;
+        padding: 40px 0;
+        text-align: center;
+    }
     .post-preview {
-        transition: transform 0.3s;
+        border: 1px solid #28a745; /* Green */
+        border-radius: 5px;
+        margin-bottom: 30px;
+        transition: transform 0.3s, box-shadow 0.3s;
+        overflow: hidden;
+        background-color: white;
     }
-
     .post-preview:hover {
-        transform: scale(1.02);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transform: scale(1.05);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     }
-
-    .post-thumbnail {
+    .post-title {
+        color: #28a745; /* Green */
+        font-weight: bold;
+    }
+    .post-meta {
+        color: #555;
+    }
+    .post-preview img {
         width: 100%;
         height: auto;
-        border-radius: 5px;
-        margin-bottom: 15px;
+        border-bottom: 1px solid #28a745; /* Green */
     }
-
-    .post-meta {
-        font-size: 0.9rem;
-        color: gray;
-    }
-
-    .page-heading {
-        padding: 60px 0;
-        background: #f8f9fa;
-        text-align: center;
+    @media (max-width: 768px) {
+        .page-heading {
+            padding: 30px 0;
+        }
+        .post-preview {
+            margin-bottom: 20px;
+        }
     }
 </style>
 {% endblock %}
@@ -43,27 +59,23 @@
         </div>
     </div>
 </div>
+
 <!-- Main Content-->
 <div class="container px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 justify-content-center">
         <div class="col-md-10 col-lg-8 col-xl-7">
-            <!-- Post preview-->
+            <!-- Post previews-->
             {% for i in blogs %}
             <div class="post-preview">
                 <a href="{{ url_for('blog_post', blog_link=i['blog_link']) }}">
-                    {% if i['image_url'] %}
-                    <img src="{{ i['image_url'] }}" alt="{{ i['Title'] }}" class="post-thumbnail">
-                    {% endif %}
+                    <img src="{{ i['image_url'] }}" alt="{{ i['Title'] }}" class="img-fluid">
                     <h2 class="post-title">{{ i['Title'] }}</h2>
                     <h3 class="post-subtitle">
-                        {{ i['Body'][0:100] | safe }}...
+                        {{ i['Body'][0:100]|safe }}...
                     </h3>
                 </a>
                 <p class="post-meta">
-                    Posted by
-                    <a href="#!">{{ i['author'] }}</a>
-                    on
-                    {{ i['publish_date'] }}
+                    Posted by <a href="#!">{{ i['author'] }}</a> on {{ i['publish_date'] }}
                 </p>
             </div>
             <!-- Divider-->
