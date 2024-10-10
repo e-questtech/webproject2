@@ -82,8 +82,8 @@
 </div>  
 
 <!-- Navigation Bar -->
-<header class="navbar-scroll-hide">
-  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white;"> <!-- Added white background -->
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light"> <!-- Removed fixed position and background color -->
     <div class="container">
       <a class="navbar-brand" href="{{url_for('index')}}">
           <img src="{{ url_for('static', filename='img/te_quant_logo.png') }}" alt="TE Quant Resources Logo" class="img-fluid" style="height: 50px;"> <!-- Logo Placeholder -->
@@ -119,6 +119,7 @@
     </div>
   </nav>
 </header>
+
     
 <!-- Page Content -->
 <div class="content">
