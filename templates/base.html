@@ -36,13 +36,7 @@
             margin-top: 20px; /* Creates 20px distance from navbar */
         }
         
-        /* Sticky navbar disappears on scroll */
-        .navbar-scroll-hide {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            transition: top 0.3s;
-        }
+        
         /* Additional Custom Styles */
 .navbar {
     padding: 15px; /* Increase padding for more whitespace */
@@ -66,7 +60,6 @@
     </style>
 
     
-
     {% endblock %}
 </head>
 
@@ -83,8 +76,7 @@
 
 <!-- Navigation Bar -->
 <header>
-  <nav class="navbar"> 
-<!--       navbar-expand-lg navbar-light">  -->
+  <nav class="navbar navbar-expand-lg navbar-dark"> 
     <div class="container">
       <a class="navbar-brand" href="{{url_for('index')}}">
           <img src="{{ url_for('static', filename='img/te_quant_logo.png') }}" alt="TE Quant Resources Logo" class="img-fluid" style="height: 50px;"> <!-- Logo Placeholder -->
