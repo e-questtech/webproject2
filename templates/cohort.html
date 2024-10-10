@@ -3,131 +3,132 @@
 {% block title %} Cohorts{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <h2 class="text-center mb-4">Join Our Learning Cohort</h2>
-    <p class="text-center mb-5">Explore the range of courses offered by TE Quant. 
-        Learn from expert tutors and advance your career in tech.</p>
-    <a href="{{url_for('student_register')}}" class="cta-button">Apply Now</a>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Journey Cohort</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-    <!-- Course Section -->
-    <div class="row">
-        <!-- Course 1: Web Development -->
-        <div class="col-md-4">
-            <div class="card mb-4">
-                <img src="https://via.placeholder.com/350" class="card-img-top" alt="Web Development">
-                <div class="card-body">
-                    <h5 class="card-title">Web Development</h5>
-                    <p class="card-text">Learn how to build modern websites and web applications using HTML, CSS, JavaScript, and more.</p>
-                    <a href="#" class="btn btn-primary">Learn More</a>
+        .animate-fade-in {
+            animation: fade-in 0.8s ease-out;
+        }
+
+        .animate-delay-200 {
+            animation-delay: 0.2s;
+        }
+    </style>
+</head>
+
+<body class="bg-white text-gray-900">
+
+    <!-- Navbar -->
+<!--     <nav class="bg-gray-800 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="text-xl font-bold">TE</div>
+            <div>
+                <a href="#" class="mx-2 transition-transform duration-300 hover:scale-105 hover:text-green-400">Home</a>
+                <a href="#" class="mx-2 transition-transform duration-300 hover:scale-105 hover:text-green-400">Courses</a>
+                <a href="#" class="mx-2 transition-transform duration-300 hover:scale-105 hover:text-green-400">Contact</a>
+                <a href="#" class="mx-2 transition-transform duration-300 hover:scale-105 hover:text-green-400">About</a>
+                <a href="#" class="mx-2 transition-transform duration-300 hover:scale-105 hover:text-green-400">Blog</a>
+            </div>
+        </div>
+    </nav> -->
+
+    <!-- Hero Section -->
+    <section class="relative">
+        <img src="https://placehold.co/1920x600" alt="Mountain with night sky background" class="w-full h-96 object-cover">
+        
+            <div class="absolute top-1/4 left-8 text-white animate-fade-in">
+                <h1 class="text-5xl font-bold">Begin Your Tech Journey Here</h1>
+                <p class="text-lg mt-2 animate-delay-200">Registration for the November Cohort is on!</p>
+                <a href="#" class="mt-4 inline-block bg-green-500 text-white py-2 px-6 rounded hover:bg-green-600 transition-transform duration-300 hover:scale-105">Start Now</a>
+            </div>
+    </section>
+
+    <!-- Programs Section -->
+    <section class="my-12 text-center">
+        <h2 class="text-3xl font-bold">What our Programs Will Do for you.</h2>
+        <div class="container mx-auto flex flex-wrap justify-center items-start mt-8">
+            <div class="w-full lg:w-1/2">
+                <ul class="list-none space-y-4 text-left text-lg">
+                    <li>- Enhanced Employability: Acquiring tech skills increases your attractiveness to employers.</li>
+                    <li>- Expanded Career Opportunities: Tech proficiency opens doors to diverse job roles.</li>
+                    <li>- Higher Income Potential: Tech skills are often associated with higher-paying roles.</li>
+                    <li>- Improved Problem-Solving Abilities: Tech skills empower individuals to analyze complex problems.</li>
+                </ul>
+            </div>
+            <div class="w-full lg:w-1/2 grid grid-cols-3 gap-8 mt-8">
+                <div class="text-center">
+                    <img src="https://placehold.co/150" alt="Nikson Kejeh" class="rounded-full mx-auto">
+                    <p class="mt-4 font-bold">Nikson Kejeh</p>
+                    <p class="text-gray-600">Data Science Facilitator</p>
+                </div>
+                <div class="text-center">
+                    <img src="https://placehold.co/150" alt="Oghenetega Stanley" class="rounded-full mx-auto">
+                    <p class="mt-4 font-bold">Oghenetega Stanley</p>
+                    <p class="text-gray-600">Graphics Design Facilitator</p>
+                </div>
+                <div class="text-center">
+                    <img src="https://placehold.co/150" alt="Osamuyi Osaghae" class="rounded-full mx-auto">
+                    <p class="mt-4 font-bold">Osamuyi Osaghae</p>
+                    <p class="text-gray-600">Digital Marketing Facilitator</p>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- Course 2: Data Science -->
-        <div class="col-md-4">
-            <div class="card mb-4">
-                <img src="https://via.placeholder.com/350" class="card-img-top" alt="Data Science">
-                <div class="card-body">
-                    <h5 class="card-title">Data Science</h5>
-                    <p class="card-text">Master data analysis, visualization, and machine learning with Python, SQL, and key tools.</p>
-                    <a href="#" class="btn btn-primary">Learn More</a>
-                </div>
+    <!-- Courses Section -->
+    <section class="bg-gray-100 py-12">
+        <div class="container mx-auto text-center">
+            <h3 class="text-2xl font-bold mb-8">Available Programs</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <a href="#" class="block bg-white p-6 shadow-lg hover:bg-gray-200">Data Science</a>
+                <a href="#" class="block bg-white p-6 shadow-lg hover:bg-gray-200">Data Analysis</a>
+                <a href="#" class="block bg-white p-6 shadow-lg hover:bg-gray-200">Coding/Programming</a>
+                <a href="#" class="block bg-white p-6 shadow-lg hover:bg-gray-200">Cyber Security</a>
+                <a href="#" class="block bg-white p-6 shadow-lg hover:bg-gray-200">Digital Marketing</a>
+                <a href="#" class="block bg-white p-6 shadow-lg hover:bg-gray-200">Graphics Design</a>
+            </div>
+            <a href="{{url_for('student_register')}}" class="mt-8 inline-block bg-green-500 text-white py-2 px-6 rounded hover:bg-green-600">Sign Up</a>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-12 text-center">
+        <h3 class="text-2xl font-bold mb-8">Here's what previous learners say</h3>
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div class="p-4">
+                <p class="italic">"Transitioning from Law to tech wasn't an easy task, but TE Quant made the basics easy to understand!"</p>
+                <p class="mt-4 font-bold">- Chioma J Okorie</p>
+            </div>
+            <div class="p-4">
+                <p class="italic">"My learning experience at TE Quant was one of a kind. Python programming is now a part of my career."</p>
+                <p class="mt-4 font-bold">- Daniel Mitchell-Atihese</p>
+            </div>
+            <div class="p-4">
+                <p class="italic">"As a computer scientist, I advanced my career by learning Data Science at TE Quant, which helped me secure a role in the UK."</p>
+                <p class="mt-4 font-bold">- Lawrence Ameh</p>
+            </div>
+            <div class="p-4">
+                <p class="italic">"The cohort was amazing! I learned Python and can now build data solutions for my company."</p>
+                <p class="mt-4 font-bold">- Ciera Omole</p>
             </div>
         </div>
+    </section>
 
-        <!-- Course 3: IoT and Embedded Systems -->
-        <div class="col-md-4">
-            <div class="card mb-4">
-                <img src="https://via.placeholder.com/350" class="card-img-top" alt="IoT and Embedded Systems">
-                <div class="card-body">
-                    <h5 class="card-title">IoT and Embedded Systems</h5>
-                    <p class="card-text">Learn how to create connected devices and embedded systems that interact with the physical world.</p>
-                    <a href="#" class="btn btn-primary">Learn More</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <!-- Course 4: Python Programming -->
-        <div class="col-md-4">
-            <div class="card mb-4">
-                <img src="https://via.placeholder.com/350" class="card-img-top" alt="Python Programming">
-                <div class="card-body">
-                    <h5 class="card-title">Python Programming</h5>
-                    <p class="card-text">Become proficient in Python programming, from basics to advanced concepts like OOP and data structures.</p>
-                    <a href="#" class="btn btn-primary">Learn More</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Course 5: AI and Machine Learning -->
-        <div class="col-md-4">
-            <div class="card mb-4">
-                <img src="https://via.placeholder.com/350" class="card-img-top" alt="AI and Machine Learning">
-                <div class="card-body">
-                    <h5 class="card-title">AI and Machine Learning</h5>
-                    <p class="card-text">Dive into the world of artificial intelligence and machine learning with hands-on projects and real-world applications.</p>
-                    <a href="#" class="btn btn-primary">Learn More</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Course 6: DevOps and Cloud Computing -->
-        <div class="col-md-4">
-            <div class="card mb-4">
-                <img src="https://via.placeholder.com/350" class="card-img-top" alt="DevOps and Cloud Computing">
-                <div class="card-body">
-                    <h5 class="card-title">DevOps and Cloud Computing</h5>
-                    <p class="card-text">Learn to automate deployments, manage cloud infrastructure, and streamline the development pipeline.</p>
-                    <a href="#" class="btn btn-primary">Learn More</a>
-                    
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<style>
-    .container {
-    max-width: 1200px;
-}
-
-h2 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #333;
-}
-
-.card {
-    border: none;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out;
-}
-
-.card:hover {
-    transform: scale(1.05);
-}
-
-.card-title {
-    font-size: 1.25rem;
-    color: #007bff;
-}
-
-.card-text {
-    font-size: 1rem;
-    color: #666;
-}
-
-.btn {
-    background-color: #007bff;
-    color: white;
-    font-weight: 600;
-    transition: background-color 0.3s ease;
-}
-
-.btn:hover {
-    background-color: #0056b3;
-}
-</style>
+</body>
 {% endblock %}
     
