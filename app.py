@@ -551,7 +551,7 @@ def student_register():
     cursor.execute(sql)
     courses = cursor.fetchall()
     
-    if request.method == "POST":
+    if request.method == "POST" and 'fullName' in request.form and 'email' in request.form and 'countryCode' in request.form and 'phone' in request.form and 'course' in request.form and 'state' in request.form:
         full_name = request.form['fullName']
         email = request.form['email']
         country_code = request.form['countryCode']
