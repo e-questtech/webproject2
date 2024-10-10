@@ -2,6 +2,34 @@
 {% block title %} Blog {% endblock %}
 {% block head %}
 {{ super() }}
+<style>
+    .post-preview {
+        transition: transform 0.3s;
+    }
+
+    .post-preview:hover {
+        transform: scale(1.02);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .post-thumbnail {
+        width: 100%;
+        height: auto;
+        border-radius: 5px;
+        margin-bottom: 15px;
+    }
+
+    .post-meta {
+        font-size: 0.9rem;
+        color: gray;
+    }
+
+    .page-heading {
+        padding: 60px 0;
+        background: #f8f9fa;
+        text-align: center;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
@@ -9,9 +37,8 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1> TE Quant Blog</h1>
+                <h1>TE Quant Blog</h1>
                 <span>Get yourself Enlightened</span>
-                
             </div>
         </div>
     </div>
@@ -22,27 +49,25 @@
         <div class="col-md-10 col-lg-8 col-xl-7">
             <!-- Post preview-->
             {% for i in blogs %}
-
             <div class="post-preview">
-                <a href="{{ url_for('blog_post', blog_link = i['blog_link']) }}">
-                    <h2 class="post-title">{{i['Title']}}</h2>
+                <a href="{{ url_for('blog_post', blog_link=i['blog_link']) }}">
+                    {% if i['image_url'] %}
+                    <img src="{{ i['image_url'] }}" alt="{{ i['Title'] }}" class="post-thumbnail">
+                    {% endif %}
+                    <h2 class="post-title">{{ i['Title'] }}</h2>
                     <h3 class="post-subtitle">
-                        {{i['Body'][0:100]|safe}}...
-                        <!--Subheading.. To add subheading to make it cool-->
+                        {{ i['Body'][0:100] | safe }}...
                     </h3>
                 </a>
                 <p class="post-meta">
                     Posted by
-                    <a href="#!">{{i['author']}}</a>
+                    <a href="#!">{{ i['author'] }}</a>
                     on
-                    <!--<a href="#">To add the date as a link to display posts made on that day</a>-->
-                    {{i['publish_date']}}
+                    {{ i['publish_date'] }}
                 </p>
-
             </div>
             <!-- Divider-->
             <hr class="my-4" />
-
             {% else %}
             <h5>No Posts</h5>
             {% endfor %}
