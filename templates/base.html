@@ -97,7 +97,7 @@
 
 <!-- Navigation Bar -->
 <header class="navbar-scroll-hide">
-  <nav class="navbar navbar-expand-lg">
+  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: white;"> <!-- Added white background -->
     <div class="container">
       <a class="navbar-brand" href="{{url_for('index')}}">
           <img src="{{ url_for('static', filename='img/logo.png') }}" alt="TE Quant Resources Logo" class="img-fluid" style="height: 50px;"> <!-- Logo Placeholder -->
@@ -109,24 +109,24 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link font-weight-bold" href="{{url_for('index')}}">Home
+            <a class="nav-link font-weight-bold" href="{{url_for('index')}}" style="text-transform: uppercase; color: black; font-size: 1.2rem;">Home
               <span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link font-weight-bold" href="{{url_for('about')}}">About Us</a>
+            <a class="nav-link font-weight-bold" href="{{url_for('about')}}" style="text-transform: uppercase; color: black; font-size: 1.2rem;">About Us</a>
           </li>  
           <li class="nav-item">
-            <a class="nav-link font-weight-bold" href="{{ url_for('all_courses') }}">Courses</a>
+            <a class="nav-link font-weight-bold" href="{{ url_for('all_courses') }}" style="text-transform: uppercase; color: black; font-size: 1.2rem;">Courses</a>
           </li>                          
           <li class="nav-item">
-            <a class="nav-link font-weight-bold" href="{{url_for('blog')}}">Blogs</a>
+            <a class="nav-link font-weight-bold" href="{{url_for('blog')}}" style="text-transform: uppercase; color: black; font-size: 1.2rem;">Blogs</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link font-weight-bold" href="{{url_for('videos')}}">Videos</a>
+            <a class="nav-link font-weight-bold" href="{{url_for('videos')}}" style="text-transform: uppercase; color: black; font-size: 1.2rem;">Videos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link font-weight-bold" href="{{url_for('contact')}}">Contact Us</a>
+            <a class="nav-link font-weight-bold" href="{{url_for('contact')}}" style="text-transform: uppercase; color: black; font-size: 1.2rem;">Contact Us</a>
           </li>
         </ul>
       </div>
@@ -174,39 +174,26 @@
             <li><a href="{{url_for('contact')}}">Contact Us</a></li>
           </ul>
         </div>
-        <div class="col-md-3 footer-item last-item">
-          <h4>Contact Us</h4>
-          <div class="contact-form">
-            <form id="contact footer-contact" action="" method="post">
-              <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                  <fieldset>
-                    <input name="name" type="text" class="form-control" id="name" placeholder="Full Name" required="">
-                  </fieldset>
-                </div>
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                  <fieldset>
-                    <input name="email" type="text" class="form-control" id="email" pattern="[^ @]*@[^ @]*" placeholder="E-Mail Address" required="">
-                  </fieldset>
-                </div>
-                <div class="col-lg-12">
-                  <fieldset>
-                    <textarea name="message" rows="6" class="form-control" id="message" placeholder="Your Message" required=""></textarea>
-                  </fieldset>
-                </div>
-                <div class="col-lg-12">
-                  <fieldset>
-                    <button type="submit" id="form-submit" class="filled-button">Send Message</button>
-                  </fieldset>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
       </div>
     </div>
-  </footer>
-  
+</footer>
+
+<!-- Custom Styles for Navbar -->
+<style>
+  /* Make navbar links uppercase and black when background is white */
+  .navbar .nav-link {
+    text-transform: uppercase;
+    color: black !important; /* Force links to be black */
+    font-size: 1.2rem; /* Increase font size */
+  }
+
+  /* Responsive adjustment */
+  @media (max-width: 768px) {
+    .navbar .nav-link {
+      font-size: 1rem; /* Slightly smaller for mobile screens */
+    }
+  }
+</style>
   <div class="sub-footer">
     <div class="container">
       <div class="row">
