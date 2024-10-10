@@ -44,7 +44,42 @@
     <!-- Summernote  -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+<style>
+        /* Additional CSS for smooth collapse */
+        .sidebar {
+            transition: width 0.2s ease;
+        }
 
+        .sidebar.collapsed {
+            width: 80px;
+        }
+
+        .sidebar .nav-item .nav-link {
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .sidebar.collapsed .nav-item .nav-link {
+            font-size: 0;
+        }
+
+        .sidebar.collapsed .sidebar-brand-text {
+            display: none;
+        }
+
+        .sidebar.collapsed .fa-fw {
+            font-size: 1.25rem;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $('#sidebarToggle, #sidebarToggleTop').on('click', function (e) {
+                e.preventDefault();
+                $("body").toggleClass("sidebar-toggled");
+                $(".sidebar").toggleClass("collapsed");
+            });
+        });
+    </script>
     {% endblock %}
 </head>
 
