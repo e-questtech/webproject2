@@ -82,25 +82,6 @@ def blog_post(blog_link):
         return render_template('blog.html', blog=blog)
     else:
         return render_template('404.html')
-
-# @app.route("/blog/<blog_link>/", methods=["GET"])
-# def blog_post(blog_link):
-#     # Fetch the blog post using the provided blog_link
-#     sql = "SELECT * FROM Blog WHERE blog_link = %s"
-#     cursor.execute(sql, (blog_link,))
-#     blog = cursor.fetchone()
-
-#     # Check if a blog was found
-#     if blog:
-#         # Get the image URL from the blog post in the database
-#         image_url = blog['image_url']  # Assuming 'image_url' is the correct column name
-        
-#         # If no image is found, set a default placeholder image (optional)
-#         if not image_url:
-#             image_url = "https://via.placeholder.com/600x400?text=No+Image+Available"
-
-#         # Render the blog post with the Cloudinary image URL
-#         return render_template('blog.html', blog=blog, image_url=image_url)
             
 # About Page
 @app.route("/about/")
@@ -314,7 +295,7 @@ def save_blog():
 def read_blog(blog_link):
     if 'loggedin' in session:
         if session['role'] == 'admin':
-            sql_select = "SELECT * FROM Blog WHERE blog_link = %s"
+            sql = "SELECT * FROM Blog WHERE blog_link = %s"
             cursor.execute(sql, (blog_link,))
             blog = cursor.fetchone()
             return render_template('read_blog.html', blog=blog)
