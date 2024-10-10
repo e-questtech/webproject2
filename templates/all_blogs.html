@@ -46,8 +46,8 @@
                     <img src="{{ blog['image_url'] }}" alt="{{ blog['title'] }}">
                 </div>
                 <div class="p-4">
-                    <h2 class="text-lg font-bold text-gray-800">{{ blog['title'] }}</h2>
-                    <p class="text-gray-600 text-sm mt-1">{{ blog['excerpt'] }}</p>
+                    <h2 class="text-lg font-bold text-gray-800">{{ blog['Title'] }}</h2>
+                    <p class="text-gray-600 text-sm mt-1">{{ blog['Body'][0:100]|safe}}...</p>
                     <p class="text-gray-500 text-sm mt-1">Published on: {{ blog['publish_date'].strftime('%B %d, %Y') }}
                     </p>
                 </div>
