@@ -579,7 +579,7 @@ def student_register():
             cursor.execute(sql, vals)
             connection.commit()
             flash('Registration submitted successfully!', 'success')
-            return redirect(url_for('home'))
+            return redirect(url_for('index'))
 
     return render_template('student_register.html', courses=courses)
 
