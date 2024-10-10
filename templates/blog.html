@@ -46,7 +46,7 @@
                         </div>
                     </div>
                     <div class="social-sharing">
-                    <h4>Share this post:</h4>
+                    <h4>Share <i class="fa fa-share"></i></h4>
                     <!-- Facebook Share Button -->
                                             <a href="https://www.facebook.com/sharer/sharer.php?u={{url_for('blog_post', blog_link = blog['blog_link'])}}" target="_blank">
                     <i class="fa fa-facebook"></i>    
@@ -54,7 +54,7 @@
                     </a>
                     
                     <!-- Twitter Share Button -->
-                   <a href="https://twitter.com/intent/tweet?url={{url_for('blog_post', blog_link = blog['blog_link'])}}&text={{blog['Title'] |safe }}" target="_blank"> <i class="fa fa-twitter"></i>     
+                   <a href="https://twitter.com/intent/tweet?text=Check+out+this+blog!&url={{url_for('blog_post', blog_link = blog['blog_link'])}}&text={{blog['Title'] |safe }}" target="_blank"> <i class="fa fa-twitter"></i>     
                     </a>
                     
     <!-- LinkedIn Share Button -->
