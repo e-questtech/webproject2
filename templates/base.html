@@ -43,6 +43,26 @@
             width: 100%;
             transition: top 0.3s;
         }
+        /* Additional Custom Styles */
+.navbar {
+    padding: 15px; /* Increase padding for more whitespace */
+}
+
+.navbar-nav .nav-link {
+    margin: 0 15px; /* Add space between nav items */
+}
+
+.img-fluid {
+    max-width: 100%; /* Ensure logo is responsive */
+    height: auto; /* Maintain aspect ratio */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 10px; /* Adjust padding for smaller screens */
+    }
+}
     </style>
 
     <script>
@@ -80,38 +100,39 @@
   <nav class="navbar navbar-expand-lg">
     <div class="container">
       <a class="navbar-brand" href="{{url_for('index')}}">
-          <h2>TE Quant Resources</h2></a>
+          <img src="{{ url_for('static', filename='img/logo.png') }}" alt="TE Quant Resources Logo" class="img-fluid" style="height: 50px;"> <!-- Logo Placeholder -->
+          <h2 class="font-weight-bold" style="display: inline;">TE Quant Resources</h2>
+      </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="{{url_for('index')}}">Home
+            <a class="nav-link font-weight-bold" href="{{url_for('index')}}">Home
               <span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{url_for('about')}}">About Us</a>
+            <a class="nav-link font-weight-bold" href="{{url_for('about')}}">About Us</a>
           </li>  
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('all_courses') }}">Courses</a>
+            <a class="nav-link font-weight-bold" href="{{ url_for('all_courses') }}">Courses</a>
           </li>                          
           <li class="nav-item">
-            <a class="nav-link" href="{{url_for('blog')}}">Blogs</a>
+            <a class="nav-link font-weight-bold" href="{{url_for('blog')}}">Blogs</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{url_for('videos')}}">Videos</a>
+            <a class="nav-link font-weight-bold" href="{{url_for('videos')}}">Videos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{url_for('contact')}}">Contact Us</a>
+            <a class="nav-link font-weight-bold" href="{{url_for('contact')}}">Contact Us</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 </header>
-
 <!-- Page Content -->
 <div class="content">
     {% block content %}
