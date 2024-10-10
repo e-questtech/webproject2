@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify, flash,Response
-from datetime import timedelta      #Check JS for timer
+from datetime import timedelta
 # from flask_mail import *
 import hashlib    #To change to one for flask hashing
 import random
@@ -12,6 +12,7 @@ import requests
 from flask_caching import Cache
 from config import Config
 import os
+# Cloudinary to store the uploaded blog images
 from cloudinary.uploader import upload
 from cloudinary.utils import cloudinary_url
 
@@ -325,10 +326,14 @@ def delete_blog(blog_link):
             if request.method == 'POST' and 'confirm' in request.form:
                 confirm = request.form['confirm']
                 if confirm == 'YES':
+					sql_ = "select image_url from Blog where blog_link = '%s'%blog_link
+					cursor.execute(sql_)
+					image_url = cursor.fetchone()
+        			public_id = "/".join(image_url.split('/')[-2:])[:-4]
+        			result = cloudinary.uploader.destroy(public_id)
                     sql = "DELETE from Blog WHERE blog_link = '%s'" %blog_link
                     cursor.execute(sql)
                     connection.commit()
-                    connection.close()
                     msg = 'You have successfully deleted Blog Post'
                     flash(msg, 'success')
                     return redirect(url_for('blog_view'))
