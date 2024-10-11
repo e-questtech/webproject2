@@ -326,7 +326,7 @@ def delete_blog(blog_link):
             if request.method == 'POST' and 'confirm' in request.form:
                 confirm = request.form['confirm']
                 if confirm == 'YES':
-                    sql_ = "select image_url from Blog where blog_link = '%s'blog_link"
+                    sql_ = "select image_url from Blog where blog_link = %s blog_link"
                     cursor.execute(sql_)
                     image_url = cursor.fetchone()
                     public_id = "/".join(image_url.split('/')[-2:])[:-4]
