@@ -4,7 +4,7 @@ from datetime import timedelta
 import hashlib    #To change to one for flask hashing
 import random
 import re
-from mysql.connector import OperationalError
+# from mysql.connector import OperationalError
 import datetime
 from datetime import datetime
 import pymysql
@@ -633,13 +633,6 @@ def page_not_found(error):
             return render_template("403.html"), 404
     except KeyError:
         return render_template("404.html"), 404
-
-
-@app.errorhandler(OperationalError)
-def handle_db_error(e):
-    app.logger.error(f"Database OperationalError: {str(e)}")
-    return render_template('db_error.html'), 500
-
 
 
 
