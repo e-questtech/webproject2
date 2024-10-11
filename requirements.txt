@@ -9,7 +9,6 @@ cryptography==43.0.1
 Flask==3.0.3
 Flask-Caching==2.3.0
 Flask-Mail==0.10.0
-Flask-MySQLdb==2.0.0
 gunicorn
 idna==3.10
 cloudinary
