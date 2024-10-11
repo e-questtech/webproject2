@@ -19,6 +19,7 @@ from cloudinary.utils import cloudinary_url
 app = Flask(__name__)
 
 app.config.from_object(Config)
+app.config['DEBUG'] = False
 
 
 # LInk to the online database ffrom Aiven
@@ -727,4 +728,4 @@ def login():
 
 
 if __name__ == "__main__":
-   app.run(host="0.0.0.0", port=5000, debug=True)
+   app.run(host="0.0.0.0", port=5000)
