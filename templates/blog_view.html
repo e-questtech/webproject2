@@ -39,7 +39,7 @@
                 </thead>
                 <tbody>
                     <tr>{% for i in record %}
-                        <a href="{{ url_for('read_blog', blog_link = i['blog_link']) }}"><td>{{i['Title']}}</td></a>
+                        <td></td><a href="{{ url_for('read_blog', blog_link = i['blog_link']) }}">{{i['Title']}}</a></td>
                         <td>{{i['Body'][0:300]|safe}}...</td>
                         <td>{{i['category']}}</td>
                         <td>{{i['author']}}</td>
