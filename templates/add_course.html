@@ -2,6 +2,10 @@
 {% block title %}Add Course{% endblock %}
 {% block head %}
 {{ super() }}
+<!-- Include Summernote CSS and JS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.min.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.min.js"></script>
 {% endblock %}
 
 {% block content %}
@@ -30,12 +34,12 @@
 
     <div class="input-container">
         <i class="fa fa-book-open icon"></i>
-        <textarea name="course_description" class="input-field" id="summernote" placeholder="Course Description" id="course_description" required></textarea>
+        <textarea name="course_description" class="input-field" id="summernote-description" placeholder="Course Description" required></textarea>
     </div>
 
     <div class="input-container">
         <i class="fa fa-book-open icon"></i>
-        <textarea name="course_curriculum" class="input-field" id="summernote" placeholder="Course Curriculum" id="course_description" required></textarea>
+        <textarea name="course_curriculum" class="input-field" id="summernote-curriculum" placeholder="Course Curriculum" required></textarea>
     </div>
     
     <button type="submit" class="btn">Add Course</button>
@@ -43,13 +47,33 @@
 
 <script>
     $(document).ready(function () {
-        $('#summernote').summernote({
-            placeholder: 'Your Text Here',
-            tabsize: 50,
-            height: 100,
-            color: 'black'
+        $('#summernote-description').summernote({
+            placeholder: 'Enter course description here...',
+            tabsize: 2,
+            height: 200, // Set editor height
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['link', 'picture']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
 
-        })
+        $('#summernote-curriculum').summernote({
+            placeholder: 'Enter course curriculum here...',
+            tabsize: 2,
+            height: 200, // Set editor height
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['insert', ['link', 'picture']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
     });
 </script>
 {% endblock %}
