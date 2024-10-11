@@ -17,8 +17,6 @@ python-dotenv
 itsdangerous==2.2.0
 Jinja2==3.1.4
 MarkupSafe==2.1.5
-mysql-connector-python==9.0.0
-mysqlclient==2.2.4 
 pycparser==2.22
 PyMySQL==1.1.1
 python-dotenv==1.0.1
