@@ -7,6 +7,7 @@
 {% endblock %}
 
 {% block content %}
+
 <body class="bg-gray-100">
     <div class="page-heading header-text">
         <div class="container">
@@ -27,11 +28,13 @@
             <div class="bg-white shadow-lg rounded-lg overflow-hidden">
                 <div class="flex">
                     <div class="w-32 flex-shrink-0">
-                        <img src="https://placehold.co/200x120" alt="{{ i['course_title'] }}" class="w-full h-full object-cover">
+                        <img src="https://placehold.co/200x120" alt="{{ i['course_title'] }}"
+                            class="w-full h-full object-cover">
                     </div>
                     <div class="p-4 flex-1">
                         <h2 class="text-lg font-bold text-gray-800">
-                            <a href="{{ url_for('course_detail', course_code=i['course_code']) }}">{{ i['course_title'] }}</a>
+                            <a href="{{ url_for('course_detail', course_code=i['course_code']) }}">{{ i['course_title']
+                                }}</a>
                         </h2>
                         <p class="text-gray-600">{{ i['course_description'][0:200] | safe }}...</p>
                     </div>
@@ -41,10 +44,9 @@
             <h5 class="text-center text-gray-600">No Courses Available</h5>
             {% endfor %}
             <!-- End of Loop -->
+
         </div>
     </div>
 
-    <!-- Optional Footer Space -->
-    <div class="py-10"></div> <!-- Add space for footer separation -->
-</body>
-{% endblock %}
+    
+    {% endblock %}
