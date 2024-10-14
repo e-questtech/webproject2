@@ -23,7 +23,10 @@
                     <div class="blog">
                         <!-- Blog Image -->
                         <div class="blog-image text-center" style="margin-bottom: 20px;"> 
-                            <img src="{{ blog['image_url'] }}" alt="{{ blog['Title'] }}" class="img-fluid" style="max-width: 100%; height: auto;"> 
+
+                            <img alt="{{ blog['Title'] }}" class="img-fluid"
+    style='max-width: 100%; height: auto;background-position: center center; background-size: cover;
+	padding: 230px 0px 150px 0px; color: #fff; background-repeat: no-repeat; background-image: url({{ blog["image_url"] }})'>
                         </div>
 
                         <!-- Blog Post -->
