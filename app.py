@@ -464,7 +464,6 @@ def add_course():
                 course_code = request.form['course_code']
                 course_title = request.form['course_title']
                 course_description = request.form['course_description']
-                course_curriculum = request.form['course_curriculum']
                 
                 # Check if course already exists
                 sql_select = "SELECT * FROM Courses WHERE course_code = %s"
@@ -477,9 +476,9 @@ def add_course():
                     return render_template('add_course.html', msg=msg)
                 else:
                     # Insert new course with description and curriculum
-                    sql = """INSERT INTO Courses (course_title, course_code, course_description, course_curriculum) 
+                    sql = """INSERT INTO Courses (course_title, course_code, course_description) 
                              VALUES (%s, %s, %s, %s)"""
-                    vals = (course_title, course_code, course_description, course_curriculum)
+                    vals = (course_title, course_code, course_description)
                     cursor.execute(sql, vals)
                     connection.commit()
                     
