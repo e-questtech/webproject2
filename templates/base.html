@@ -65,15 +65,13 @@
 
 <body>
 
-<!-- Preloader -->
-
 
 <!-- Navigation Bar -->
 <header>
   <nav class="navbar navbar-expand-lg navbar-light"> 
     <div class="container">
       <a class="navbar-brand" href="{{url_for('index')}}">
-          <img src="{{ url_for('static', filename='images/te_quant_logo.png') }}" alt="TE Quant Resources Logo" class="img-fluid" style="height: 50px;"> <!-- Logo Placeholder -->
+          <img src="{{ url_for('static', filename='images/te_quant_logo.png') }}" alt="TE Quant Resources Logo" class="img-fluid" style="height: 50px;"> 
           <h2 class="font-weight-bold" style="display: inline;">TE Quant Resources</h2>
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,24 +80,24 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link font-weight-bold" href="{{url_for('index')}}" style="text-transform: uppercase; color: black; font-size: 1.2rem;">Home
+            <a class="nav-link " href="{{url_for('index')}}" style="text-transform: uppercase; color: black; font-size: 1rem;">Home
               <span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link font-weight-bold" href="{{url_for('about')}}" style="text-transform: uppercase; color: black; font-size: 1.2rem;">About Us</a>
+            <a class="nav-link " href="{{url_for('about')}}" style="text-transform: uppercase; color: black; font-size: 1rem;">About Us</a>
           </li>  
           <li class="nav-item">
-            <a class="nav-link font-weight-bold" href="{{ url_for('all_courses') }}" style="text-transform: uppercase; color: black; font-size: 1.2rem;">Courses</a>
+            <a class="nav-link " href="{{ url_for('all_courses') }}" style="text-transform: uppercase; color: black; font-size: 1rem;">Courses</a>
           </li>                          
           <li class="nav-item">
-            <a class="nav-link font-weight-bold" href="{{url_for('blog')}}" style="text-transform: uppercase; color: black; font-size: 1.2rem;">Blogs</a>
+            <a class="nav-link " href="{{url_for('blog')}}" style="text-transform: uppercase; color: black; font-size: 1rem;">Blogs</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link font-weight-bold" href="{{url_for('videos')}}" style="text-transform: uppercase; color: black; font-size: 1.2rem;">Videos</a>
+            <a class="nav-link " href="{{url_for('videos')}}" style="text-transform: uppercase; color: black; font-size: 1rem;">Videos</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link font-weight-bold" href="{{url_for('contact')}}" style="text-transform: uppercase; color: black; font-size: 1.2rem;">Contact Us</a>
+            <a class="nav-link " href="{{url_for('contact')}}" style="text-transform: uppercase; color: black; font-size: 1rem;">Contact Us</a>
           </li>
         </ul>
       </div>
@@ -234,17 +232,6 @@
 <script src="{{url_for('static', filename = 'js/slick.js')}}"></script>
 <script src="{{url_for('static', filename = 'js/accordions.js')}}"></script>
 
-    
-  <script> 
-    cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
-    function clearField(t){                   //declaring the array outside of the
-    if(! cleared[t.id]){                      // function makes it static and global
-        cleared[t.id] = 1;  // you could use true and false, but that's more typing
-        t.value='';         // with more chance of typos
-        t.style.color='#fff';
-        }
-    }
-  </script>
 
 </body>
 </html>
