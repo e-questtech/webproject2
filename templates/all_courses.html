@@ -8,19 +8,40 @@
 
 {% block content %}
 
+<head>
+
+    <style>
+        /* Custom Styles for Blog Post Images */
+        .blog-image-container {
+            width: 150px;
+            /* Small box width */
+            height: 150px;
+            /* Small box height */
+            overflow: hidden;
+            border-radius: 10px;
+            /* Optional: Add rounded corners */
+
+        }
+
+
+        /* Add some spacing around the blog post */
+        .blog-post {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
 <body class="bg-gray-100">
     <div class="page-heading header-text">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="text-4xl font-bold text-center mt-6">Courses at TE Quant</h1>
-                    <span class="text-lg text-gray-600">Add Value to Yourself</span>
+                    <h1> Courses at TE Quant </h1>
                 </div>
             </div>
         </div>
     </div>
 
-    
 
     <div class="max-w-6xl mx-auto px-6 py-10 mt-10">
         <!-- Title -->
@@ -28,25 +49,27 @@
 
         <!-- Blog Posts Grid -->
         <div class="grid">
+            <!--              grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 -->
             {% for i in courses %}
-            <!-- Single Course Post Item -->
+            <!-- Single Blog Post Item -->
             <div class="bg-white rounded-lg shadow-md overflow-hidden blog-post">
-                <a href="{{ url_for('course_detail', course_code=i['course_code']) }}">{{ i['course_title']}}">
-                
-                <div class="p-4">
-                    <h2 class="text-lg font-bold text-gray-800">{{ i['course_title'] }}</h2>
-                    <p class="text-gray-600 text-sm mt-1">{{ i['course_description'][0:200] | safe }}...</p>
-                    
-                    </p>
-                </div>
-                    {% else %}
+                <a href="{{ url_for('course_detail', course_code=i['course_code']) }}">
+                    <!-- Blog Image in Small Box -->
+
+                    <div class="p-4">
+                        <h2 class="text-lg font-bold text-gray-800">{{ i['course_title']}}</h2>
+                        <p class="text-gray-600 text-sm mt-1">{{ i['course_code']}}</p>
+                        <p class="text-gray-600 text-sm mt-1">{{ i['course_description'][0:200] | safe }}...</p>
+
+                    </div>
+            </div>
+            {% else %}
             <h5 class="text-center text-gray-600">No Courses Available</h5>
-            {% endfor %}
-           
         </div>
+        {% endfor %}
+    </div>
     </div>
 
 </body>
 
-    
-    {% endblock %}
+{% endblock %}
