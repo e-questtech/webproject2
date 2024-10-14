@@ -20,33 +20,33 @@
         </div>
     </div>
 
-    <!-- Main Container -->
-    <div class="max-w-7xl mx-auto px-6 py-10">
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            <!-- Start of Loop -->
+    
+
+    <div class="max-w-6xl mx-auto px-6 py-10 mt-10">
+        <!-- Title -->
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">Blog Posts</h1>
+
+        <!-- Blog Posts Grid -->
+        <div class="grid">
             {% for i in courses %}
-            <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-                <div class="flex">
-                    <div class="w-32 flex-shrink-0">
-                        <img src="https://placehold.co/200x120" alt="{{ i['course_title'] }}"
-                            class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-4 flex-1">
-                        <h2 class="text-lg font-bold text-gray-800">
-                            <a href="{{ url_for('course_detail', course_code=i['course_code']) }}">{{ i['course_title']
-                                }}</a>
-                        </h2>
-                        <p class="text-gray-600">{{ i['course_description'][0:200] | safe }}...</p>
-                    </div>
+            <!-- Single Course Post Item -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden blog-post">
+                <a href="{{ url_for('course_detail', course_code=i['course_code']) }}">{{ i['course_title']}}">
+                
+                <div class="p-4">
+                    <h2 class="text-lg font-bold text-gray-800">{{ i['course_title'] }}</h2>
+                    <p class="text-gray-600 text-sm mt-1">{{ i['course_description'][0:200] | safe }}...</p>
+                    
+                    </p>
                 </div>
-            </div>
-            {% else %}
+                    {% else %}
             <h5 class="text-center text-gray-600">No Courses Available</h5>
             {% endfor %}
-            <!-- End of Loop -->
-
+           
         </div>
     </div>
+
+</body>
 
     
     {% endblock %}
