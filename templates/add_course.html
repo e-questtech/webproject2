@@ -36,11 +36,6 @@
         <i class="fa fa-book-open icon"></i>
         <textarea name="course_description" class="input-field" id="summernote-description" placeholder="Course Description" required></textarea>
     </div>
-
-    <div class="input-container">
-        <i class="fa fa-book-open icon"></i>
-        <textarea name="course_curriculum" class="input-field" id="summernote-curriculum" placeholder="Course Curriculum" required></textarea>
-    </div>
     
     <button type="submit" class="btn">Add Course</button>
 </form>
@@ -61,19 +56,7 @@
             ]
         });
 
-        $('#summernote-curriculum').summernote({
-            placeholder: 'Enter course curriculum here...',
-            tabsize: 2,
-            height: 200, // Set editor height
-            toolbar: [
-                ['style', ['bold', 'italic', 'underline', 'clear']],
-                ['font', ['strikethrough', 'superscript', 'subscript']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['insert', ['link', 'picture']],
-                ['view', ['fullscreen', 'codeview', 'help']]
-            ]
-        });
+        
     });
 </script>
 {% endblock %}
