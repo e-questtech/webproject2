@@ -22,14 +22,34 @@
         <i class="fa fa-book icon"></i>
         <input type="text" name="course_title" placeholder="Course Title e.g Cyber Security" id="course_title" class="input-field" required>
     </div>
-
+ 
     <div class="input-container">
         <i class="fa fa-tag icon"></i>
-        <input type="text" name="course_code" class="input-field" placeholder="Course Code e.g CYB" id="course_code" maxlength="4">
+        <input type="text" name="course_code" class="input-field" placeholder="Course Code e.g CYB" id="course_code" maxlength="4" required>
+    </div>
+
+    <div class="input-container">
+        <i class="fa fa-book-open icon"></i>
+        <textarea name="course_description" class="input-field" id="summernote" placeholder="Course Description" id="course_description" required></textarea>
+    </div>
+
+    <div class="input-container">
+        <i class="fa fa-book-open icon"></i>
+        <textarea name="course_curriculum" class="input-field" id="summernote" placeholder="Course Curriculum" id="course_description" required></textarea>
     </div>
     
     <button type="submit" class="btn">Add Course</button>
 </form>
 
-</body>
+<script>
+    $(document).ready(function () {
+        $('#summernote').summernote({
+            placeholder: 'Blog Content',
+            tabsize: 50,
+            height: 100,
+            color: 'black'
+
+        })
+    });
+</script>
 {% endblock %}

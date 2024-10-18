@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ course['course_title'] | safe }}
+{% endblock %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+
+<body class="bg" style="color: rgb(0, 0, 0); background-color: rgb(170, 170, 170);">
+    <div class="header-text">
+    <!-- Main Container -->
+    <div class="container py-5">
+    </div>
+</div>
+
+
+<div class="row justify-content-center">
+    <!-- Column with padding, and responsiveness on different screen sizes -->
+    <div class="col-lg-8 col-md-10 col-sm-12">
+        <!-- Course Header -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <!-- Title Section -->
+                <h3 class="card-title display-5" style="text-transform: uppercase; font-family: Verdana, Geneva, Tahoma, sans-serif;">
+                    {{ course['course_title'] }}
+                </h3>
+                <p class="card-subtitle text-muted">
+                    Course Code: {{ course['course_code'] }}
+                </p>
+            </div>
+        </div>
+
+        <!-- Course Description -->
+<div class="card shadow-sm mb-5">
+    <div class="card-body">
+        <h2 class="h4 mb-3"style="text-transform: uppercase;">Course Description</h2>
+        <p class="card-text">
+            {{ course['course_description'] | safe }}
+        </p>
+    </div>
+</div>
+
+    </div>
+</body>
+{% endblock %}
+

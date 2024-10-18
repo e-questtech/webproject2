@@ -1,0 +1,33 @@
+{% extends "base_dashboard.html" %}
+{% block title %} Add Assignment {% endblock %}
+{% block content %}
+<h2>Add a New Post</h2>
+<div class="alert">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="{{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+</div>
+
+<form action="{{ url_for('add_assignment')}}" method="post">
+    <div class="form-group">
+        <label for="course">Select Course:</label>
+        <select name="course" class="form-control" required>
+            {% for i in courses %}
+                <option value="{{ i['course_code'] }}">{{ i['course_title'] }}</option>
+            {% else %}
+                <option value="">No courses available</option>  <!-- Fallback if no courses -->
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="content">Post Content:</label>
+        <textarea name="content" class="form-control" rows="5" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Post</button>
+</form>
+
+{% endblock %}

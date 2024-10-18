@@ -1,50 +1,147 @@
 {% extends "base.html" %}
-{% block title %} {% for i in blog %}
-{{i['Title']|safe }}
-{% endfor %} {% endblock %}
-{% block head %}
-{{ super() }}
+{% block title %}
+{{ blog['Title']|safe }}
 {% endblock %}
 
+{% block head %}
+{{ super() }}
+<meta name="description" content="{{ blog['body'] }}">
+<!-- Include Open Graph meta tags for better sharing -->
+<meta property="og:title" content="{{ blog['title'] }}" />
+<meta property="og:description" content="{{ blog['body'] }}" />
+<meta property="og:url" content="{{ url_for('blog_post', blog_link=blog['blog_link'], _external=True) }}" />
+<meta property="og:image" content="{{ blog['image_url'] }}" />
+
+<!-- Add Google Fonts -->
+<link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Lora:wght@400;700&family=Raleway:wght@300;400&display=swap"
+    rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Montserrat:wght@500;700&display=swap"
+    rel="stylesheet">
+{% endblock %}
 
 {% block content %}
+<!-- Main Content Section -->
+<section class="course-content">
+    <div class="col-lg-9 col-md-12 mx-auto">
+        <div class="col-md-12">
+            <div class="blog">
+                <!-- Blog Image -->
 
-<head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/blog_styles.css')}}">
-</head>
-<header>
-    <img src="{{ image_url }}" alt="Blog" style="background-color: rgb(123, 123, 126);">
-    <div class="container position-relative px-4 px-lg-5">
-        <div class="row gx-4 gx-lg-5 justify-content-center">
-            <div class="col-md-10 col-lg-8 col-xl-7">
-                {% for i in blog %}
-                <div class="post-heading">
-                    <h1>{{i['Title'] |safe}}</h1>
-                    <span class="meta">
-                        &bullet; <a href="#">{{i['author']}}</a>
-                        &bullet; <a href="#">{{i['publish_date']}}</a>
-                        &bullet; <a href="#">{{i['category']}}</a>
-                    </span>
+                <div class="page-heading header-text"
+                    style="margin-top: 80px;margin-bottom: 5px; background-size: inherit; background-image: url({{ blog['image_url'] }});">
+                    <div class="container">
+                        <div class="row">
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-</header>
-<!-- Post Content-->
-<article class="mb-4">
-    <div class="container px-4 px-lg-5">
-        <div class="row gx-4 gx-lg-5 justify-content-center">
-            <div class="col-md-10 col-lg-8 col-xl-7">
-                {{i['Body']| safe}}
-                {% endfor %}
+
+
+            <!-- Blog Post -->
+            <div class="blog-info clearfix">
+                <div class="post-left">
+                    <ul style="display: flex; list-style: none; padding: 0;">
+                        <li style="margin-right: 15px;">
+                            <a href="#" style="color: #0b692a;">
+                                <!-- Green for Author -->
+                                <i class="fa fa-user"></i> {{ blog['author'] }}
+                            </a>
+                        </li>
+                        <li style="margin-right: 15px;">
+                            <a href="#" style="color: #0b692a;">
+                                <!-- Green for Date -->
+                                <i class="fa fa-calendar"></i> {{ blog['publish_date'] }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" style="color: #0b692a;">
+                                <!-- Green for Category -->
+                                <i class="fa fa-tag"></i> {{ blog['category'] }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Social Sharing -->
+            <div class="social-sharing">
+                <h4 style="color: #0b692a;">Share: </h4> <!-- Green for heading -->
+                <a href="https://www.facebook.com/sharer/sharer.php?u={{ url_for('blog_post', blog_link=blog['blog_link']) }}"
+                    target="_blank">
+                    <i class="fa fa-facebook" style="color: #34495e;"></i> <!-- Black Icons -->
+                </a>
+                <a href="https://twitter.com/intent/tweet?text=Check+out+this+blog!&url={{ url_for('blog_post', blog_link=blog['blog_link'], _external=True) }}&text={{ blog['Title'] | safe }}"
+                    target="_blank">
+                    <i class="fa fa-twitter" style="color: #34495e;"></i> <!-- Black Icons -->
+                </a>
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ url_for('blog_post', blog_link=blog['blog_link'], _external=True) }}"
+                    target="_blank">
+                    <i class="fa fa-linkedin" style="color: #34495e;"></i> <!-- Black Icons -->
+                </a>
+            </div>
+
+            <h3 class="blog-title"><a href="#" style="color: #2c3e50;">{{ blog['Title'].replace('-', ' ').title() | safe
+                    }}</a></h3>
+
+            <div class="blog-content" style="margin-top: 20px; line-height: 1.8; color: #000;">
+                <!-- Black for blog content -->
+                {{ blog['Body'] | safe }}
             </div>
         </div>
-    </div>
-</article>
-<!-- 
-<form>
-    <h1>Leave a Comment on this post</h1>
-    
-</form> -->
+        <!-- /Blog Post -->
+</section>
 
+<style>
+    /* General Blog Font Styles */
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #ffffff;
+        /* White Background */
+        color: #000000;
+        /* Black text */
+    }
+
+    .blog-title {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+        font-size: 2rem;
+        /* Large size for blog titles */
+        margin-top: 20px;
+        color: #000;
+        /* Black for titles */
+    }
+
+    .blog-content {
+        font-family: 'Poppins', sans-serif;
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #000;
+        /* Black for readability */
+    }
+
+    .social-sharing a {
+        font-size: 1.5rem;
+        /* Larger share icons */
+        color: #0b692a;
+        /* Green for social icons */
+        margin-right: 10px;
+    }
+
+    .social-sharing h4 {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 500;
+        font-size: 1.2rem;
+        color: #0b692a;
+        /* Green for "Share" heading */
+    }
+
+    .post-left a {
+        font-family: 'Lora', serif;
+        color: #0b692a;
+        /* Green for author, date, and category links */
+        font-size: 1rem;
+    }
+</style>
 {% endblock %}

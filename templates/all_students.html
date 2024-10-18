@@ -5,7 +5,6 @@
 {% endblock %}
 
 {% block content %}
-<form action="{{ url_for('create_student')}}" method="post">
     <div class="alert">
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -31,17 +30,18 @@
                         <th>Last Name</th>
                         <th>Email</th>
                         <th>Student ID</th>
+                        <th>Course Offered</th>
                         <th>Date Registered</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>{% for i in record %}
                         <td>{{i['FIRST_NAME']}}</td>
-                        <td>{{i['LAST_NAME'][0:300]|safe}}...</td>
+                        <td>{{i['LAST_NAME']</td>
                         <td>{{i['EMAIL']}}</td>
                         <td>{{i['STUDENT_ID']}}</td>
+                        <td>{{i['COURSE']}}</td>
                         <td>{{i['Date_Registered']}}</td>
-                        
                     </tr>
                     {% endfor %}
                 </tbody>

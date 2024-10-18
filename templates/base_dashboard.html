@@ -72,7 +72,7 @@
 
                 <!-- Divider -->
                 <hr class="sidebar-divider">
-
+                {% if session['role'] == 'superadmin' %}
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="{{ url_for('create_admin') }}" data-target="#collapseTwo"
                         aria-expanded="true" aria-controls="collapseTwo">
@@ -80,7 +80,13 @@
                         <span>Add Admin</span>
                     </a>
                 </li>
-                
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{ url_for('assign_tutor') }}" data-target="#collapseTwo"
+                        aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fas fa-fw fa-user"></i>
+                        <span>Assign Tutor</span>
+                    </a>
+                </li>
                 <!-- Divider -->
                 <hr class="sidebar-divider">
                 <!-- Heading -->
@@ -99,14 +105,32 @@
                     
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{ url_for('prospective_students') }}" data-target="#collapseTwo"
+                        aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fas fa-fw fa-user"></i>
+                        <span>New Registrations</span>
+                    </a>
+                </li>
+                {% endif %}
+                {% if session['role'] in ['superadmin', 'tutor'] %}
+                <li class="nav-item">
                     <a class="nav-link collapsed" href="{{ url_for('all_students') }}" data-target="#collapseTwo"
                         aria-expanded="true" aria-controls="collapseTwo">
                         <i class="fas fa-fw fa-cog"></i>
                         <span>All Students</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{ url_for('add_assignment') }}" data-target="#collapseTwo"
+                        aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fas fa-fw fa-cog"></i>
+                        <span>Add Assignment</span>
+                    </a>
+                </li>
+                {% endif %}
                 <hr class="sidebar-divider">
 
+                {% if session['role'] in ['superadmin', 'content_manager'] %}
                 <!-- Heading -->
                 <div class="sidebar-heading">
                     Blog
@@ -149,11 +173,9 @@
                         <span>All Videos</span>
                     </a>
                 </li>
-                <hr class="sidebar-divider">
+                {% endif %}
 
-                <!-- Heading -->
-
-                
+                {% if session['role'] == 'superadmin' %}
                 <hr class="sidebar-divider">
                 <!-- Heading -->
                 <div class="sidebar-heading">
@@ -175,7 +197,7 @@
                         <span>All Courses</span>
                     </a>
                 </li>
-                
+                {% endif %}
                 <!-- Divider -->
                 <hr class="sidebar-divider d-none d-md-block">
 

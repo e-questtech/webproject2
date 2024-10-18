@@ -240,7 +240,7 @@ a {
   text-decoration: none;
 }
 a:hover {
-  color: #0085A1;
+  color: #0b692a;
 }
 
 a:not([href]):not([class]), a:not([href]):not([class]):hover {
@@ -2989,7 +2989,7 @@ textarea.form-control-lg {
 }
 .btn-check:focus + .btn, .btn:focus {
   outline: 0;
-  box-shadow: 0 0 0 0.25rem rgba(0, 133, 161, 0.25);
+  box-shadow: 0 0 0 0.25rem #0b692a
 }
 .btn:disabled, .btn.disabled, fieldset:disabled .btn {
   pointer-events: none;
@@ -3003,8 +3003,8 @@ textarea.form-control-lg {
 }
 .btn-primary:hover {
   color: #fff;
-  background-color: #007189;
-  border-color: #006a81;
+  background-color: #0b692a;
+  border-color: #0b692a;
 }
 .btn-check:focus + .btn-primary, .btn-primary:focus {
   color: #fff;

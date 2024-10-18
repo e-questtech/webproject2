@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %} Course Posts {% endblock %}
+{% block content %}
+<h2>Posts from Your Tutors</h2>
+<div class="alert">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="{{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+</div>
+<div class="card">
+    <div class="card-body">
+        {% if posts %}
+            <ul>
+                {% for post in posts %}
+                    <li>
+                        <strong>{{ post['FIRST_NAME'] }} {{ post['LAST_NAME'] }}</strong>: {{ post['content'] }}
+                        <br>
+                        <small>Posted on: {{ post['date_posted'] }}</small>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No posts available.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

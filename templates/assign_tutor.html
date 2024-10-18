@@ -1,0 +1,39 @@
+{% extends "base_dashboard.html" %}
+{% block title %} Assign Course To Tutor {% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+
+<form action="{{ url_for('assign_tutor') }}" method="POST">
+    <div class="alert">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+            <div class="{{ category }}">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                {{ message }}
+            </div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    <label for="tutor_email">Select Tutor:</label>
+    <select id="tutor_email" name="tutor_email" required>
+        {% for tutor in tutors %}
+        <option value="{{ tutor['email'] }}">{{ tutor['FIRST_NAME'] }} {{ tutor['LAST_NAME'] }}</option>
+        {% endfor %}
+    </select><br>
+
+    <label for="course_code">Select Course:</label>
+    <select id="course_code" name="course_code" required>
+        {% for course in courses %}
+        <option value="{{ course['course_code'] }}">{{ course['course_title'] }}</option>
+        {% endfor %}
+    </select><br>
+
+    <input type="submit" value="Assign Tutor to Course">
+</form>
+
+{% endblock %}

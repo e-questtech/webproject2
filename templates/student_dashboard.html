@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <!-- Include Bootstrap or any CSS framework -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Student Portal</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <div class="container mt-5">
+        <h1 class="text-center">Welcome, {{ student['FIRST_NAME'] }} {{ student['LAST_NAME']  }}</h1>
+        <div class="row mt-5">
+            <!-- Student Info Card -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        Your Profile
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Student ID:</strong> {{ student['STUDENT_ID'] }}</p>
+                        <p><strong>Full Name:</strong> {{ student['FIRST_NAME'] }} {{ student['LAST_NAME'] }}</p>
+                        <p><strong>Email:</strong> {{ student['EMAIL'] }}</p>
+                        <p><strong>Course:</strong> {{ student['course'] }}</p>
+                        <p><strong>Year:</strong> {{ student['Date_Registered'] }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Links or Courses Card -->
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        Your Courses and Updates
+                    </div>
+                    <div class="card-body">
+                        <!-- Display the student's enrolled courses or other relevant information -->
+                        <ul>
+                            <li>Course: <strong>{{ student['course'] }}</strong></li>
+                            
+                        </ul>
+                        <!-- <ul>
+                            <li>Tutor: <strong>{{ student['course'] }}</strong></li>
+                            Show the tutor assigned to the course
+                        </ul> -->
+                    </div>
+                </div>
+
+                <!-- Other Dashboard Content or Alerts -->
+                <div class="mt-4">
+                    <div class="alert alert-info" role="alert">
+                        You have new assignments due next week! Please check your courses.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container text-center">
+            <span class="text-muted">&copy; 2024 Student Dashboard</span>
+        </div>
+    </footer>
+
+    <!-- JS dependencies (Bootstrap, jQuery) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

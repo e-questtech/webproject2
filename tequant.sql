@@ -1,4 +1,4 @@
--- use defaultdb;
+use defaultdb;
 create database defaultdb;
 CREATE TABLE Blog (
 	blog_link  varchar(200) primary key,
@@ -54,6 +54,41 @@ select * from Courses;
 insert into Courses values('CyberSecurity', 'CYB');
 
 ALTER TABLE Blog
-ADD COLUMN image_filename VARCHAR(255);
-
+ADD COLUMN image_url VARCHAR(255);
+select * from Courses;
+-- select *  from Courses where course_code = 'MSFT';
+select * from prospective_students;
+alter table prospective_students add column phone_number integer(20);
 -- drop database defaultdb;
+
+-- TutorCourse Table (For Assigning Tutors to Courses)
+CREATE TABLE TutorCourse (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    tutor_email VARCHAR(255),
+    course_code VARCHAR(10),
+    FOREIGN KEY (tutor_email) REFERENCES Admins(email) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (course_code) REFERENCES Courses(course_code) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+select * from TutorCourse;
+
+CREATE TABLE Posts (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    course_code VARCHAR(10),
+    tutor_email VARCHAR(255),
+    content TEXT,
+    date_posted DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (course_code) REFERENCES Courses(course_code),
+    FOREIGN KEY (tutor_email) REFERENCES Admins(email)
+);
+select * from Posts;
+
+select course_code from Courses where course_title = (select course from Students where STUDENT_ID = 'DTS/2024/50');
+
+CREATE TABLE Library (
+       id INT PRIMARY KEY AUTO_INCREMENT,
+       title VARCHAR(255),
+       author VARCHAR(255),
+       description TEXT,
+       file_path VARCHAR(255)  -- Path to the book file from google drive
+   );

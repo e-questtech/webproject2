@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %} Courses {% endblock %}
+{% block head %}
+{{ super() }}
+
+<head>
+    <style>
+        /* Custom Styles for Blog Post Images */
+        .blog-image-container {
+            width: 150px;
+            /* Small box width */
+            height: 150px;
+            /* Small box height */
+            overflow: hidden;
+            border-radius: 10px;
+            /* Optional: Add rounded corners */
+        }
+
+        /* Add some spacing around the blog post */
+        .blog-post {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+{% endblock %}
+
+{% block content %}
+<body>
+
+    <div class="page-heading header-text"style="background-image: url({{ url_for('static', filename='img/pexels-polina-tankilevitch-4443160.jpg')}});">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Courses at TE Quant</h1>
+                    <span>Add <em>Value</em> to yourself</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="row">
+            <!-- Courses Grid -->
+            {% for i in courses %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <!-- Single Course Item -->
+                <div class="card h-100 shadow-sm blog-post">
+                    <a href="{{ url_for('course_detail', course_code=i['course_code']) }}">
+                        <!-- Blog Image (if you have one) -->
+                        
+                    
+                    <div class="card-body">
+                        <h5 class="card-title" style="color: black;">{{ i['course_title'] }}</h5>
+                        <h6 class="card-subtitle text-muted">{{ i['course_code'] }}</h6>
+                        <p class="card-text" style="color: black;">{{ i['course_description'][0:200] | safe }}...</p>
+                    </div></a>
+                </div>
+            </div>
+            {% else %}
+            <div class="col-md-12 text-center">
+                <h5>No Courses Available</h5>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+{% endblock %}

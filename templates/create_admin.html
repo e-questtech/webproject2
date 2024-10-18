@@ -7,7 +7,7 @@
 
 <body>
 
-    <form action="{{ url_for('create_admin') }}" method="POST" style="max-width:350px;margin:auto">
+    <form action="{{ url_for('create_admin') }}" method="POST" style="max-width:350px;margin:auto;">
         <div class="alert">
             {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
@@ -38,6 +38,15 @@
         <div class="input-container">
             <i class="fa fa-key icon"></i>
             <input class="input-field" type="password" placeholder="Password" name="password" required>
+        </div>
+        <div class="input-container">
+            <i class="fa fa-user-shield icon"></i>
+            <select class="input-field" name="role" required>
+                <option value="" disabled selected>Select Role</option>
+                <option value="tutor">Tutor</option>
+                <option value="content_manager">Content Manager</option>
+                <!-- <option value="viewer">Content Manager</option> -->
+            </select>
         </div>
         <button type="submit" class="btn">Add Admin</button>
     </form>
