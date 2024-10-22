@@ -1,44 +1,53 @@
-{% extends "base.html" %}
+{% extends "student_base.html" %}
 {% block title %} Course Posts {% endblock %}
 {% block content %}
 
-<div class="page-heading header-text">
-    <h3>Assignments</h3>
-</div>
+<div class="container" style="margin-bottom: 80px;">
+    <h5 class="center-align">Assignments</h5>
 
-<div class="container" style="margin-bottom: 400px;">
-
-    <div class="alert">
+    <!-- Flash Messages -->
+    <div>
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category, message in messages %}
-            <div class="alert alert-{{ category }}">{{ message }}</div>
+            <div class="card-panel {{ category }} lighten-4">
+                <span class="{{ category }}-text">{{ message }}</span>
+            </div>
             {% endfor %}
         {% endif %}
         {% endwith %}
     </div>
 
-    <div class="card">
+    <!-- Assignment Posts -->
+    <div class="section">
         {% if posts %}
+            <ul class="collection">
                 {% for post in posts %}
-                <li class="list-group-item">
+                <li class="collection-item">
+                    <div class="row">
+                        <div class="col s12">
+                            <h6><strong>Tutor Name:</strong> {{ post['FIRST_NAME'] }} {{ post['LAST_NAME'] }}</h6>
+                        </div>
 
-                  <h6>TUTOR NAME: {{ post['FIRST_NAME'] }} {{ post['LAST_NAME'] }}</h6>
-                  <h4 class="button" style="text-align:right;"><a href="{{url_for('submit_assignment')}}">SUBMIT ASSIGNMENT</a></h4>
+                        <div class="col s12">
+                            <p class="flow-text">{{ post['content'] | safe }}</p>
+                            <small class="grey-text">Posted on: {{ post['date_posted'] }}</small>
+                        </div>
 
-                  <div class="blog-content" style="margin: 0px; padding: 0; line-height: 1.8;">
-                  {{ post['content'] | safe }}
-              </div>
-                    
-                    <small class="text-muted">Posted on: {{ post['date_posted'] }}</small>
+                        <!-- Submit Assignment Link -->
+                        <div class="col s12 right-align">
+                            <a href="{{ url_for('submit_assignment') }}" class="btn green darken-3">
+                                Submit Assignment
+                            </a>
+                        </div>
+                    </div>
                 </li>
                 {% endfor %}
-            {% else %}
-            <h5 class="text-center">No posts available.</h5>
-            {% endif %}
-        
+            </ul>
+        {% else %}
+            <h5 class="center-align">No posts available.</h5>
+        {% endif %}
     </div>
-
 </div>
 
 {% endblock %}

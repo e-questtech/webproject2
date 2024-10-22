@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-<form action="{{ url_for('add_blog')}}" method="post">
+<form action="{{ url_for('add_blog')}}" method="post"enctype="multipart/form-data">
     <div class="alert">
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
@@ -22,7 +22,10 @@
         <i class="fa fa-pen icon"></i>
         <input type="text" name="title" placeholder="Blog Title" id="first_name" class="input-field" required>
     </div>
-
+    <div class="input-container">
+        <i class="fa fa-picture icon"></i>
+        <input type="file" name="image" id="image" accept="image/*" placeholder="Select Blog Image">
+    </div>
     <div class="input-container">
         <i class="fa fa-text"></i>
         <textarea type="text" name="body" placeholder="Body" id="summernote" required></textarea>
@@ -49,10 +52,12 @@
 <script>
     $(document).ready(function () {
         $('#summernote').summernote({
-            placeholder: 'Blog Content',
+            placeholder: 'Blog Content goes Here',
             tabsize: 50,
-            height: 100,
-            color: 'black'
+            height: 300,
+        fontNames: ['Lora', 'Merriweather', 'Open Sans', 'Roboto', 'Source Sans Pro', 'Arial', 'Georgia'], // Add blog-friendly fonts
+        fontNamesIgnoreCheck: ['Lora', 'Merriweather', 'Open Sans', 'Roboto', 'Source Sans Pro'], // Ensure custom fonts work
+        fontSizes: ['12', '14', '16', '18', '24', '36'],
 
         })
     });
@@ -61,25 +66,5 @@
 </body>
 {% endblock %}
 
-
-<script>
-    $(document).ready(function () {
-        $('#summernote').summernote({
-            placeholder: 'Course Content',
-            tabsize: 50,
-            height: 100,
-            color: 'black'
-
-        })
-});
-        $('#summernote-curriculum').summernote({
-            placeholder: 'Course Content',
-            tabsize: 50,
-            height: 100,
-            color: 'black'
-
-        });
-    
-</script>
 
 </html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Dashboard{% endblock %}</title>
+
+    <!-- Materialize CSS and Material Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+    {% block extra_css %}
+    <!-- Additional page-specific CSS -->
+    {% endblock %}
+</head>
+
+<body>
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col s12 m4 l3">
+            <ul id="slide-out" class="sidenav sidenav-fixed" style="background-color: #0b692a;">
+                
+                <li><a href="{{url_for('student_dashboard')}}" class="waves-effect white-text"><i class="material-icons white-text">dashboard</i>Dashboard</a></li>
+                <li><a href="{{url_for('view_posts')}}" class="waves-effect white-text"><i class="material-icons white-text">assignment</i>Assignments</a></li>
+                <li><a href="#!" class="waves-effect white-text"><i class="material-icons white-text">message</i>Messages</a></li>
+                <li><a href="#!" class="waves-effect white-text"><i class="material-icons white-text">settings</i>Settings</a></li>
+                <li><div class="divider white"></div></li>
+                <li><a href="{{ url_for('logout') }}" class="waves-effect white-text"><i class="material-icons white-text">exit_to_app</i>Logout</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col s12 m8 l9">
+            <nav>
+                <div class="nav-wrapper" style="background-color: #0b692a;">
+                    <a href="#" class="brand-logo center">Student Dashboard</a>
+                    <a href="#" data-target="slide-out" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a>
+                </div>
+            </nav>
+
+            <!-- Main content area where other templates can inject their content -->
+            <div>
+                {% block content %}
+                <!-- Page-specific content goes here -->
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Materialize JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.sidenav');
+            var instances = M.Sidenav.init(elems);
+        });
+    </script>
+
+    {% block extra_js %}
+    <!-- Additional page-specific JS -->
+    {% endblock %}
+</body>
+
+</html>
