@@ -1,6 +1,8 @@
 {% extends "base_dashboard.html" %}
 {% block title %} Add Assignment {% endblock %}
 {% block content %}
+<div class="container">
+    
 <h2>Add a New Post</h2>
 <div class="alert">
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -24,10 +26,25 @@
         </select>
     </div>
     <div class="form-group">
-        <label for="content">Post Content:</label>
-        <textarea name="content" class="form-control" rows="5" required></textarea>
+        <div class="input-container">
+            <i class="fa fa-text"></i>
+            <textarea type="text" name="content" placeholder="Body" id="summernote" required></textarea>
+        </div>
+        
     </div>
     <button type="submit" class="btn btn-primary">Submit Post</button>
 </form>
+<script>
+    $(document).ready(function () {
+        $('#summernote').summernote({
+            placeholder: 'Assignment',
+            tabsize: 50,
+            height: 100,
+            color: 'black'
 
+        })
+    });
+</script>
+
+</div>
 {% endblock %}

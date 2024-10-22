@@ -5,6 +5,8 @@
 {% endblock %}
 {% block content %}
 
+
+<div class="page-heading header-text">
 <div class="container">
     <h2 class="text-center">Student Login</h2>
     <div class="login-form">
@@ -20,7 +22,7 @@
         {% endwith %}
 
         <!-- Login form -->
-        <form action="{{ url_for('login') }}" method="POST">
+            <form action="{{ url_for('login') }}" method="POST" style="max-width:300px;margin:auto">
             <div class="form-group">
                 <label for="STUDENT_ID">Student ID</label>
                 <input type="text" class="form-control" name="STUDENT_ID" placeholder="e.g. CYB/2024/19 or johndoe@example.com" required>

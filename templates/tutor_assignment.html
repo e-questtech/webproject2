@@ -1,0 +1,34 @@
+{% extends "base_dashboard.html" %}
+{% block title %} Assignment Submissions {% endblock %}
+{% block content %}
+
+<div class="container">
+    <h3>Assignment Submissions</h3>
+
+    {% if submissions %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Student Name</th>
+                <th>File</th>
+                <th>Date Submitted</th>
+                <th>Download</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for submission in submissions %}
+            <tr>
+                <td>{{ submission['FIRST_NAME'] }} {{ submission['LAST_NAME'] }}</td>
+                <td>{{ submission['file_name'] }}</td>
+                <td>{{ submission['date_submitted'] }}</td>
+                <td style= "border: none; color: white; background-color: blue; text-align: center; text-transform:uppercase; border-radius: 10px;"><a href="{{ url_for('download_assignment', assignment_id=submission['id']) }}" style="color: white;">Download</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No submissions found.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

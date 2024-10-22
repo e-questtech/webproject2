@@ -127,6 +127,14 @@
                         <span>Add Assignment</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{ url_for('view_submissions') }}" data-target="#collapseTwo"
+                        aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fas fa-fw fa-cog"></i>
+                        <span>Submitted Assignments</span>
+                    </a>
+                </li>
+                
                 {% endif %}
                 <hr class="sidebar-divider">
 
@@ -217,7 +225,16 @@
 
                     <!-- Topbar -->
                     <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
+                        <div class="alert">
+                            {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                            {% for category, message in messages %}
+                            <span class="closebtn">&times;</span>
+                            <div class="{{ category }}">{{ message }}</div>
+                            {% endfor %}
+                            {% endif %}
+                            {% endwith %}
+                        </div>
                         <!-- Topbar Navbar -->
                         <ul class="navbar-nav ml-auto">
 

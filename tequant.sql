@@ -92,3 +92,31 @@ CREATE TABLE Library (
        description TEXT,
        file_path VARCHAR(255)  -- Path to the book file from google drive
    );
+   
+   
+   SELECT c.course_code, c.course_title 
+    FROM TutorCourse tc
+    JOIN Courses c ON tc.course_code = c.course_code
+    WHERE tc.tutor_email = 'johnny.cage@tequant.ng';
+    
+    SELECT Posts.content, Posts.date_posted, Admins.FIRST_NAME, Admins.LAST_NAME
+            FROM Posts
+            JOIN Admins ON Posts.tutor_email = Admins.EMAIL
+            WHERE Posts.course_code = 'DTS'
+            ORDER BY Posts.date_posted DESC;
+            
+            select * from Students;
+            SELECT COURSE FROM Students WHERE STUDENT_ID = 'DTS/2024/50';
+            SELECT course_code from Courses where course_title = 'Data Science';
+
+
+CREATE TABLE Assignments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    student_id INT,
+    course_code VARCHAR(10),
+    file_name VARCHAR(255),
+    file_data LONGBLOB,  -- For storing the PDF file directly
+    date_submitted DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (student_id) REFERENCES Students(STUDENT_ID),
+    FOREIGN KEY (course_code) REFERENCES Courses(course_code)
+);

@@ -1,10 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify, flash,Response
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify, flash,Response, make_response
 from datetime import timedelta
 from flask_mail import *
-import hashlib    #To change to one for flask hashing
+import hashlib   
 import random
 import re
-# from mysql.connector import OperationalError
 import datetime
 from datetime import datetime
 import pymysql
@@ -12,6 +11,7 @@ import requests
 from flask_caching import Cache
 from config import Config
 import os
+import io
 from functools import wraps
 # Cloudinary to store the uploaded blog images
 from cloudinary.uploader import upload
@@ -775,40 +775,37 @@ def add_assignment():
     cursor.execute(sql_courses, (tutor_email,))
     courses = cursor.fetchall()
 
-    # Debugging: Check if courses were retrieved
-    print(courses)  # Add this line to see if courses are being retrieved correctly
-
+   
     return render_template('add_assignment.html', courses=courses)
+
 # Students See Course Content
-@app.route('/student/posts/', methods=['GET'])
+@app.route('/student/assignments/', methods=['GET'])
 def view_posts():
     if 'loggedin' in session:
-        student_id = session['STUDENT_ID']  
+        student_id = session['STUDENT_ID']
 
-        # Fetch the student's enrolled courses
-        sql_courses = """
-        SELECT course_code FROM Courses 
-        WHERE course_code = (SELECT course FROM Students WHERE STUDENT_ID = %s);
+        # Fetch the student's enrolled course (only one)
+        sql_course = """
+        SELECT COURSE FROM Students WHERE STUDENT_ID = %s;
         """
-        cursor.execute(sql_courses, (student_id,))
-        courses = cursor.fetchall()
+        cursor.execute(sql_course, (student_id,))
+        course = cursor.fetchone()
+        course = course['COURSE']
+        course_code_sql = '''SELECT course_code from Courses where course_title = %s'''
+        cursor.execute(course_code_sql, (course,))
+        course_code = cursor.fetchone()
+        course_code = course_code['course_code']
+        
 
-        # Prepare a list of course codes for the IN clause
-        course_codes = tuple(course['course_code'] for course in courses)
-
-        if not course_codes:
-            # Handle the case where the student is not enrolled in any courses
-            return render_template('course_content.html', posts=[], message="No courses found.")
-
-        # Fetch posts related to the enrolled courses
+        # Fetch posts related to the enrolled course
         sql_posts = """
             SELECT Posts.content, Posts.date_posted, Admins.FIRST_NAME, Admins.LAST_NAME
             FROM Posts
             JOIN Admins ON Posts.tutor_email = Admins.EMAIL
-            WHERE Posts.course_code IN %s
+            WHERE Posts.course_code = %s
             ORDER BY Posts.date_posted DESC
         """
-        cursor.execute(sql_posts, (course_codes,))
+        cursor.execute(sql_posts, (course_code,))
         posts = cursor.fetchall()
         
         return render_template('course_content.html', posts=posts)
@@ -816,9 +813,103 @@ def view_posts():
     return redirect(url_for('login'))  # Redirect to login if not logged in
 
 
+# Student Submit Assignment
+@app.route('/student/submit_assignment/', methods=['POST', 'GET'])
+def submit_assignment():
+    if 'loggedin' not in session:
+        return redirect(url_for('login'))
 
+    if request.method == 'POST':
+        student_id = session['STUDENT_ID']
+        course_sql = """select course_code from Courses where course_title in 
+        (SELECT COURSE FROM Students WHERE STUDENT_ID = %s)"""
+        cursor.execute(course_sql, (student_id,))
+        course = cursor.fetchone()
+        # Check if an assignment file is part of the request
+        if 'assignment_file' not in request.files:
+            flash('No file part', 'danger')
+            return redirect(url_for('submit_assignment'))
 
+        file = request.files['assignment_file']
 
+        # Ensure a file was selected
+        if file.filename == '':
+            flash('No file selected', 'danger')
+            return redirect(url_for('submit_assignment'))
+
+        # Ensure the file is a PDF
+        if file:
+            file_name = file.filename
+            file_data = file.read()
+
+            # Get the course code from the form
+            course_code = course['course_code']
+
+            # Insert assignment into the database
+            sql_insert_assignment = """
+            INSERT INTO Assignments (student_id, course_code, file_name, file_data)
+            VALUES (%s, %s, %s, %s);
+            """
+            cursor.execute(sql_insert_assignment, (student_id, course_code, file_name, file_data))
+            connection.commit()
+
+            flash('Assignment submitted successfully!', 'success')
+            return redirect(url_for('view_posts'))
+        else:
+            flash('Only PDF files are allowed', 'danger')
+            return redirect(url_for('submit_assignment'))
+    
+    # Render the assignment submission form when the method is GET
+    return render_template('submit_assignment.html')
+
+    
+
+# Tutors View Assignment Submitted
+@roles_required(['tutor', 'superadmin'])
+@app.route('/tutor/submissions/', methods=['GET'])
+def view_submissions():
+    if 'loggedin' in session:
+        tutor_email = session['email']
+
+        # Fetch all submissions for the courses the tutor teaches
+        sql_get_submissions = """
+        SELECT Assignments.id, Students.FIRST_NAME, Students.LAST_NAME, Assignments.file_name, Assignments.date_submitted
+        FROM Assignments
+        JOIN Students ON Assignments.student_id = Students.STUDENT_ID
+        JOIN Posts ON Assignments.course_code = Posts.course_code
+        WHERE Posts.tutor_email = %s
+        ORDER BY Assignments.date_submitted DESC
+        """
+        cursor.execute(sql_get_submissions, (tutor_email,))
+        submissions = cursor.fetchall()
+
+        return render_template('tutor_assignment.html', submissions=submissions)
+
+    return redirect(url_for('admin_login'))
+
+# Tutor Download Assignment
+@roles_required(['tutor', 'superadmin'])
+@app.route('/download_assignment/<int:assignment_id>', methods=['GET'])
+def download_assignment(assignment_id):
+    if 'loggedin' in session:
+        # Fetch the file from the database
+        sql_get_assignment = """
+        SELECT file_name, file_data FROM Assignments WHERE id = %s;
+        """
+        cursor.execute(sql_get_assignment, (assignment_id,))
+        assignment = cursor.fetchone()
+
+        if assignment:
+            file_name = assignment['file_name']
+            file_data = assignment['file_data']
+
+            # Send the file as a download response
+            response = make_response(file_data)
+            response.headers['Content-Type'] = 'application/pdf'
+            response.headers['Content-Disposition'] = f'attachment; filename="{file_name}"'
+            return response
+
+    return redirect(url_for('admin_login'))
 
 
 

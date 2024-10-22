@@ -6,6 +6,8 @@
 {% block content %}
 
 <body>
+    <div class="page-heading header-text">
+    <div class="container">
     <form action="{{ url_for('admin_login')}}" method="POST" style="max-width:300px;margin:auto">
         <div class="alert">
             {% with messages = get_flashed_messages(with_categories=true) %}
@@ -17,7 +19,7 @@
             {% endif %}
             {% endwith %}
         </div>
-        <h2 class="title">Login</h2>
+        <h2 style="text-transform: uppercase; color: azure;">Login</h2>
         <div class="input-container">
             <i class="fa fa-envelope icon"></i>
             <input class="input-field" type="text" placeholder="Email" name="email" required>
@@ -28,8 +30,8 @@
         </div>
         <button type="submit" class="btn">Login</button>
     </form>
-
-
+</div>
+</div>
 </body>
 
 {% endblock %}

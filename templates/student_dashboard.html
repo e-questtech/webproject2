@@ -41,7 +41,7 @@
                         <p><strong>Student ID:</strong> {{ student['STUDENT_ID'] }}</p>
                         <p><strong>Full Name:</strong> {{ student['FIRST_NAME'] }} {{ student['LAST_NAME'] }}</p>
                         <p><strong>Email:</strong> {{ student['EMAIL'] }}</p>
-                        <p><strong>Course:</strong> {{ student['course'] }}</p>
+                        <p><strong>Course:</strong> {{ student['COURSE'] }}</p>
                         <p><strong>Year:</strong> {{ student['Date_Registered'] }}</p>
                     </div>
                 </div>
@@ -54,14 +54,14 @@
                         Your Courses and Updates
                     </div>
                     <div class="card-body">
-                        <!-- Display the student's enrolled courses or other relevant information -->
+                        <!-- Display the student's enrolled COURSEs or other relevant information -->
                         <ul>
-                            <li>Course: <strong>{{ student['course'] }}</strong></li>
+                            <li>Course: <strong>{{ student['COURSE'] }}</strong></li>
                             
                         </ul>
                         <!-- <ul>
-                            <li>Tutor: <strong>{{ student['course'] }}</strong></li>
-                            Show the tutor assigned to the course
+                            <li>Tutor: <strong>{{ student['COURSE'] }}</strong></li>
+                            Show the tutor assigned to the COURSE
                         </ul> -->
                     </div>
                 </div>
@@ -69,7 +69,7 @@
                 <!-- Other Dashboard Content or Alerts -->
                 <div class="mt-4">
                     <div class="alert alert-info" role="alert">
-                        You have new assignments due next week! Please check your courses.
+                        You have new assignments due next week! Please check your COURSEs.
                     </div>
                 </div>
             </div>
