@@ -4,7 +4,7 @@
 {{ super() }}
 
 <head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/blog_styles.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/blog_styles.css') }}">
 </head>
 {% endblock %}
 
@@ -15,39 +15,57 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <h1> TE Quant Blog</h1>
+                    <h1>TE Quant Blog</h1>
                     <span>Get yourself Enlightened</span>
-
                 </div>
             </div>
         </div>
     </div>
+
     <!-- Main Content-->
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
-            <!-- Post preview-->
-            {% for i in blogs %}
+            <!-- Blog Content with Sidebar-->
+            <div class="col-lg-8">
+                <!-- Post preview-->
+                {% for blog in blogs %}
+                <div class="post-preview" style="font-family: 'Poppins', sans-serif;">
+                    <!-- Blog Cover Image -->
+                    <div class="blog-cover" style="margin-bottom: 20px;">
+                        <img src="{{ url_for('static', filename='images/blogs/' ~ blog['cover_image']) }}" class="img-fluid" alt="Cover image of {{ blog['Title'] }}">
+                    </div>
 
-            <div class="post-preview" style="font-family: 'Poppins', sans-serif;">
-                <a href="{{ url_for('blog_post', blog_link = i['blog_link']) }}">
-                    <p class="post-title">{{i['Title']}}</p>
-                    <p class="post-subtitle">{{i['Body'][0:180]|safe}}...</p>
-                </a>
-                <p>
-                    Posted by <a href="#">{{i['author']}}</a> on <a href="#">{{i['publish_date']}}</a>
-                </p>
-
-            </div>
-            
+                    <a href="{{ url_for('blog_post', blog_link=blog['blog_link']) }}">
+                        <h2 class="post-title">{{ blog['Title'] }}</h2>
+                        <p class="post-subtitle">{{ blog['Body'][0:180] | safe }}...</p>
+                    </a>
+                    <p class="post-meta">
+                        Posted by <a href="#">{{ blog['author'] }}</a> on {{ blog['publish_date'] }}
+                    </p>
+                </div>
                 <hr class="my-4" />
-
                 {% else %}
-                <h5>No Posts</h5>
+                <h5>No Posts Available</h5>
                 {% endfor %}
-            
+            </div>
+
+            <!-- Sidebar for Blog Categories -->
+            <div class="col-lg-4">
+                <div class="card my-4">
+                    <h5 class="card-header">Categories</h5>
+                    <div class="card-body">
+                        <ul class="list-unstyled mb-0">
+                            {% for category in category %}
+                            <li>
+                                <a href="#">{{ category }}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
 </body>
 
 {% endblock %}

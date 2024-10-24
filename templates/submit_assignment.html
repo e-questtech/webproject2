@@ -1,17 +1,50 @@
-{% extends "base.html" %}
+{% extends "student_base.html" %}
 {% block title %} Submit Assignment {% endblock %}
 {% block content %}
 
 <div class="container">
-    <h3>Submit Your Assignment</h3>
-    <form action="{{ url_for('submit_assignment') }}" method="POST" enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="assignment_file">Submit your assignment :</label>
-            <input type="file" class="form-control" id="assignment_file" name="assignment_file" accept=".pdf">
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+    <h5 class="center-align">Submit Your Assignment</h5>
     
+    <!-- Flash Messages -->
+    <div class="alert">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}" style="position: relative; padding: 10px; border-radius: 5px; margin-bottom: 20px; background-color: #f8d7da; color: #721c24;">
+            <span class="closebtn" style="position: absolute; top: 0; right: 10px; cursor: pointer; color: #721c24;" onclick="this.parentElement.style.display='none';">&times;</span>
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- Card for the Submission Form -->
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">Upload Assignment</span>
+
+            <form action="{{ url_for('submit_assignment') }}" method="POST" enctype="multipart/form-data">
+                <div class="input-field col s12">
+                    <div class="file-field input-field">
+                        <div class="btn green darken-3">
+                            <span>Upload</span>
+                            <input type="file" name="assignment_file" accept=".pdf" required>
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text" placeholder="Upload your assignment here" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col s12">
+                        <button type="submit" class="btn green darken-3">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 {% endblock %}

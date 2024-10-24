@@ -1,0 +1,67 @@
+{% extends "base_dashboard.html" %}
+
+{% block title %}Admin Logs{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">Activity Logs</h2>
+
+    <!-- Logs Table -->
+    {% if logs %}
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Admin</th>
+                <th>Action</th>
+                <th>Details</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in logs %}
+            <tr>
+                <td>{{ log['admin_email'] }}</td>
+                <td>{{ log['action'] }}</td>
+                <td>{{ log['details'] }}</td>
+                <td>{{ log['timestamp'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <!-- Pagination Links -->
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            <!-- Previous button -->
+            <li class="page-item {% if page == 1 %}disabled{% endif %}">
+                <a class="page-link" href="{{ url_for('view_logs', page=page-1, admin_name=admin_name, action_type=action_type, start_date=start_date, end_date=end_date) }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            
+            <!-- Page numbers -->
+            {% for page_num in range(1, total_pages + 1) %}
+                <li class="page-item {% if page_num == page %}active{% endif %}">
+                    <a class="page-link" href="{{ url_for('view_logs', page=page_num, admin_name=admin_name, action_type=action_type, start_date=start_date, end_date=end_date) }}">
+                        {{ page_num }}
+                    </a>
+                </li>
+            {% endfor %}
+            
+            <!-- Next button -->
+            <li class="page-item {% if page == total_pages %}disabled{% endif %}">
+                <a class="page-link" href="{{ url_for('view_logs', page=page+1, admin_name=admin_name, action_type=action_type, start_date=start_date, end_date=end_date) }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    {% else %}
+    <div class="alert alert-warning text-center" role="alert">
+        No logs found.
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}

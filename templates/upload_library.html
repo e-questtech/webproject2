@@ -1,0 +1,72 @@
+{% extends "base_dashboard.html" %}
+{% block title %}Upload Library Item{% endblock %}
+{% block content %}
+<h2 class="text-center">Upload Library Item</h2>
+
+<div class="container mt-4">
+    <div class="alert">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}"
+            style="position: relative; padding: 10px; border-radius: 5px; margin-bottom: 20px; background-color: #f8d7da; color: #721c24;">
+            <span class="closebtn" style="position: absolute; top: 0; right: 10px; cursor: pointer; color: #721c24;"
+                onclick="this.parentElement.style.display='none';">&times;</span>
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+    <form action="{{ url_for('upload_library_item') }}" method="post" class="shadow p-4 rounded bg-light">
+        <form method="POST">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" name="description" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="google_drive_link">Google Drive Link (PDF)</label>
+                <input type="url" class="form-control" name="google_drive_link" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Upload</button>
+        </form>
+
+    </form>
+
+
+</div>
+
+<style>
+    body {
+        background-color: #f8f9fa;
+        /* Light background for the form */
+    }
+
+    h2 {
+        color: #343a40;
+        /* Darker title color */
+    }
+
+    .form-control {
+        border-radius: 0.5rem;
+        /* Rounded input fields */
+    }
+
+    .btn {
+        border-radius: 0.5rem;
+        /* Rounded button */
+        padding: 10px 20px;
+        /* More padding for the button */
+    }
+
+    .alert {
+        border-radius: 0.5rem;
+        /* Rounded alert */
+    }
+</style>
+
+{% endblock %}

@@ -5,35 +5,34 @@
 {% endblock %}
 
 {% block content %}
-<form action="{{ url_for('add_video')}}" method="post">
+<form action="{{ url_for('add_video') }}" method="post" style="max-width: 400px; margin: auto;">
     <div class="alert">
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
         {% for category, message in messages %}
-        <span class="closebtn">&times;</span>
-        <div class="{{ category }}">{{ message }}</div>
+        <div class="alert alert-{{ category }}" style="position: relative; padding: 10px; border-radius: 5px; margin-bottom: 20px; background-color: #f8d7da; color: #721c24;">
+            <span class="closebtn" style="position: absolute; top: 0; right: 10px; cursor: pointer; color: #721c24;" onclick="this.parentElement.style.display='none';">&times;</span>
+            {{ message }}
+        </div>
         {% endfor %}
         {% endif %}
         {% endwith %}
     </div>
 
     <h2>Add Video</h2>
+    
     <div class="input-container">
-        <i class="fa fa-video icon"></i>
-        <input type="text" name="title" placeholder="Video Title" id="first_name" class="input-field" required>
+        <input type="text" name="title" placeholder="Video Title" class="input-field" required>
     </div>
 
     <div class="input-container">
-        <i class="fa fa-link icon"></i>
-        <input type="text" name="link" class="input-field" placeholder="Video URL" id="link">
+        <input type="text" name="link" class="input-field" placeholder="Video URL" required>
     </div>
+
     <div class="input-container">
-        <i class="fa fa-calendar icon"></i>
-        <input type="date" name="upload_date" class="input-field" placeholder="Upload Date" id="upload_date"
-            value="{{ upload_date}}">
+        <input type="date" name="upload_date" class="input-field" placeholder="Upload Date" value="{{ upload_date }}">
     </div>
+
     <button type="submit" class="btn">Add Video</button>
 </form>
-
-</body>
 {% endblock %}

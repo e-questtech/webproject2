@@ -9,8 +9,10 @@
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
     {% for category, message in messages %}
-    <span class="closebtn">&times;</span>
-    <div class="{{ category }}">{{ message }}</div>
+    <div class="alert alert-{{ category }}" style="position: relative; padding: 10px; border-radius: 5px; margin-bottom: 20px; background-color: #f8d7da; color: #721c24;">
+        <span class="closebtn" style="position: absolute; top: 0; right: 10px; cursor: pointer; color: #721c24;" onclick="this.parentElement.style.display='none';">&times;</span>
+        {{ message }}
+    </div>
     {% endfor %}
     {% endif %}
     {% endwith %}

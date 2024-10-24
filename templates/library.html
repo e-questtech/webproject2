@@ -1,0 +1,136 @@
+{% if session.role in ['superadmin', 'tutor', 'content manager'] %}
+{% extends "base_dashboard.html" %}
+{% elif 'STUDENT_ID' in session %}
+{% extends "student_base.html" %}
+{% else %}
+{% extends "base.html" %}
+{% endif %}
+
+{% block title %}Library{% endblock %}
+
+{% block content %}
+
+<h4 class="text-center my-4"style="text-transform:uppercase;text-align:justify;"> TE Quant Library</h4>
+
+<!-- Flash messages for alerts -->
+<div class="alert">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }}"
+        style="position: relative; padding: 10px; border-radius: 5px; margin-bottom: 20px;">
+        <span class="closebtn" style="position: absolute; top: 0; right: 10px; cursor: pointer;"
+            onclick="this.parentElement.style.display='none';">&times;</span>
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+</div>
+
+<!-- Library items displayed in grid layout -->
+    <div class="row">
+        {% for item in items %}
+        <div class="col s12 m6 l5 mb-4">
+            <!-- Materialize Card -->
+            <div class="card hoverable" style="box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+                <div class="card-content">
+                    <span class="card-title">{{ item.title }}</span>
+                    <p>{{ item.description }}</p>
+                </div>
+                <div class="card-action">
+                    {% if item.google_drive_link %}
+                    {% if 'STUDENT_ID' in session %}
+                    <a class="btn waves-effect waves-light modal-trigger" href="#bookModal"
+                        data-title="{{ item.title }}" data-link="{{ item.google_drive_link }}">Read Book</a>
+                    {% else %}
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#bootstrapModal"
+                        data-title="{{ item.title }}" data-link="{{ item.google_drive_link }}">
+                        Read Book
+                    </button>
+                    {% endif %}
+                    {% else %}
+                    <p class="text-muted">Preview not available.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Modal for Materialize -->
+<div id="bookModal" class="modal" style="width:100%; height:100%;">
+    <div class="modal-content">
+        <h4 id="bookModalLabel"></h4>
+        <iframe id="bookIframe" src="" width="90%" height="500px" frameborder="0"></iframe>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+</div>
+
+<!-- Modal for Bootstrap -->
+<div id="bootstrapModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bootstrapModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <iframe id="bootstrapIframe" src="" width="100%" height="600px" frameborder="0"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Initialize Materialize modal
+    document.addEventListener('DOMContentLoaded', function () {
+        var materializeElems = document.querySelectorAll('.modal');
+        M.Modal.init(materializeElems);
+
+        // Handle Materialize modal opening
+        var modalTriggers = document.querySelectorAll('.modal-trigger');
+        modalTriggers.forEach(function (trigger) {
+            trigger.addEventListener('click', function (e) {
+                e.preventDefault(); // Prevent href navigation for Materialize
+                var title = this.getAttribute('data-title');
+                var link = this.getAttribute('data-link');
+
+                document.getElementById('bookModalLabel').innerText = title;
+
+                // Change Google Drive link from view to preview
+                var previewLink = link.replace('/view', '/preview');
+                document.getElementById('bookIframe').setAttribute('src', previewLink);
+
+                // Open Materialize modal
+                var modalInstance = M.Modal.getInstance(document.getElementById('bookModal'));
+                modalInstance.open();
+            });
+        });
+    });
+
+    // Handle Bootstrap modal opening
+    $('#bootstrapModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var title = button.data('title');
+        var link = button.data('link');
+
+        var modal = $(this);
+        modal.find('.modal-title').text(title);
+
+        // Change Google Drive link from view to preview
+        var previewLink = link.replace('/view', '/preview');
+        modal.find('#bootstrapIframe').attr('src', previewLink);
+    });
+
+</script>
+
+{% endblock %}

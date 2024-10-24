@@ -1,17 +1,14 @@
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify, flash,Response, make_response
+from flask import Flask, render_template, request, redirect, url_for, session,g, jsonify, flash,Response, make_response
 from datetime import timedelta
-from flask_mail import *
 import hashlib   
 import random
 import re
 import datetime
 from datetime import datetime
 import pymysql
-import requests
 from flask_caching import Cache
 from config import Config
 import os
-import io
 from functools import wraps
 # Cloudinary to store the uploaded blog images
 from cloudinary.uploader import upload
@@ -69,13 +66,26 @@ def roles_required(allowed_roles):
     def wrapper(f):
         @wraps(f)
         def decorated_function(*args, **kwargs):
-            if 'role' not in session or session['role'] not in allowed_roles:
-                # Modify a custom error template for admin roles
+            if 'role' not in session:
+                flash('Session Timeout', 'warning')
+            elif session['role'] not in allowed_roles:
                 flash('You do not have permission to access this page.', 'danger')
+                # Modify a custom error template for admin roles
                 return redirect(url_for('admin_login'))
             return f(*args, **kwargs)
         return decorated_function
     return wrapper
+
+
+def log_admin_action(admin_email, action, details=None):
+    sql = """
+    INSERT INTO admin_logs (admin_email, action, details)
+    VALUES (%s, %s, %s)
+    """
+    cursor.execute(sql, (admin_email, action, details))
+
+    connection.commit()
+    
 
 # Homepage
 @app.route('/')
@@ -93,7 +103,18 @@ def blog():
     sql = "select * from Blog order by publish_date desc"
     cursor.execute(sql)
     blogs = cursor.fetchall()
-    return render_template('all_blogs.html', blogs = blogs)
+    category_sql = "select category from Blog"
+    cursor.execute(category_sql)
+    category = cursor.fetchall()
+    return render_template('all_blogs.html', blogs = blogs, category = category)
+
+# # Blog Category
+# @app.route("/blog/category/<name>/", methods = ["GET", "POST"])
+# def category(name):
+#     category_sql = "select category from Blog"
+#     cursor.execute(category_sql)
+#     category = cursor.fetchall()
+#     return render_template('all_blogs.html', category = category)
 
 # Single Blog Post
 @app.route("/blog/<blog_link>/", methods=["GET", "POST"])
@@ -154,6 +175,7 @@ def admin_login():
 @app.route("/admin/create/", methods=["GET", "POST"])
 @roles_required('superadmin')
 def create_admin():
+    msg = ''
     if 'loggedin' in session and session['role'] == 'superadmin':
         if request.method == 'POST' and all(key in request.form for key in ['first_name', 'last_name', 'email', 'password', 'role']):
             first_name = request.form['first_name'].strip().upper()
@@ -163,7 +185,8 @@ def create_admin():
 
             # Validate the email format
             if not re.match(r'^[a-zA-Z]+\.[a-zA-Z]+@tequant\.ng$', email):
-                flash('Invalid email address!', 'error')
+                msg = 'Invalid email address!'
+                flash(msg, 'error')
                 return render_template('create_admin.html')
 
             _password = request.form['password']
@@ -172,7 +195,8 @@ def create_admin():
             # Check if email already exists in the database
             cursor.execute("SELECT * FROM Admins WHERE EMAIL = %s", (email,))
             if cursor.fetchone():
-                flash('Account already exists!', 'error')
+                msg = 'Account already exists!'
+                flash(msg, 'error')
                 return render_template('create_admin.html')
 
             # Insert the new admin with role
@@ -180,12 +204,14 @@ def create_admin():
             vals = (first_name, last_name, email, password, role)
             cursor.execute(sql, vals)
             connection.commit()
-            flash('Posted successfully!', 'success')
+            log_admin_action(session['email'], 'Created a new Admin', 'Name: %s %s'%(first_name, last_name))
+            msg = 'Added successfully!'
+            flash(msg, 'success')
             return redirect(url_for('dashboard'))
         
         return render_template('create_admin.html')
-    
-    flash('Session Timeout', 'warning')
+    msg = 'Session Timeout'
+    flash(msg, 'warning')
     return redirect(url_for('admin'))
 
     
@@ -268,6 +294,7 @@ def add_blog():
                 vals = (title, body, category, author, publish_date, blog_link, image_url)
                 cursor.execute(sql, vals)
                 connection.commit()
+                log_admin_action(session['email'], 'Added a new Blog', f'Blog Title: {title}')
                 msg = 'Posted successfully !!'
                 flash(msg, 'success')
             return redirect(url_for('read_blog', blog_link=blog_link))
@@ -322,6 +349,7 @@ def edit_blog(blog_link):
                     vals = (title, body, category, author, image_url, updated_blog_link, blog_link)
                     cursor.execute(sql_update, vals)
                     connection.commit()
+                    log_admin_action(session['email'], 'Edit Blog', f'Blog Title: {title}')
                     flash('Blog post updated successfully!', 'success')
                 return redirect(url_for('blog_view'))  # Redirect to blog view or dashboard
 
@@ -372,6 +400,7 @@ def delete_blog(blog_link):
                 sql = "DELETE from Blog WHERE blog_link = '%s'" %blog_link
                 cursor.execute(sql)
                 connection.commit()
+                log_admin_action(session['email'], 'Beleted Blog', f'Blog Title: {blog_link}')
                 msg = 'You have successfully deleted Blog Post'
                 flash(msg, 'success')
                 return redirect(url_for('blog_view'))
@@ -401,7 +430,7 @@ def add_video():
                     vals = (title, link, upload_date)
                     cursor.execute(sql, vals)
                     connection.commit()
-                    # connection.close()
+                    log_admin_action(session['email'], 'Added a new Video', f'Title: {title}')
                     msg = 'Video Posted successfully !!'
                     flash(msg, 'success')
                 return redirect(url_for('video_view'))
@@ -434,6 +463,7 @@ def delete_video(video_link):
                 sql = "DELETE FROM Videos WHERE Link = %s"%video_link
                 cursor.execute(sql)
                 connection.commit()
+                log_admin_action(session['email'], 'Delete Video', f'Link: {video_link}')
                 msg = 'You have successfully deleted Blog Post'
                 flash(msg, 'success')
                 return redirect(url_for('video_view'))
@@ -442,7 +472,6 @@ def delete_video(video_link):
     return redirect(url_for('admin_login'))
         
             
-
 
 @app.route("/admin/student/create/", methods = ["GET", "POST"])
 @roles_required(['superadmin'])
@@ -472,23 +501,10 @@ def create_student():
                     vals = (first_name, last_name, email, password, STUDENT_ID, date_registered, course_title['course_title'])
                     cursor.execute(sql, vals)
                     connection.commit()
+                    log_admin_action(session['email'], 'Added a new Student', f'Student ID: {STUDENT_ID}')
                     msg = 'Added successfully !!'
-                    # flash(msg, 'success')
-                    # msg = Message('Your Student Account at TE Quant', recipients=[email])
-                    # msg.body = f"""
-                    # Dear Student,
-
-                    # Your account has been created at TE Quant.
+                    flash(msg, 'success')
                     
-                    # Student ID: {STUDENT_ID}
-                    # Password: {password}
-
-                    # Please log in and change your password as soon as possible.
-
-                    # Best regards,
-                    # TE Quant Team
-                    # """
-                    # mail.send(msg)
                 return redirect(url_for('all_students'))
             return render_template('create_student.html', courses = courses)
         
@@ -534,7 +550,7 @@ def add_course():
                 vals = (course_title, course_code, course_description)
                 cursor.execute(sql, vals)
                 connection.commit()
-                
+                log_admin_action(session['email'], 'Added a new course', f'Course Name: {course_title}')
                 msg = 'Course added successfully !!'
                 flash(msg, 'success')
                 return redirect(url_for('courses'))
@@ -593,8 +609,8 @@ def sitemap():
     urls = [
         url_for('blog'),
         url_for('about'),
-        url_for('videos')
-        #url_for('')
+        url_for('videos'),
+        url_for('contact')
     ]
     return Response(render_template('sitemap.xml', urls=urls), mimetype='application/xml')
 
@@ -702,7 +718,8 @@ def assign_tutor():
 
         try:
             cursor.execute(sql, vals)
-            connection.commit()  # Commit only after modifying data
+            connection.commit()  
+            log_admin_action(session['email'], 'Assigned Course to %s'%tutor_email, f'Course Code: {course_code}')
             flash('Tutor assigned to course successfully!', 'success')
         except Exception as e:
             connection.rollback()  # Rollback in case of an error
@@ -728,7 +745,8 @@ def assign_tutor():
     return render_template('assign_tutor.html', tutors=tutors, courses=courses)
 
 # Tutors and Assigned Courses
-@app.route('/admin/tutors')
+@app.route('/admin/tutors/',methods=['GET'])
+@roles_required(['superadmin'])
 def view_tutors():
     sql_select = """
         SELECT Admins.first_name, Admins.last_name, Admins.email, Courses.course_title
@@ -761,8 +779,10 @@ def add_assignment():
         """
         cursor.execute(sql_insert, (course_code, tutor_email, content))
         connection.commit()
+        log_admin_action(session['email'], 'Gave Assignment', f'Course Code: {course_code}')
 
         flash('Assignment added successfully!', 'success')
+
         return redirect(url_for('dashboard'))
 
     # Fetch available courses for the tutor
@@ -863,7 +883,6 @@ def submit_assignment():
     return render_template('submit_assignment.html')
 
     
-
 # Tutors View Assignment Submitted
 @roles_required(['tutor', 'superadmin'])
 @app.route('/tutor/submissions/', methods=['GET'])
@@ -911,20 +930,133 @@ def download_assignment(assignment_id):
 
     return redirect(url_for('admin_login'))
 
+# Library
+@app.route('/library/')
+def library():
+    # Check if user is logged in
+    if 'loggedin' not in session:
+        flash('You must be logged in to access the library.', 'danger')
+        return redirect(url_for('login'))  # Redirect to login page if not authenticated
+
+    # Retrieve library items from the database
+    
+    cursor.execute("SELECT * FROM Library")
+    items = cursor.fetchall()
+
+    return render_template('library.html', items=items)
+
+@app.route('/admin/upload/library/', methods=['POST', 'GET'])
+@roles_required('superadmin')
+def upload_library_item():
+    if 'loggedin' in session:
+        if request.method == 'POST':
+            # Handle form data
+            title = request.form['title']
+            description = request.form['description']
+            google_drive_link = request.form['google_drive_link']
+            
+            if google_drive_link:
+                uploaded_by = session['role'] 
+                # Insert the Google Drive link instead of blob data
+                cursor.execute("INSERT INTO Library (title, description, google_drive_link, uploaded_by) VALUES (%s, %s, %s, %s)",
+                            (title, description, google_drive_link, uploaded_by))
+                connection.commit()
+                log_admin_action(session['email'], 'Added Book to Library', f'Book Title: {title}')
+
+                flash('Library item uploaded successfully!', 'success')
+            else:
+                flash('Failed to upload library item. No link provided.', 'danger')
+
+            return redirect(url_for('library'))
+
+        # GET request: Render the upload form
+        return render_template('upload_library.html')
+    return redirect(url_for('admin_login'))
+
+# Nt yet efffective
+@app.route('/contact/message/', methods=['POST'])
+def contact_form():
+    if request.method == 'POST':
+        email = request.form['email']
+        message = request.form['message']
+
+        msg = Message('New Contact Form Submission', recipients=['support@tequant.ng'])
+        msg.body = f'From: {email}\n\nMessage: {message}'
+
+        try:
+            mail.send(msg)
+            flash('Your message has been sent successfully!', 'success')
+        except Exception as e:
+            flash(f'An error occurred: {str(e)}', 'danger')
+
+        return redirect(url_for('index'))
 
 
+@app.route('/admin/logs', methods=['GET','POST'])
+@roles_required('superadmin')  
+def view_logs():
+    if 'loggedin' in session:
+        # Fetch filter values from request arguments
+        admin_name = request.args.get('admin_name')
+        action_type = request.args.get('action_type')
+        start_date = request.args.get('start_date')
+        end_date = request.args.get('end_date')
 
+        # Pagination settings
+        page = request.args.get('page', 1, type=int)  # Default page is 1
+        per_page = 10  # Number of logs per page
+        offset = (page - 1) * per_page
 
+        # Start building the SQL query
+        sql = """
+            SELECT admin_logs.*, CONCAT(Admins.first_name, ' ', Admins.last_name) AS admin_name
+            FROM admin_logs
+            JOIN Admins ON admin_logs.admin_email = Admins.email
+            WHERE 1=1
+        """
 
+        # Store query parameters
+        params = []
 
+        # Filter by admin name
+        if admin_name:
+            sql += " AND CONCAT(admins.first_name, ' ', admins.last_name) LIKE %s"
+            params.append(f'%{admin_name}%')
 
+        # Filter by action type
+        if action_type:
+            sql += " AND admin_logs.action LIKE %s"
+            params.append(f'%{action_type}%')
 
+        # Filter by date range
+        if start_date and end_date:
+            sql += " AND admin_logs.timestamp BETWEEN %s AND %s"
+            params.append(start_date)
+            params.append(end_date)
 
+        # Order by the latest logs and apply pagination
+        sql += " ORDER BY admin_logs.timestamp DESC LIMIT %s OFFSET %s"
+        params.append(per_page)
+        params.append(offset)
 
+        # Execute the SQL query
+        cursor.execute(sql, tuple(params))
+        logs = cursor.fetchall()
 
+        # Get the total number of logs for pagination purposes
+        cursor.execute("SELECT COUNT(*) AS total FROM admin_logs")
+        total_logs = cursor.fetchone()['total']
+        total_pages = (total_logs + per_page - 1) // per_page  # Calculate total pages
 
+    
 
-
+        # Render the logs with pagination
+        return render_template(
+            'admin_logs.html', logs=logs, admin_name=admin_name, 
+            action_type=action_type, start_date=start_date, end_date=end_date, 
+            page=page, total_pages=total_pages
+        )
+    return redirect(url_for('admin_login'))
 
 
 #Logout

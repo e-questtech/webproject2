@@ -84,16 +84,23 @@ CREATE TABLE Posts (
 select * from Posts;
 
 select course_code from Courses where course_title = (select course from Students where STUDENT_ID = 'DTS/2024/50');
+   
+   
 
+drop table Library;
 CREATE TABLE Library (
-       id INT PRIMARY KEY AUTO_INCREMENT,
-       title VARCHAR(255),
-       author VARCHAR(255),
-       description TEXT,
-       file_path VARCHAR(255)  -- Path to the book file from google drive
-   );
-   
-   
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    google_drive_link VARCHAR(255),
+    uploaded_by INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+
+
+
    SELECT c.course_code, c.course_title 
     FROM TutorCourse tc
     JOIN Courses c ON tc.course_code = c.course_code
@@ -119,4 +126,23 @@ CREATE TABLE Assignments (
     date_submitted DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (student_id) REFERENCES Students(STUDENT_ID),
     FOREIGN KEY (course_code) REFERENCES Courses(course_code)
+);
+
+CREATE TABLE admin_logs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    admin_email VARCHAR(50) NOT NULL,
+    action VARCHAR(255),
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    details TEXT,
+    FOREIGN KEY (admin_email) REFERENCES Admins(email) ON DELETE CASCADE
+);
+
+CREATE TABLE comments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    content TEXT NOT NULL,
+    author VARCHAR(100) NOT NULL,
+    email VARCHAR(120) NOT NULL,
+    date_posted TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    post_id INT,
+    FOREIGN KEY (post_id) REFERENCES Blog(blog_link) ON DELETE CASCADE
 );

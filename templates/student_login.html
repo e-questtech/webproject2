@@ -9,17 +9,20 @@
 <div class="page-heading header-text">
 <div class="container">
     <h2 class="text-center">Student Login</h2>
-    <div class="login-form">
-        <!-- Flash message for displaying errors or alerts -->
+    <div class="alert">
         {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="alert">
-                    {% for category, message in messages %}
-                        <div class="{{ category }}">{{ message }}</div>
-                    {% endfor %}
-                </div>
-            {% endif %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}" style="position: relative; padding: 10px; border-radius: 5px; margin-bottom: 20px; background-color: #f8d7da; color: #721c24;">
+            <span class="closebtn" style="position: absolute; top: 0; right: 10px; cursor: pointer; color: #721c24;" onclick="this.parentElement.style.display='none';">&times;</span>
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
         {% endwith %}
+    </div>
+    <div class="login-form">
+        
 
         <!-- Login form -->
             <form action="{{ url_for('login') }}" method="POST" style="max-width:300px;margin:auto">

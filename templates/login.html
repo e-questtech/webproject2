@@ -1,37 +1,53 @@
 {% extends "base.html" %}
 {% block title %}Login{% endblock %}
 {% block head %}
-{{ super() }}
+    {{ super() }}
 {% endblock %}
 {% block content %}
 
 <body>
     <div class="page-heading header-text">
-    <div class="container">
-    <form action="{{ url_for('admin_login')}}" method="POST" style="max-width:300px;margin:auto">
-        <div class="alert">
-            {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-            {% for category, message in messages %}
-            <span class="closebtn">&times;</span>
-            <div class="{{ category }}">{{ message }}</div>
-            {% endfor %}
-            {% endif %}
-            {% endwith %}
+        <div class="container">
+            <!-- Login Form -->
+            <form action="{{ url_for('admin_login') }}" method="POST" style="max-width:300px;margin:auto">
+
+                <!-- Flash Message Display -->
+                <div class="alert">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}" style="position: relative; padding: 10px; border-radius: 5px; margin-bottom: 20px; background-color: #f8d7da; color: #721c24;">
+                        <span class="closebtn" style="position: absolute; top: 0; right: 10px; cursor: pointer; color: #721c24;" onclick="this.parentElement.style.display='none';">&times;</span>
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
+                </div>
+
+
+                <!-- Login Form Fields -->
+                <h2 style="text-transform: uppercase; color: #0b692a; text-align: center;">Login</h2>
+
+                <!-- Email Input -->
+                <div class="input-container" style="margin-bottom: 20px;">
+                    <i class="fa fa-envelope icon" style="padding-right: 10px;"></i>
+                    <input class="input-field" type="text" placeholder="Email" name="email" required style="width: 100%; padding: 10px;">
+                </div>
+
+                <!-- Password Input -->
+                <div class="input-container" style="margin-bottom: 20px;">
+                    <i class="fa fa-key icon" style="padding-right: 10px;"></i>
+                    <input class="input-field" type="password" placeholder="Password" name="password" required style="width: 100%; padding: 10px;">
+                </div>
+
+                <!-- Login Button -->
+                <button type="submit" class="btn" style="background-color: #0b692a; color: white; width: 100%; padding: 10px; text-align: center;">Login</button>
+            </form>
         </div>
-        <h2 style="text-transform: uppercase; color: azure;">Login</h2>
-        <div class="input-container">
-            <i class="fa fa-envelope icon"></i>
-            <input class="input-field" type="text" placeholder="Email" name="email" required>
-        </div>
-        <div class="input-container">
-            <i class="fa fa-key icon"></i>
-            <input class="input-field" type="password" placeholder="Password" name="password" required>
-        </div>
-        <button type="submit" class="btn">Login</button>
-    </form>
-</div>
-</div>
+    </div>
+
+    
 </body>
 
 {% endblock %}

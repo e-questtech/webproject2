@@ -2,69 +2,93 @@
 {% block title %}Add Blog{% endblock %}
 {% block head %}
 {{ super() }}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+    .input-container {
+        margin-bottom: 15px;
+    }
+
+    .input-field, textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        transition: border-color 0.3s;
+    }
+
+    .input-field:focus, textarea:focus {
+        border-color: #007bff; /* Change border color on focus */
+        outline: none;
+    }
+
+    
+    textarea {
+        height: 200px;
+        resize: none; /* Disable resizing */
+    }
+</style>
 {% endblock %}
 
 {% block content %}
-<form action="{{ url_for('add_blog')}}" method="post"enctype="multipart/form-data">
+<form action="{{ url_for('add_blog')}}" method="post" enctype="multipart/form-data">
     <div class="alert">
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
         {% for category, message in messages %}
-        <span class="closebtn">&times;</span>
-        <div class="{{ category }}">{{ message }}</div>
+        <div class="alert alert-{{ category }}">
+            <span class="closebtn" style="cursor: pointer;" onclick="this.parentElement.style.display='none';">&times;</span>
+            {{ message }}
+        </div>
         {% endfor %}
         {% endif %}
         {% endwith %}
     </div>
 
     <h2>Add Blog</h2>
+
     <div class="input-container">
-        <i class="fa fa-pen icon"></i>
-        <input type="text" name="title" placeholder="Blog Title" id="first_name" class="input-field" required>
+        <input type="text" name="title" placeholder="Blog Title" class="input-field" required>
     </div>
+    
     <div class="input-container">
-        <i class="fa fa-picture icon"></i>
-        <input type="file" name="image" id="image" accept="image/*" placeholder="Select Blog Image">
+        <input type="file" name="image" id="image" accept="image/*" class="input-field">
     </div>
+    
     <div class="input-container">
-        <i class="fa fa-text"></i>
-        <textarea type="text" name="body" placeholder="Body" id="summernote" required></textarea>
+        <textarea name="body" placeholder="Body" id="summernote" required></textarea>
     </div>
 
     <div class="input-container">
-        <i class="fa fa-tags icon"></i>
-        <input type="text" name="category" class="input-field" placeholder="Category" id="category">
+        <input type="text" name="category" class="input-field" placeholder="Category" id="category" required>
     </div>
+    
     <div class="input-container">
-        <i class="fa fa-user icon"></i>
         {% for i in names %}
-        <input class="input-field" type="text" placeholder="author" name="author"
+        <input class="input-field" type="text" placeholder="Author" name="author"
             value="{{ i['first_name'] }} {{ i['last_name'] }}" readonly>
         {% endfor %}
     </div>
+    
     <div class="input-container">
-        <i class="fa fa-calendar icon"></i>
         <input type="date" name="publish_date" class="input-field" placeholder="Publish Date" id="publish_date"
-            value="{{ publish_date}}">
+            value="{{ publish_date }}">
     </div>
+    
     <button type="submit" class="btn">Add Blog</button>
 </form>
+
 <script>
     $(document).ready(function () {
         $('#summernote').summernote({
             placeholder: 'Blog Content goes Here',
-            tabsize: 50,
+            tabsize: 2,
             height: 300,
-        fontNames: ['Lora', 'Merriweather', 'Open Sans', 'Roboto', 'Source Sans Pro', 'Arial', 'Georgia'], // Add blog-friendly fonts
-        fontNamesIgnoreCheck: ['Lora', 'Merriweather', 'Open Sans', 'Roboto', 'Source Sans Pro'], // Ensure custom fonts work
-        fontSizes: ['12', '14', '16', '18', '24', '36'],
-
-        })
+            fontNames: ['Lora', 'Merriweather', 'Open Sans', 'Roboto', 'Source Sans Pro', 'Arial', 'Georgia'],
+            fontNamesIgnoreCheck: ['Lora', 'Merriweather', 'Open Sans', 'Roboto', 'Source Sans Pro'],
+            fontSizes: ['12', '14', '16', '18', '24', '36'],
+            lineHeights: ['0.8', '1.0', '1.2', '1.5', '2.0', '3.0'],
+            
+        });
     });
 </script>
-
-</body>
 {% endblock %}
-
-
-</html>

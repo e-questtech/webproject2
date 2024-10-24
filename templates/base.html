@@ -109,6 +109,7 @@
 </header>
 <div>
     {% block content %}
+    
     <!-- Page-specific content goes here -->
     {% endblock %}
 </div>
@@ -148,7 +149,7 @@
       <div class="col-md-3 footer-item last-item">
         <h4>Contact Us</h4>
         <div class="contact-form">
-          <form id="contact footer-contact" action="" method="post">
+          <form id="contact footer-contact" action="{{url_for('contact_form')}}" method="post">
             <div class="row">
               <div class="col-lg-12 col-md-12 col-sm-12">
                 <fieldset>
@@ -188,7 +189,17 @@
   </div>
 </div>
 
-
+<script>
+  // Close button functionality for flash messages
+  var close = document.getElementsByClassName("closebtn");
+  var i;
+  for (i = 0; i < close.length; i++) {
+      close[i].onclick = function() {
+          var div = this.parentElement;
+          div.style.display = "none";
+      }
+  }
+</script>
 
 
 
