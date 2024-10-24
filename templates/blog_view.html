@@ -10,8 +10,10 @@
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
         {% for category, message in messages %}
-        <div class="alert alert-{{ category }}" style="position: relative; padding: 10px; border-radius: 5px; margin-bottom: 20px; background-color: #f8d7da; color: #721c24;">
-            <span class="closebtn" style="position: absolute; top: 0; right: 10px; cursor: pointer; color: #721c24;" onclick="this.parentElement.style.display='none';">&times;</span>
+        <div class="alert alert-{{ category }}"
+            style="position: relative; padding: 10px; border-radius: 5px; margin-bottom: 20px; background-color: #f8d7da; color: #721c24;">
+            <span class="closebtn" style="position: absolute; top: 0; right: 10px; cursor: pointer; color: #721c24;"
+                onclick="this.parentElement.style.display='none';">&times;</span>
             {{ message }}
         </div>
         {% endfor %}
@@ -20,42 +22,49 @@
     </div>
 
 
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">All Blogs</h6>
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                    <tr style="text-align:center ;">
-                        <th>Title</th>
-                        <th>Body</th>
-                        <th>Category</th>
-                        <th>Author</th>
-                        <th>Date Published</th>
-                        <th>Read Blog</th>
-                        <th>Edit Blog</th>
-                        <th>Delete Blog</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>{% for i in record %}
-                        <td>{{i['Title']}}</td>
-                        <td>{{i['Body'][0:300]|safe}}...</td>
-                        <td>{{i['category']}}</td>
-                        <td>{{i['author']}}</td>
-                        <td>{{i['publish_date']}}</td>
-                        <td><a href="{{ url_for('read_blog', blog_link = i['blog_link']) }}">Read Blog</a></td>
-                        <td><a href="{{ url_for('edit_blog', blog_link = i['blog_link']) }}">Edit Blog</a>
-                        </td>
-                        <td><a href="{{ url_for('delete_blog', blog_link = i['blog_link']) }}">Delete Blog</a></td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">All Blogs</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr style="text-align:center ;">
+                            <th>Title</th>
+                            <th>Body</th>
+                            <th>Category</th>
+                            <th>Author</th>
+                            <th>Date Published</th>
+                            <th>Read Blog</th>
+                            <th>Edit Blog</th>
+                            <th>Delete Blog</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>{% for i in record %}
+                            <td>{{i['Title']}}</td>
+                            <td>{{i['Body'][0:300]|safe}}...</td>
+                            <td>{{i['category']}}</td>
+                            <td>{{i['author']}}</td>
+                            <td>{{i['publish_date']}}</td>
+                            <td><a href="{{ url_for('read_blog', blog_link = i['blog_link']) }}" title="Read Blog">
+                                    <i class="fas fa-book"></i>
+                                </a></td>
+                            <td><a href="{{ url_for('edit_blog', blog_link = i['blog_link']) }}" title="Edit Blog">
+                                    <i class="fas fa-pen" style="color: burlywood;"></i>
+                                </a></td>
+                            <td>
+                                <a href="{{ url_for('delete_blog', blog_link = i['blog_link']) }}" title="Delete Blog">
+                                    <i class="fas fa-trash-alt" style="color: red;"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
-</div>
-{% endblock %}
+    </div>
+    {% endblock %}

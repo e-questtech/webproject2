@@ -314,6 +314,7 @@ def edit_blog(blog_link):
         sql_select = "SELECT * FROM Blog WHERE blog_link = %s"
         cursor.execute(sql_select, (blog_link,))
         record = cursor.fetchone()
+        author = record['author']
         
         # If the form is submitted (POST method), update the blog post
         if request.method == 'POST':
@@ -322,7 +323,7 @@ def edit_blog(blog_link):
                 updated_blog_link = title.lower().replace(' ', '-')  # Create new blog link from title
                 body = request.form['body']
                 category = request.form['category'].title()
-                author = request.form['author']
+                
                 # Handle image upload with Cloudinary
                 image = request.files.get('image')
                 image_url = None
@@ -342,7 +343,8 @@ def edit_blog(blog_link):
                     except Exception as e:
                         flash(f'Image upload failed: {str(e)}', 'error')
                         return render_template('edit_blog.html', record=record)
-
+                else:
+                    image_url = None
                 
                     # Update Blog
                     sql_update = """UPDATE Blog SET Title = %s, Body = %s, Category = %s, Author = %s, image_url = %s, Blog_Link = %s WHERE Blog_Link = %s"""

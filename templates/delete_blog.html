@@ -7,30 +7,48 @@
 {% block content %}
 
 <body>
-    <form action="{{ url_for('delete_blog', blog_link = blog_link) }}" method="POST" style="max-width:400px;margin:auto">
+    <div class="container" style="max-width: 500px; margin-top: 50px;">
+        <!-- Flash messages for alerts -->
         <div class="alert">
             {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
             {% for category, message in messages %}
-            <div class="alert alert-{{ category }}" style="position: relative; padding: 10px; border-radius: 5px; margin-bottom: 20px; background-color: #f8d7da; color: #721c24;">
-                <span class="closebtn" style="position: absolute; top: 0; right: 10px; cursor: pointer; color: #721c24;" onclick="this.parentElement.style.display='none';">&times;</span>
+            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert" style="background-color: #f8d7da; color: #721c24; padding: 10px; border-radius: 5px;">
                 {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="color: #721c24;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             {% endfor %}
             {% endif %}
             {% endwith %}
         </div>
-        <h2 class="title">Delete Blog</h2>
-        
-        <h3>Are you sure you want to delete blog: {{blog_link}}?</h3>
-        
-        <label for="yes">YES</label>
-        <input type="radio" name="confirm" value="YES" id="yes"  >
-        <label for="no">NO</label>
-        <input type="radio" name="confirm" value="NO" id="no"  >
-    
-        <button type="submit">Submit</button>
 
-    </form>
+        <!-- Delete Confirmation Form -->
+        <form action="{{ url_for('delete_blog', blog_link=blog_link) }}" method="POST">
+            <h2 class="text-center">Delete Blog</h2>
+            <p class="text-center">Are you sure you want to delete the blog: <strong>{{ blog_link }}</strong>?</p>
+            
+            <!-- Radio buttons for confirmation -->
+            <div class="form-group">
+                <label>
+                    <input type="radio" name="confirm" value="YES" id="yes" required>
+                    Yes, I want to delete
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    <input type="radio" name="confirm" value="NO" id="no">
+                    No, cancel
+                </label>
+            </div>
+            
+            <!-- Submit button -->
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-danger btn-block">Submit</button>
+            </div>
+        </form>
+    </div>
 </body>
+
 {% endblock %}
